@@ -1,0 +1,23 @@
+@import "variables";
+
+body {
+  font-family: 'Codec Pro';
+}
+
+a {
+  text-decoration: none;
+}
+
+svg {
+  cursor: pointer;
+  path {
+    transition: fill ease-in-out 300ms;
+  }
+
+  &:hover {
+    path {
+      transition: fill ease-in-out 300ms;
+      fill: $main-400;
+    }
+  }
+}

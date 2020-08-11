@@ -1,0 +1,44 @@
+@import '../variables';
+
+:global(.dark-mode) {
+  .color {
+    // text color
+    &__title {
+      transition: color ease-in-out 300ms;
+      color: $base-0;
+    }
+    &__descr {
+      transition: color ease-in-out 300ms;
+      color: $base-200;
+    }
+    &__important {
+      transition: color ease-in-out 300ms;
+      color: $main-400;
+    }
+    &__price {
+      transition: color ease-in-out 300ms;
+      color: $secondary-400;
+    }
+    //bg colors
+    &__bg_primary {
+      transition: background-color ease-in-out 300ms;
+      background-color: $base-500;
+    }
+
+    &__bg_secondary {
+      transition: background-color ease-in-out 300ms;
+      background-color: $base-600;
+    }
+
+    &_logo {
+      rect {
+        transition: fill ease-in-out 300ms;;
+        fill: $base-500;
+      }
+      circle[cx="17"] {
+        transition: fill ease-in-out 300ms;;
+        fill: $base-0;
+      }
+    }
+  }
+}

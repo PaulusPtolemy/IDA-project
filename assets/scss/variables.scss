@@ -1,0 +1,90 @@
+//fonts
+
+$fontSizeBase: 16px;
+$fontSizeMedium: 18px;
+$fontSizeLarge: 20px;
+$fontSizeBig: 22px;
+$fontSizeLarge: 40px;
+
+//$fontSizeGrand: 60px;
+//$fontSizeBig: 50px;
+//$fontSizeXxl: 40px;
+//$fontSizeXxxl: 35px;
+//$fontSizeCard: 26px;
+//$fontSizeXl: 25px;
+//$fontSizeXlS: 24px;
+//$fontSizeListTitle: 22px;
+//$fontSizeNewsAccent: 20px;
+//$fontSizeLg: 18px;
+//$fontSizeMd: 15px;
+//$fontSizeSm: 14px;
+//$fontSizeLabel: 13px;
+//$fontSizePlaceholder: 12px;
+//$fontSizeXs: 10px;
+//$fontSizeXxs: 8px;
+//$fontSizeTiny: 6px;
+
+
+
+$fontWeightLight: 100;
+$fontWeightMedium: 300;
+$fontWeightAccent: 500;
+$fontWeightSemiBold: 700;
+$fontWeightBold: 900;
+
+//colors
+$main-100: #D1D5FF;
+$main-200: #A4ACFF;
+$main-300: #7682FF;
+$main-400: #4959FF;
+$main-500: #1B2FFF;
+$main-600: #1626CC;
+$main-700: #101C99;
+$main-800: #0B1366;
+$main-900: #050933;
+
+$base-0: #FCFCFC;
+$base-50: #F3F4F7;
+$base-100: #CCD3DA;
+$base-200: #99A7B5;
+$base-300: #677B8F;
+$base-400: #344F6A;
+$base-500: #012345;
+$base-600: #011C37;
+$base-700: #011529;
+$base-800: #000E1C;
+$base-900: #00070E;
+
+$secondary-100: #FDD2EC;
+$secondary-200: #FCA5D9;
+$secondary-300: #FA77C6;
+$secondary-400: #F84AB3;
+$secondary-500: #F71D9F;
+$secondary-600: #C51780;
+$secondary-700: #941160;
+$secondary-800: #630C40;
+$secondary-900: #310620;
+
+
+//paddings
+
+//breakpoints
+$breakpoints: (
+  xs: 320px,
+  sm: 768px,
+  md: 1140px,
+  lg: 1280px,
+  xl: 1340px
+);
+
+$border-r-large: 48px;
+$border-r-huge: 32px;
+$border-r-medium: 24px;
+$border-r-small: 16px;
+$border-r-tiny: 12px;
+
+$line-h-grand: 24px;
+$line-h-large: 20px;
+$line-h-medium: 18px;
+
+$anim: ease-in-out 200ms;
