@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted () {
-    this.$colorMode.preference ? this.mode = this.$colorMode.preference : this.mode = 'light'
+    this.$colorMode.preference ? this.mode = this.$colorMode.value : this.mode = 'light'
   }
 }
 </script>

@@ -18,7 +18,10 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "vue-debounce": "^2.5.7",
+    "vue-infinite-scroll": "^2.0.2",
+    "vue-select": "^3.10.8"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^1.0.3",
@@ -26,6 +29,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
+    "@nuxtjs/svg": "^0.1.11",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",

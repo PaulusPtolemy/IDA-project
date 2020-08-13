@@ -8,7 +8,7 @@
       World's first affordable airsharing
     </div>
     <div :class="$style.right_float">
-      <ColorModePicker />
+      <color-mode-picker />
       <MessageIcon :class="$style.message" />
       <NotIcon :class="$style.notification" />
       <div :class="[$style.user_name, $style.color__title]">
@@ -23,7 +23,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ColorModePicker from '@/components/ColorModePicker'
+import ColorModePicker from '~/components/controls/ColorModePicker'
 
 import LogoIcon from '~/assets/svg/Logo.svg?inline'
 import MessageIcon from '~/assets/svg/message.svg?inline'

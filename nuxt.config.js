@@ -34,7 +34,6 @@ export default {
   */
   css: [
     'normalize.css/normalize.css',
-    '@/assets/scss/_main.scss',
     '@/assets/fonts/font.css'
   ],
   /*
@@ -42,6 +41,9 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    {src: '~plugins/vue-infinite-scroll.js', ssr: false},
+    {src: '~plugins/vue-debounce.js', ssr: false},
+    {src: '~plugins/vue-select.js', ssr: false}
   ],
   /*
   ** Auto import components

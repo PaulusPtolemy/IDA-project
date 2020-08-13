@@ -1,4 +1,12 @@
 @import "variables";
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+h1, p {
+  margin: 0;
+}
 
 body {
   font-family: 'Codec Pro';
