@@ -15,7 +15,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'default'
+      default: 'button'
     },
     disabled: {
       type: Boolean,
@@ -38,10 +38,17 @@ export default {
     border-radius: $border-r-tiny;
     outline: none;
     cursor: pointer;
+    transition: all $anim-medium;
 
     span {
       color: $base-0;
       font-weight: $fontWeightBold;
+    }
+
+    &:disabled {
+      transition: all $anim-medium;
+      opacity: 0.3;
+      cursor: not-allowed;
     }
   }
 </style>

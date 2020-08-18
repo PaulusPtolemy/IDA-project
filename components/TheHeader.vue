@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.header">
+  <header :class="$style.header">
     <nuxt-link to="/" :class="$style.logo">
-      <LogoIcon :class="[$style.logo_icon, $style.color_logo]" />
+      <LogoIcon id="logo_icon" :class="[$style.logo_icon, $style.color_logo]" />
       <span :class="[$style.logo_title, $style.color__title]">Pepelane</span>
     </nuxt-link>
     <div :class="$style.color__descr">
@@ -9,15 +9,34 @@
     </div>
     <div :class="$style.right_float">
       <color-mode-picker />
-      <MessageIcon :class="$style.message" />
-      <NotIcon :class="$style.notification" />
+      <div
+        v-if="isIE()"
+        :class="$style.message"
+        @mouseenter="hoverSVG('message-icon', 'enter')"
+        @mouseleave="hoverSVG('message-icon', 'leave')"
+      >
+        <MessageIcon id="message-icon" />
+      </div>
+      <MessageIcon v-else :class="$style.message" />
+      <div
+        v-if="isIE()"
+        :class="$style.notification"
+        @mouseenter="hoverSVG('notification-icon', 'enter')"
+        @mouseleave="hoverSVG('notification-icon', 'leave')"
+      >
+        <NotIcon id="notification-icon" />
+      </div>
+      <NotIcon v-else :class="$style.notification" />
       <div :class="[$style.user_name, $style.color__title]">
         {{ getUser.name }}
       </div>
-      <!-- img from base64 -->
-      <img :class="$style.user_avatar" :src="'data:image/jpeg;base64,' + getUser.avatar">
+      <img
+        :class="$style.user_avatar"
+        :src="'data:image/jpeg;base64,' + getUser.avatar"
+        alt="user avatar"
+      >
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -36,10 +55,6 @@ export default {
     MessageIcon,
     NotIcon,
     ColorModePicker
-  },
-  data () {
-    return {
-    }
   },
   computed: {
     ...mapGetters(['getUser'])
@@ -78,20 +93,11 @@ export default {
 }
 .message {
   margin-left: 108px;
+  cursor: pointer;
 }
 .notification {
   margin-left: 30px;
-  position: relative;
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: red;
-  }
+  cursor: pointer;
 }
 .user {
   &_name {

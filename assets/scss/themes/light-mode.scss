@@ -1,5 +1,4 @@
 @import '../variables';
-
 :global(.light-mode) {
   .color {
     // text colors
@@ -30,14 +29,29 @@
       background-color: $base-50;
     }
 
+    &__bg_trans {
+      background: rgba(252, 252, 252, 0.8);
+    }
+
     &_logo {
       rect {
-        transition: fill ease-in-out 300ms;
-        fill: $base-0;
+        fill: transparent;
       }
       circle[cx="17"] {
-        transition: fill ease-in-out 300ms;
+        transition: all ease-in-out 300ms;
         fill: $base-500;
+      }
+    }
+    &__input_placeholder {
+      &::placeholder {
+        transition: color ease-in-out 300ms;
+        color: $base-300;
+      }
+    }
+    &__iconCross {
+      path {
+        transition: fill ease-in-out 300ms;
+        fill: $base-600;
       }
     }
   }

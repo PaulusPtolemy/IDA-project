@@ -8,7 +8,7 @@
         Please refresh the page
       </p>
       <btn
-        @click="$router.go($router.currentRoute)"
+        @click="reloadPage"
       >
         <span>
           Reload page
@@ -40,6 +40,17 @@ export default {
     error: {
       type: Object,
       default: null
+    }
+  },
+  methods: {
+    reloadPage () {
+      if (this.isIE()) {
+        if (process.browser) {
+          window.location.reload(true)
+        }
+      } else {
+        this.$router.go(this.$router.currentRoute)
+      }
     }
   }
 }

@@ -3,27 +3,9 @@ $fontSizeSmall: 12px;
 $fontSizeSmaller: 14px;
 $fontSizeBase: 16px;
 $fontSizeMedium: 18px;
-$fontSizeLarge: 20px;
+$fontSizeBigger: 20px;
 $fontSizeBig: 22px;
 $fontSizeLarge: 40px;
-
-//$fontSizeGrand: 60px;
-//$fontSizeBig: 50px;
-//$fontSizeXxl: 40px;
-//$fontSizeXxxl: 35px;
-//$fontSizeCard: 26px;
-//$fontSizeXl: 25px;
-//$fontSizeXlS: 24px;
-//$fontSizeListTitle: 22px;
-//$fontSizeNewsAccent: 20px;
-//$fontSizeLg: 18px;
-//$fontSizeMd: 15px;
-//$fontSizeSm: 14px;
-//$fontSizeLabel: 13px;
-//$fontSizePlaceholder: 12px;
-//$fontSizeXs: 10px;
-//$fontSizeXxs: 8px;
-//$fontSizeTiny: 6px;
 
 
 
@@ -66,6 +48,7 @@ $secondary-700: #941160;
 $secondary-800: #630C40;
 $secondary-900: #310620;
 
+$success: #4caf50;
 
 //paddings
 
@@ -90,3 +73,4 @@ $line-h-large: 20px;
 $line-h-medium: 18px;
 
 $anim: ease-in-out 200ms;
+$anim-medium: ease-in-out 400ms;

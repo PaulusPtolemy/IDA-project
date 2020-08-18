@@ -2,7 +2,12 @@
   <transition name="fade" appear>
     <div :class="[$style.color__bg_primary ,$style.item]">
       <div :class="[$style.img_wrap, $style.color__bg_secondary]">
-        <img :src="itemData.preview" :class="$style.img">
+        <img
+          :src="itemData.preview"
+          :class="$style.img"
+          alt="Item Photo"
+          @error="$event.target.src='~/assets/img/pepe.png'"
+        >
       </div>
       <div :class="$style.right">
         <p :class="[$style.color__title, $style.title ]">
@@ -66,6 +71,7 @@ export default {
 .right {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .title {
   font-weight: $fontWeightBold;
@@ -79,40 +85,4 @@ export default {
   font-weight: $fontWeightBold;
   font-size: $fontSizeSmaller;
 }
-</style>
-<style scoped lang="scss">
-  .fade {
-
-    &-enter-active, &-leave-active {
-      transition: opacity 1.5s;
-    }
-
-    &-enter, &-leave-to {
-      opacity: 0;
-    }
-  }
-
-  .slideAppear {
-
-    &-enter {
-      transform: translateX(-50px);
-      opacity: 0;
-
-      &-active {
-        transition: all 1.5s ease;
-      }
-    }
-
-    &-leave {
-
-      &-active {
-        transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-      }
-
-      &-to {
-        transform: translateX(100px);
-        opacity: 0;
-      }
-    }
-  }
 </style>

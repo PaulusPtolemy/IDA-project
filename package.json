@@ -17,6 +17,7 @@
     "*.{css,vue}": "stylelint"
   },
   "dependencies": {
+    "incstr": "^1.2.3",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.14.0",
     "vue-debounce": "^2.5.7",

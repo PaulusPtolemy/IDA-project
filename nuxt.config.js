@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV === 'development';
+const getScopedName = require('./plugins/getScopedName.js');
 
 export default {
   /*
@@ -15,18 +17,18 @@ export default {
   ** See https://nuxtjs.org/api/configuration-head
   */
   head: {
+    htmlAttrs: {
+      lang: 'en'
+    },
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap'
-      }
     ]
   },
   /*
@@ -34,7 +36,8 @@ export default {
   */
   css: [
     'normalize.css/normalize.css',
-    '@/assets/fonts/font.css'
+    '@/assets/fonts/font.css',
+    '~/assets/scss/_main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -43,7 +46,10 @@ export default {
   plugins: [
     {src: '~plugins/vue-infinite-scroll.js', ssr: false},
     {src: '~plugins/vue-debounce.js', ssr: false},
-    {src: '~plugins/vue-select.js', ssr: false}
+    {src: '~plugins/vue-select.js', ssr: false},
+    '~/plugins/filters.js',
+    '~/plugins/methods.js',
+    '~/plugins/svg-color.js'
   ],
   /*
   ** Auto import components
@@ -70,5 +76,24 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    analyze: true,
+    loaders: {
+      cssModules: {
+        modules: {
+          ...( isDev ?
+              {
+                localIdentName: "[path]_[name]_[local]"
+              }
+              :
+              {
+                getLocalIdent: (context, localIdentName, localName) => (
+                  getScopedName(localName, context.resourcePath)
+                )
+              }
+          ),
+        }
+      },
+
+    },
   }
 }

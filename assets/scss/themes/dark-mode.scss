@@ -30,13 +30,35 @@
       background-color: $base-600;
     }
 
+    &__bg_trans {
+      background: rgba(1, 35, 69, 0.8);
+    }
+
     &_logo {
       rect {
-        transition: fill ease-in-out 300ms;;
-        fill: $base-500;
+        fill: transparent;
       }
       circle[cx="17"] {
-        transition: fill ease-in-out 300ms;;
+        transition: all ease-in-out 300ms;
+        fill: $base-0;
+      }
+    }
+
+    &__input_placeholder {
+      &::placeholder {
+        transition: color ease-in-out 300ms;
+        color: $base-200;
+      }
+    }
+
+    &__input_bg {
+      transition: background-color ease-in-out 300ms;
+      background-color: $base-500;
+    }
+
+    &__iconCross {
+      path {
+        transition: fill ease-in-out 300ms;
         fill: $base-0;
       }
     }

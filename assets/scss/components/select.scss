@@ -1,0 +1,48 @@
+@import '../variables';
+
+.v-select {
+  &.-IE_browser {
+    display: inline-block;
+    .vs__dropdown-menu {
+    }
+  }
+}
+
+.vs__dropdown-toggle {
+  border: none!important;
+}
+.vs__selected {
+  position: relative!important;
+  color: $main-400!important;
+  font-size: $fontSizeLarge!important;
+  line-height: $line-h-mega!important;
+  font-weight: $fontWeightBold;
+  cursor: pointer;
+  padding: 0!important;
+}
+.vs__clear {
+  display: none !important;
+}
+.vs__search {
+  display: none!important;
+}
+
+.filter_types {
+  margin-right: 4px;
+
+  .vs__actions {
+    display: none!important;
+  }
+  &.light {
+    span {
+      transition: color ease-in-out 300ms;
+      color: $base-500!important;
+    }
+  }
+  &.dark {
+    span {
+      transition: color ease-in-out 300ms;
+      color: $base-0!important;
+    }
+  }
+}
