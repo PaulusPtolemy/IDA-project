@@ -2,47 +2,48 @@
   <div :class="[$style.color__bg_secondary, $style.cont]">
     <div>
       <div :class="[$style.list]">
-        <div :class="$style.filter">
-          <v-select
-            v-model="chosenType"
-            :options="typeNames"
-            class="filter_types"
-            :class="[$colorMode.preference, {'-IE_browser': isIE()}]"
-          />
-          <v-select
-            v-model="selectedVal"
-            :options="selectOpt('whatever')"
-            :class="{'-IE_browser': isIE()}"
-          />
-          <div :class="$style.input_wrap">
-            <the-input
-              v-show="showInput"
-              :id="'universal'"
-              :type="chosenType === 'Rent' ? 'number' : 'text'"
-              :value="inputVal"
-              :placeholder="'Print value'"
-              :css-modules="[
-                $style.color__bg_primary,
-                $style.color__descr,
-                $style.color__input_placeholder,
-                $style.input
-              ]"
-              @input="updFilter"
+        <client-only>
+          <div :class="$style.filter">
+            <v-select
+              v-model="chosenType"
+              :options="typeNames"
+              class="filter_types"
+              :class="[$colorMode.preference, {'-IE_browser': isIE()}]"
             />
+            <v-select
+              v-model="selectedVal"
+              :options="selectOpt('whatever')"
+              :class="{'-IE_browser': isIE()}"
+            />
+            <div :class="$style.input_wrap">
+              <the-input
+                v-show="showInput"
+                :id="'universal'"
+                :type="chosenType === 'Rent' ? 'number' : 'text'"
+                :value="inputVal"
+                :placeholder="'Print value'"
+                :css-modules="[
+                  $style.color__bg_primary,
+                  $style.color__descr,
+                  $style.color__input_placeholder,
+                  $style.input
+                ]"
+                @input="updFilter"
+              />
+            </div>
+            <div :class="$style.add_right">
+              <span :class="$style.add_title">
+                Add new
+              </span>
+              <btn
+                :class="$style.btn_plus"
+                @click="showAddItemPopUp"
+              >
+                <plus-icon />
+              </btn>
+            </div>
           </div>
-          <div :class="$style.add_right">
-            <span :class="$style.add_title">
-              Add new
-            </span>
-            <btn
-              v-if="true"
-              :class="$style.btn_plus"
-              @click="showAddItemPopUp"
-            >
-              <plus-icon />
-            </btn>
-          </div>
-        </div>
+        </client-only>
         <transition-group
           v-infinite-scroll="Scrolled"
           :infinite-scroll-disabled="scroll.disabled"
@@ -72,16 +73,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import { debounce } from 'vue-debounce'
-import TheInput from '~/components/fields/TheInput'
 import listItem from '~/components/ListItem'
+import btn from '~/components/controls/TheButton.vue'
+import plusIcon from '~/assets/svg/add.svg?inline'
 import 'vue-select/dist/vue-select.css'
 
 export default {
   components: {
     listItem,
-    TheInput,
-    btn: () => import('~/components/controls/TheButton.vue'),
-    PlusIcon: () => import('~/assets/svg/add.svg?inline'),
+    btn,
+    plusIcon,
+    TheInput: () => import('~/components/fields/TheInput'),
     AddItem: () => import('~/components/popups/addItem.vue')
   },
   async fetch ({ store, error }) {
@@ -179,6 +181,9 @@ export default {
     }, 1000),
     showAddItemPopUp () {
       this.$store.dispatch('ACT_SET_POPUP', true)
+    },
+    TEST () {
+      console.log('meow')
     }
   }
 

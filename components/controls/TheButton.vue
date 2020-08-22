@@ -39,11 +39,8 @@ export default {
     outline: none;
     cursor: pointer;
     transition: all $anim-medium;
-
-    span {
-      color: $base-0;
-      font-weight: $fontWeightBold;
-    }
+    color: $base-0;
+    font-weight: $fontWeightBold;
 
     &:disabled {
       transition: all $anim-medium;

@@ -5,7 +5,7 @@
     @mouseleave="hoverSVG(currentIdIcon, 'leave')"
   >
     <div
-      v-if="checkMode('dark')"
+      v-if="Mode === 'dark'"
       :class="$style.picker"
       @click="changeMode('light')"
     >
@@ -13,7 +13,7 @@
       <span :class="$style.color__descr">Day mod</span>
     </div>
     <div
-      v-if="checkMode('light')"
+      v-if="Mode === 'light'"
       :class="$style.picker"
       @click="changeMode('dark')"
     >
@@ -23,7 +23,7 @@
   </div>
   <div v-else>
     <div
-      v-if="checkMode('dark')"
+      v-if="Mode === 'dark'"
       :class="$style.picker"
       @click="changeMode('light')"
     >
@@ -31,7 +31,7 @@
       <span :class="$style.color__descr">Day mod</span>
     </div>
     <div
-      v-if="checkMode('light')"
+      v-if="Mode === 'light'"
       :class="$style.picker"
       @click="changeMode('dark')"
     >
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ColorModePicker',
@@ -49,67 +50,52 @@ export default {
     IconDark: () => import('~/assets/svg/dark.svg?inline'),
     IconLight: () => import('~/assets/svg/light.svg?inline')
   },
-  data () {
-    return {
-      IEmode: null
-    }
-  },
   computed: {
+    ...mapGetters({
+      Mode: 'getColorMode'
+    }),
     currentIdIcon () {
-      return this.IEmode === 'light' ? 'dark-icon' : 'light-icon'
+      return this.Mode === 'light' ? 'dark-icon' : 'light-icon'
     }
   },
   watch: {
-    IEmode () {
+    Mode () {
       if (this.isIE()) {
-        this.changeSVGLogo()
+        this.changeMode(this.Mode)
+        this.changeSVGColor(
+          'logo_circle-1',
+          'fill',
+          this.$options.$RGBcolors.$base0,
+          this.$options.$RGBcolors.$base500)
+      } else {
+        this.$colorMode.value = this.Mode
       }
     }
   },
   mounted () {
-    this.changeMode('light')
-    this.IEmode = 'light'
-  },
-  $RGBcolors: {
-    $base0: { r: 252, g: 252, b: 252 },
-    $base500: { r: 1, g: 35, b: 69 },
-    $base200: { r: 153, g: 167, b: 181 },
-    $main400: { r: 73, g: 89, b: 255 }
+    const pref = this.$colorMode.preference
+    if (pref) {
+      if (this.isIE() && pref === 'system') {
+        this.sendMode('light')
+      } else {
+        this.sendMode(this.$colorMode.value)
+      }
+    } else {
+      this.sendMode('light')
+    }
   },
   methods: {
     changeMode (name) {
-      this.isIE() ? this.changeIEmode(name) : this.$colorMode.preference = name
+      this.isIE() ? this.changeIEmode(name) : this.sendMode(name)
+    },
+    sendMode (data) {
+      this.$store.dispatch('ACT_COLOR_MODE', data)
     },
     changeIEmode (val) {
       const html = document.getElementsByTagName('html')[0]
       html.removeAttribute('class')
       html.classList.add(`${val}-mode`)
-      this.IEmode = val
-    },
-    checkMode (name) {
-      return this.isIE() ? this.IEmode === name : this.$colorMode.value === name
-    },
-    changeSVGLogo () {
-      const html = document.getElementsByTagName('html')[0]
-      const element = document.getElementById('logo_circle-1')
-      if (html.classList.contains('light-mode')) {
-        this.changeSVGcolor(
-          element,
-          'fill',
-          this.$options.$RGBcolors.$base0,
-          this.$options.$RGBcolors.$base500,
-          300
-        )
-      }
-      if (html.classList.contains('dark-mode')) {
-        this.changeSVGcolor(
-          element,
-          'fill',
-          this.$options.$RGBcolors.$base500,
-          this.$options.$RGBcolors.$base0,
-          300
-        )
-      }
+      this.sendMode(val)
     }
   }
 }

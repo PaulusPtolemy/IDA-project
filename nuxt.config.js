@@ -69,7 +69,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/svg'
+    '@nuxtjs/svg',
+    '@nuxtjs/axios',
   ],
   /*
   ** Build configuration
@@ -82,7 +83,7 @@ export default {
         modules: {
           ...( isDev ?
               {
-                localIdentName: "[path]_[name]_[local]"
+                localIdentName: "[path][name]_[local]"
               }
               :
               {

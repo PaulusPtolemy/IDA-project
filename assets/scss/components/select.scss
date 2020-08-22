@@ -2,8 +2,19 @@
 
 .v-select {
   &.-IE_browser {
-    display: inline-block;
+    margin-right: 30px;
+
     .vs__dropdown-menu {
+      max-width: 50%;
+    }
+
+    .vs__actions {
+      position: absolute;
+      top: 16px;
+      right: -90%;
+    }
+
+    .vs__selected {
     }
   }
 }

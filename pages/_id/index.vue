@@ -1,8 +1,14 @@
 <template>
   <div :class="$style.container">
-    <img :src="lot.image" :class="$style.image" alt="Lot image">
+    <div :class="[$style.image_wrap, $style.color__bg_secondary]">
+      <img
+        :src="lot.image"
+        :class="$style.image"
+        alt="Lot image"
+      >
+    </div>
     <div :class="$style.content">
-      <h1 :class="[$style.color__title ,$style.title]">
+      <h1 :class="[$style.color__title, $style.title]">
         {{ lot.name }}
       </h1>
       <div :class="$style.tabs">
@@ -14,19 +20,12 @@
             $style.color__descr,
             $style.tabs_label,
             $style.label,
-            { [$style.tab_chosen]: chosenTab === tab.label },
           ]"
-          @click="chosenTab = tab.label"
         >
           {{ tab.label | capitalize }}
         </nuxt-link>
       </div>
-      <div
-        v-if="currentTab"
-        :class="[$style.color__descr, $style.tab_descr]"
-      >
-        {{ currentTab.descr }}
-      </div>
+      <NuxtChild />
     </div>
   </div>
 </template>
@@ -44,14 +43,14 @@ export default {
       error({ statusCode: 418, message: 'An error has occurred' })
     }
   },
-  data () {
-    return {
-      chosenTab: null
+  middleware ({ route, redirect }) {
+    if (route.params.id && !route.params.slug) {
+      return redirect(`/${route.params.id}/specifications`)
     }
   },
   computed: {
     ...mapGetters({
-      lot: 'getCurrentProduct'
+      lot: 'getCurrentLot'
     }),
     getTabs () {
       const tabs = []
@@ -66,13 +65,7 @@ export default {
         }
       }
       return tabs
-    },
-    currentTab () {
-      return this.getTabs.find(e => e.label === this.chosenTab)
     }
-  },
-  mounted () {
-    this.chosenTab = this.getTabs[0].label
   }
 }
 </script>
@@ -84,14 +77,23 @@ export default {
   .container {
     @include content-wrap;
     display: flex;
-
+  }
+  .content {
+    width: 100%;
   }
   .image {
-    width: 712px;
-    height: 700px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     border-radius: $border-r-medium;
-    margin-right: 64px;
+
+    &_wrap {
+      width: 712px;
+      height: 700px;
+      margin-right: 64px;
+      border-radius: $border-r-medium;
+      flex-shrink: 0;
+    }
   }
   .title {
     font-size: $fontSizeLarge;
@@ -109,16 +111,6 @@ export default {
       &:not(:last-child) {
         margin-right: 32px;
       }
-    }
-  }
-  .tab {
-    &_descr {
-      font-size: $fontSizeSmaller;
-      line-height: $line-h-large;
-      font-weight: $fontWeightMedium;
-    }
-    &_chosen {
-      color: $main-400!important;
     }
   }
 

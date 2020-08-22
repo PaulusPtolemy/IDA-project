@@ -10,7 +10,7 @@
             :class="[$style.color__bg_secondary, $style.addItem_cross]"
             @click="modalCall(false)"
           >
-            <cross-icon :class="$style.color__iconCross" />
+            <cross-icon :class="$style.color__iconSVG" />
           </div>
         </div>
         <div :class="$style.addItem_file">
@@ -75,16 +75,20 @@
           </the-input>
         </div>
         <btn
+          v-if="!itemAdded"
           :class="[$style.addItem_btn, {'-success': itemAdded}]"
           :disabled="!filledFields()"
           @click="setItem"
         >
-          <span v-if="!itemAdded">
-            Complete
-          </span>
-          <span v-if="itemAdded">
-            Success
-          </span>
+        Complete
+        </btn>
+        <btn
+          v-if="itemAdded"
+          :class="[$style.addItem_btn, {'-success': itemAdded}]"
+          :disabled="!filledFields()"
+          @click="setItem"
+        >
+         Success
         </btn>
       </div>
     </div>
@@ -93,13 +97,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import crossIcon from '~/assets/svg/cross.svg?inline'
+import btn from '~/components/controls/TheButton.vue'
+import TheInput from '~/components/fields/TheInput'
+import photoIcon from '~/assets/svg/photo.svg?inline'
+
 export default {
   name: 'AddItem',
   components: {
-    photoIcon: () => import('~/assets/svg/photo.svg?inline'),
-    TheInput: () => import('~/components/fields/TheInput'),
-    btn: () => import('~/components/controls/TheButton.vue'),
-    crossIcon: () => import('~/assets/svg/cross.svg?inline')
+    photoIcon,
+    TheInput,
+    btn,
+    crossIcon
   },
   props: {
     title: {
@@ -135,6 +145,16 @@ export default {
         }
         setTimeout(() => { this.id = null }, 3000)
       }
+    }
+  },
+  mounted () {
+    if (this.isIE()) {
+      this.changeSVGColor(
+        'modal__cross',
+        'fill',
+        this.$options.$RGBcolors.$base0,
+        this.$options.$RGBcolors.$base500
+      )
     }
   },
   methods: {

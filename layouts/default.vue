@@ -17,8 +17,8 @@ export default {
 
 .page {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 48px);
   flex-direction: column;
-  padding-bottom: 54px;
+  padding-bottom: 48px;
 }
 </style>

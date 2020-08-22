@@ -38,9 +38,20 @@
       rect {
         fill: transparent;
       }
-      circle[cx="17"] {
-        transition: all ease-in-out 300ms;
-        fill: $base-0;
+    }
+
+    @supports not (-ms-high-contrast: none) {
+      &_logo {
+        circle[cx="17"] {
+          transition: all ease-in-out 300ms;
+          fill: $base-0;
+        }
+      }
+      &__iconSVG {
+        path {
+          transition: fill ease-in-out 300ms;
+          fill: $base-0;
+        }
       }
     }
 
@@ -56,11 +67,5 @@
       background-color: $base-500;
     }
 
-    &__iconCross {
-      path {
-        transition: fill ease-in-out 300ms;
-        fill: $base-0;
-      }
-    }
   }
 }

@@ -65,6 +65,10 @@ input[type=number] {
   opacity: 0
 }
 
+.nuxt-link-exact-active {
+  color: $main-400!important;
+}
+
 .slideAppear {
 
   &-enter {

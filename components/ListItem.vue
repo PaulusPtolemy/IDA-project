@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade" appear>
+  <transition name="fade" mode="out-in" appear>
     <div :class="[$style.color__bg_primary ,$style.item]">
       <div :class="[$style.img_wrap, $style.color__bg_secondary]">
         <img
