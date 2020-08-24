@@ -77,4 +77,14 @@ export default {
       margin-bottom: 40px;
     }
   }
+  @include brp(xm) {
+    .error {
+      border-radius: $border-r-medium;
+
+      &_title {
+        margin-bottom: 16px;
+        font-size: $fontSizeBigOne;
+      }
+    }
+  }
 </style>
