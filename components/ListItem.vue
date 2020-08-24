@@ -45,9 +45,11 @@ export default {
 
 <style lang="scss" module>
 @import "~/assets/scss/modules_import.scss";
+@import "~/assets/scss/mixins.scss";
 .item {
   padding: 24px 32px 24px;
   display: flex;
+  height: 100%;
   border-radius: $border-r-huge;
 }
 .img {
@@ -56,7 +58,7 @@ export default {
   object-fit: cover;
   border-radius: $border-r-medium;
   position: relative;
-  z-index: 2;
+  z-index: $z-index-img;
 
   &_wrap {
     position: relative;
@@ -65,7 +67,7 @@ export default {
     margin-right: 24px;
     flex-shrink: 0;
     border-radius: $border-r-medium;
-    z-index: 0;
+    z-index: $z-index-img-wrap;
   }
 }
 .right {
@@ -84,5 +86,10 @@ export default {
 .price {
   font-weight: $fontWeightBold;
   font-size: $fontSizeSmaller;
+}
+@include brp(ml) {
+  .item {
+    padding: 16px 22px;
+  }
 }
 </style>

@@ -4,12 +4,9 @@ const createUniqueIdGenerator = () => {
   const uniqIds = {};
 
   const generateNextId = incstr.idGenerator({
-    // Буквы d нету, чтобы убрать сочетание ad,
-    // так как его может заблокировать Adblock
     alphabet: 'abcefghijklmnopqrstuvwxyzABCEFGHJKLMNOPQRSTUVWXYZ',
   });
 
-  // Для имени возвращаем его минифицированную версию
   return (name) => {
     if (!uniqIds[name]) {
       uniqIds[name] = generateNextId();
@@ -23,7 +20,6 @@ const localNameIdGenerator = createUniqueIdGenerator();
 const componentNameIdGenerator = createUniqueIdGenerator();
 
 module.exports = (localName, resourcePath) => {
-  // Получим название папки, в которой лежит наш index.css
   const componentName = resourcePath
 
   const localId = localNameIdGenerator(localName);

@@ -4,7 +4,7 @@
       <LogoIcon id="logo_icon" :class="[$style.logo_icon, $style.color_logo]" />
       <span :class="[$style.logo_title, $style.color__title]">Pepelane</span>
     </nuxt-link>
-    <div :class="$style.color__descr">
+    <div :class="[$style.color__descr, $style.descr]">
       World's first affordable airsharing
     </div>
     <div :class="$style.right_float">
@@ -108,8 +108,58 @@ export default {
     line-height: $line-h-grand;
   }
   &_avatar {
-    margin-left: 16px;
+    height: 56px;
+    width: 56px;
+    margin-left: 20px;
     border-radius: 50%;
+  }
+}
+@include brp(xl) {
+  .header {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+  }
+  .message {
+    margin-left: 30px;
+  }
+}
+
+@include brp(md) {
+  .descr {
+    display: none;
+  }
+}
+
+@include brp(sm) {
+  .user {
+    &_name {
+      display: none;
+    }
+  }
+}
+
+@include brp(xs) {
+  .user {
+    &_avatar {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .message, .notification {
+    margin-left: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .logo {
+    margin-right: auto;
+    &_title {
+      margin-left: 2px;
+      font-size: $fontSizeMedium;
+    }
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 }
 </style>

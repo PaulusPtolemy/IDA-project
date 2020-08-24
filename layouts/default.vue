@@ -14,11 +14,18 @@ export default {
 </script>
 <style lang="scss" module>
 @import "~/assets/scss/modules_import.scss";
+@import "~/assets/scss/mixins.scss";
 
 .page {
   display: flex;
-  min-height: calc(100vh - 48px);
+  min-height: 100vh;
   flex-direction: column;
   padding-bottom: 48px;
+}
+
+@include brp(xm) {
+  .page {
+    padding-bottom: calc(48px + 80px);
+  }
 }
 </style>

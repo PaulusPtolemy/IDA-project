@@ -76,6 +76,14 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
+  render: {
+    // включить при https
+    // http2: {
+    //   push: true,
+    //   pushAssets: (req, res, publicPath, preloadFiles) => preloadFiles
+    //   .map(f => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`)
+    // },
+  },
   build: {
     analyze: true,
     loaders: {
@@ -96,5 +104,36 @@ export default {
       },
 
     },
+    ...(!isDev && {
+      html: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true
+        }
+      }
+    }),
+    optimization: {
+      minimize: !isDev
+    },
+    ...(!isDev && {
+      extractCSS: {
+        ignoreOrder: true
+      }
+    }),
+    postcss: {
+      ...(!isDev && {
+        preset: {
+          browsers: 'cover 99.5%',
+          autoprefixer: true
+        }
+      }),
+    }
   }
 }

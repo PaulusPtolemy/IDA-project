@@ -1,5 +1,6 @@
 @import "variables";
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
@@ -40,7 +41,12 @@ input {
   }
 }
 
-
+img:-moz-loading {
+  visibility: hidden;
+}
+a {
+  outline: none;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -50,12 +56,6 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
-}
-
-.-success {
-  background-color: $success!important;
-  transition: background-color $anim-medium;
-  opacity: 1!important;
 }
 
 .page-enter-active, .page-leave-active {

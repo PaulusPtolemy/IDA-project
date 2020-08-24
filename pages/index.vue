@@ -5,19 +5,20 @@
         <client-only>
           <div :class="$style.filter">
             <v-select
+              id="selectTypes"
               v-model="chosenType"
               :options="typeNames"
-              class="filter_types"
-              :class="[$colorMode.preference, {'-IE_browser': isIE()}]"
+              class="filter_types filter__selects"
+              :class="[$colorMode.preference]"
             />
             <v-select
+              id="selectValues"
               v-model="selectedVal"
+              class="filter__selects"
               :options="selectOpt('whatever')"
-              :class="{'-IE_browser': isIE()}"
             />
-            <div :class="$style.input_wrap">
+            <div v-show="showInput" :class="$style.input_wrap">
               <the-input
-                v-show="showInput"
                 :id="'universal'"
                 :type="chosenType === 'Rent' ? 'number' : 'text'"
                 :value="inputVal"
@@ -36,6 +37,7 @@
                 Add new
               </span>
               <btn
+                title="Add New"
                 :class="$style.btn_plus"
                 @click="showAddItemPopUp"
               >
@@ -181,9 +183,6 @@ export default {
     }, 1000),
     showAddItemPopUp () {
       this.$store.dispatch('ACT_SET_POPUP', true)
-    },
-    TEST () {
-      console.log('meow')
     }
   }
 
@@ -198,7 +197,7 @@ export default {
   @include content-wrap;
   border-radius: $border-r-large;
   height: auto;
-  min-height: calc(100vh - 144px - 64px);
+  min-height: calc(100vh - 80px - 54px);
 }
 
 .list {
@@ -222,13 +221,8 @@ export default {
 .filter {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 40px;
-  &_title {
-    font-size: $fontSizeLarge;
-    line-height: $line-h-mega;
-    font-weight: $fontWeightBold;
-    position: relative;
-  }
 }
 .input_wrap {
   width: 400px;
@@ -246,6 +240,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 0!important;
+  flex-shrink: 0;
 
   svg {
     height: 14px;
@@ -267,8 +262,89 @@ export default {
   }
   &_right {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     margin-left: auto;
+  }
+}
+@include brp(xl) {
+  .list {
+    padding: 26px 16px;
+  }
+}
+@include brp(ml) {
+  .input_wrap {
+    margin: 16px 0 0 0;
+    width: 50%;
+    order: 2;
+  }
+  .add {
+    &_right {
+      width: 50%;
+    }
+  }
+}
+@include brp(md) {
+  .list {
+    &_item {
+      margin-bottom: 24px;
+      border-radius: $border-r-medium;
+      width: calc(100% / 2 - 24px/2);
+
+      &:not(:nth-child(3n)) {
+        margin-right: 0;
+      }
+
+      &:not(:nth-child(2n)) {
+        margin-right: 24px;
+      }
+    }
+  }
+}
+@include brp(sm) {
+  .cont {
+    border-radius: $border-r-medium;
+  }
+  .filter {
+    margin-bottom: 20px;
+  }
+  .add {
+    &_title {
+      font-size: $fontSizeBase;
+    }
+  }
+  .btn_plus {
+    width: 32px;
+    height: 32px;
+
+    svg {
+      height: 10px;
+      width: 10px;
+    }
+  }
+}
+@include brp(xm) {
+  .add {
+    &_title {
+      display: none;
+    }
+    &_right {
+      width: auto;
+    }
+  }
+  .input_wrap {
+    width: 100%;
+    height: 48px;
+  }
+  .list {
+    &_item {
+      margin-bottom: 12px;
+      width: 100%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 0;
+      }
+    }
   }
 }
 </style>

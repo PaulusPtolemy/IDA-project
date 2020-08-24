@@ -33,12 +33,6 @@
       background: rgba(252, 252, 252, 0.8);
     }
 
-    &_logo {
-      rect {
-        fill: transparent;
-      }
-    }
-
     @supports not (-ms-high-contrast: none) {
       &_logo {
         circle[cx="17"] {
@@ -59,6 +53,11 @@
         transition: color ease-in-out 300ms;
         color: $base-300;
       }
+    }
+
+    &__shadow {
+      background: linear-gradient(180deg, rgba(1, 35, 69, 0) 0%, $base-0 100%);
+      transition: background ease-in-out 300ms;
     }
   }
 }

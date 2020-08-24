@@ -26,13 +26,34 @@
         </nuxt-link>
       </div>
       <NuxtChild />
+      <div :class="$style.rent_block">
+        <div :class="[$style.rent_shadow, $style.color__shadow]" />
+        <div :class="[$style.rent_wrap, $style.color__bg_secondary]">
+          <div :class="[$style.color__title, $style.rent_text]">
+            <p>
+              Rent for
+            </p>
+            <span :class="$style.color__price">
+              {{ lot.rent }} $/h
+            </span>
+          </div>
+          <btn :class="$style.rent_btn">
+            Rent now
+          </btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import btn from '~/components/controls/TheButton.vue'
+
 export default {
+  components: {
+    btn
+  },
   async fetch ({ store, route, error }) {
     try {
       const data = await store.dispatch('ACT_CURRENT_LOT', { route })
@@ -73,7 +94,6 @@ export default {
 <style lang="scss" module>
   @import "~/assets/scss/modules_import.scss";
   @import "~/assets/scss/mixins.scss";
-
   .container {
     @include content-wrap;
     display: flex;
@@ -110,6 +130,118 @@ export default {
 
       &:not(:last-child) {
         margin-right: 32px;
+      }
+    }
+  }
+  .rent {
+    &_block {
+      width: 100%;
+      margin-top: 45px;
+    }
+    &_wrap {
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      height: 80px;
+      border-radius: $border-r-small;
+    }
+    &_btn {
+      margin-left: auto;
+    }
+    &_text {
+      font-size: $fontSizeBigger;
+      font-weight: $fontWeightBold;
+      display: flex;
+      flex-wrap: wrap;
+      padding-right: 10px;
+
+      p {
+        margin-right: 4px;
+      }
+    }
+  }
+  @include brp(xl) {
+    .container {
+      padding: 0 16px;
+    }
+  }
+
+  @include brp(lg) {
+    .image_wrap {
+      margin-right: 32px;
+      width: 600px;
+      height: 600px;
+    }
+  }
+  @include brp(ml) {
+    .image_wrap {
+      width: 500px;
+      height: 500px;
+    }
+  }
+  @include brp(md) {
+    .container {
+      flex-direction: column;
+    }
+    .image_wrap {
+      margin-bottom: 32px;
+    }
+    .rent_block {
+      width: 600px;
+    }
+    .image_wrap {
+      width: 600px;
+      height: 600px;
+    }
+  }
+  @include brp(md) {
+    .rent_block {
+      width: 100%;
+    }
+    .image_wrap {
+      width: 100%;
+      height: 600px;
+    }
+  }
+  @include brp(xm) {
+    .image_wrap {
+      height: 332px;
+      margin-bottom: 22px;
+    }
+    .title {
+      font-size: $fontSizeBigOne;
+      margin-bottom: 16px;
+    }
+    .tabs {
+      margin-bottom: 20px;
+    }
+  }
+  @include brp(xm) {
+    .rent {
+      &_block {
+        position: fixed;
+        width: calc(100% - 32px);
+        bottom: 32px;
+        left: 16px;
+      }
+      &_shadow {
+        display: block;
+        position: absolute;
+        top: -26px;
+        left: -16px;
+        height: 34px;
+        width: calc(100% + 32px);
+        z-index: $z-index-shadow;
+      }
+      &_wrap {
+        position: relative;
+        z-index: $z-index-content;
+      }
+      &_text {
+        font-size: $fontSizeBase;
+      }
+      &_btn {
+        padding: 16px 24px;
       }
     }
   }

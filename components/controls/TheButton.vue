@@ -41,6 +41,7 @@ export default {
     transition: all $anim-medium;
     color: $base-0;
     font-weight: $fontWeightBold;
+    flex-shrink: 0;
 
     &:disabled {
       transition: all $anim-medium;

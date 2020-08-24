@@ -9,7 +9,6 @@ $fontSizeBigOne: 24px;
 $fontSizeLarge: 40px;
 
 
-
 $fontWeightLight: 100;
 $fontWeightMedium: 300;
 $fontWeightAccent: 500;
@@ -51,22 +50,13 @@ $secondary-900: #310620;
 
 $success: #4caf50;
 
-//paddings
-
-//breakpoints
-$breakpoints: (
-  xs: 320px,
-  sm: 768px,
-  md: 1140px,
-  lg: 1280px,
-  xl: 1340px
-);
 
 $border-r-large: 48px;
 $border-r-huge: 32px;
 $border-r-medium: 24px;
 $border-r-small: 16px;
 $border-r-tiny: 12px;
+$border-r-mini: 8px;
 
 $line-h-mega: 48px;
 $line-h-grand: 24px;
@@ -75,3 +65,9 @@ $line-h-medium: 18px;
 
 $anim: ease-in-out 200ms;
 $anim-medium: ease-in-out 400ms;
+
+$z-index-shadow: 1;
+$z-index-content: 2;
+$z-index-img-wrap: 1;
+$z-index-img: 2;
+$z-index-modal-mask: 9999;

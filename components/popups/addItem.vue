@@ -76,19 +76,19 @@
         </div>
         <btn
           v-if="!itemAdded"
-          :class="[$style.addItem_btn, {'-success': itemAdded}]"
+          :class="[$style.addItem_btn, {[$style.success] : itemAdded}]"
           :disabled="!filledFields()"
           @click="setItem"
         >
-        Complete
+          Complete
         </btn>
         <btn
           v-if="itemAdded"
-          :class="[$style.addItem_btn, {'-success': itemAdded}]"
+          :class="[$style.addItem_btn, {[$style.success]: itemAdded}]"
           :disabled="!filledFields()"
           @click="setItem"
         >
-         Success
+          Success
         </btn>
       </div>
     </div>
@@ -208,12 +208,14 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
+@import "~/assets/scss/modules_import.scss";
+@import "~/assets/scss/mixins.scss";
+
 .addItem {
 
   &_mask {
     position: fixed;
-    z-index: 9998;
+    z-index: $z-index-modal-mask;
     top: 0;
     left: 0;
     width: 100%;
@@ -229,8 +231,8 @@ export default {
     }
   }
   &_container {
-    width: 456px;
-    height: 772px;
+    min-width: 460px;
+    min-height: 770px;
     margin-left: auto;
     padding: 64px 72px;
     border-radius: $border-r-large 0 0 $border-r-large;
@@ -298,7 +300,7 @@ export default {
       max-width: 80%;
       object-fit: cover;
       border-radius: $line-h-grand;
-      z-index: 2;
+      z-index: $z-index-img;
     }
   }
   &_btn {
@@ -320,6 +322,58 @@ export default {
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+.success {
+  background-color: $success!important;
+  transition: background-color $anim-medium;
+  opacity: 1!important;
+}
+
+@include brp(sm) {
+  .addItem {
+    &_header {
+      margin-bottom: 24px;
+    }
+    &_container {
+      padding: 26px 16px;
+      border-radius: $border-r-medium;
+    }
+    &_title {
+      font-size: $fontSizeBigOne;
+    }
+    &_cross {
+      height: 32px;
+      width: 32px;
+      border-radius: $border-r-mini;
+
+      svg {
+        transform: scale(0.8);
+      }
+    }
+  }
+}
+@include brp(xm) {
+  .addItem {
+    &_container {
+      min-height: initial;
+      min-width: initial;
+      width: 100%;
+    }
+    &_file {
+      width: 100%;
+    }
+  }
+}
+@include brp(xs) {
+  .addItem {
+    &_file {
+      margin-bottom: 16px;
+      height: 260px;
+    }
+  }
+  .input_wrap {
+    margin-bottom: 16px;
   }
 }
 </style>

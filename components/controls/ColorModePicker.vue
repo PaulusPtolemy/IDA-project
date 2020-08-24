@@ -103,6 +103,8 @@ export default {
 
 <style lang="scss" module>
 @import "~/assets/scss/modules_import.scss";
+@import "~/assets/scss/mixins.scss";
+
 .picker {
   display: flex;
   align-items: center;
@@ -125,6 +127,21 @@ export default {
   span {
     transition: color ease-in-out 300ms;
     margin-left: auto;
+  }
+
+  @include brp(ml) {
+    width: auto;
+
+    span {
+      display: none;
+    }
+  }
+
+  @include brp(xs) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 </style>
