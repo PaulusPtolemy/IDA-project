@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 import crossIcon from '~/assets/svg/cross.svg?inline'
 import btn from '~/components/controls/TheButton.vue'
@@ -111,12 +111,14 @@ export default {
     btn,
     crossIcon
   },
+
   props: {
     title: {
       type: String,
       default: 'Modal title'
     }
   },
+
   data () {
     return {
       id: null,
@@ -128,15 +130,21 @@ export default {
       }
     }
   },
+
   computed: {
-    ...mapGetters(['getdata']),
+    ...mapState({
+      listData: state => state.data
+    }),
+
     dataIDS () {
-      return this.getdata.map(e => e.id)
+      return this.listData.map(e => e.id)
     },
+
     itemAdded () {
-      return this.getdata.find(e => e.id === this.id)
+      return this.listData.find(e => e.id === this.id)
     }
   },
+
   watch: {
     itemAdded (newValue) {
       if (newValue) {
@@ -147,6 +155,7 @@ export default {
       }
     }
   },
+
   mounted () {
     if (this.isIE()) {
       this.changeSVGColor(
@@ -157,6 +166,7 @@ export default {
       )
     }
   },
+
   methods: {
     filledFields () {
       let res = true
@@ -167,6 +177,7 @@ export default {
       }
       return res
     },
+
     setItem () {
       this.randomID()
       const itemObj =
@@ -184,14 +195,17 @@ export default {
          }
       this.$store.dispatch('ACT_SET_ITEM', itemObj)
     },
+
     randomID () {
       const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
       this.dataIDS.includes(id) ? this.randomID() : this.id = id
     },
+
     onFileSelected (event) {
       const data = event.target.files[0]
       this.createBase64(data)
     },
+
     createBase64 (file) {
       const reader = new FileReader()
       reader.onload = (e) => {
@@ -199,6 +213,7 @@ export default {
       }
       reader.readAsDataURL(file)
     },
+
     modalCall (val) {
       this.$store.dispatch('ACT_SET_POPUP', val)
     }
@@ -208,172 +223,189 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
-.addItem {
-
-  &_mask {
-    position: fixed;
-    z-index: $z-index-modal-mask;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: rgba(0, 7, 14, 0.9);
-  }
-  @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+  .addItem {
     &_mask {
-      background: rgba(0, 7, 14, 0.32);
-      backdrop-filter: blur(32px);
+      position: fixed;
+      z-index: $z-index-modal-mask;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 7, 14, 0.9);
     }
-  }
-  &_container {
-    min-width: 460px;
-    min-height: 770px;
-    margin-left: auto;
-    padding: 64px 72px;
-    border-radius: $border-r-large 0 0 $border-r-large;
-  }
-  &_title {
-    font-weight: $fontWeightBold;
-    font-size: $fontSizeLarge;
-  }
-  &_header {
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-  }
-  &_cross {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    border-radius: $border-r-small;
-    cursor: pointer;
-  }
-  &_file {
-    width: 456px;
-    height: 348px;
-    position: relative;
-    margin-bottom: 24px;
-    &_icon {
+
+    @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+      &_mask {
+        background: rgba(0, 7, 14, 0.32);
+        backdrop-filter: blur(32px);
+      }
+    }
+
+    &_container {
+      min-width: 460px;
+      min-height: 770px;
+      margin-left: auto;
+      padding: 64px 72px;
+      border-radius: $border-r-large 0 0 $border-r-large;
+    }
+
+    &_title {
+      font-weight: $fontWeightBold;
+      font-size: $fontSizeLarge;
+    }
+
+    &_header {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    &_cross {
       width: 48px;
       height: 48px;
-      border-radius: $border-r-small;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-
-      svg {
-        flex-shrink: 0;
-      }
-    }
-
-    input {
-      display: none;
-    }
-
-    label {
-      display: block;
-      height: 100%;
-      width: 100%;
-      border-radius: $border-r-medium;
+      margin-left: auto;
+      border-radius: $border-r-small;
       cursor: pointer;
     }
 
-    img {
-      height: 80%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 80%;
-      object-fit: cover;
-      border-radius: $line-h-grand;
-      z-index: $z-index-img;
-    }
-  }
-  &_btn {
-    width: 100%;
-  }
-}
-.input {
-  &_wrap {
-    width: 100%;
-    height: 56px;
-    margin-bottom: 24px;
-
-    input {
-      border-radius: $border-r-tiny;
-    }
-  }
-  &_slot {
-    position: absolute;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-.success {
-  background-color: $success!important;
-  transition: background-color $anim-medium;
-  opacity: 1!important;
-}
-
-@include brp(sm) {
-  .addItem {
-    &_header {
+    &_file {
+      width: 456px;
+      height: 348px;
+      position: relative;
       margin-bottom: 24px;
-    }
-    &_container {
-      padding: 26px 16px;
-      border-radius: $border-r-medium;
-    }
-    &_title {
-      font-size: $fontSizeBigOne;
-    }
-    &_cross {
-      height: 32px;
-      width: 32px;
-      border-radius: $border-r-mini;
 
-      svg {
-        transform: scale(0.8);
+      &_icon {
+        width: 48px;
+        height: 48px;
+        border-radius: $border-r-small;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+
+        svg {
+          flex-shrink: 0;
+        }
+      }
+
+      input {
+        display: none;
+      }
+
+      label {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: $border-r-medium;
+        cursor: pointer;
+      }
+
+      img {
+        height: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 80%;
+        object-fit: cover;
+        border-radius: $line-h-grand;
+        z-index: $z-index-img;
+      }
+    }
+
+    &_btn {
+      width: 100%;
+    }
+  }
+
+  .input {
+    &_wrap {
+      width: 100%;
+      height: 56px;
+      margin-bottom: 24px;
+
+      input {
+        border-radius: $border-r-tiny;
+      }
+    }
+
+    &_slot {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .success {
+    background-color: $success !important;
+    transition: background-color $anim-medium;
+    opacity: 1 !important;
+  }
+
+  @include brp(sm) {
+    .addItem {
+      &_header {
+        margin-bottom: 24px;
+      }
+
+      &_container {
+        padding: 26px 16px;
+        border-radius: $border-r-medium;
+      }
+
+      &_title {
+        font-size: $fontSizeBigOne;
+      }
+
+      &_cross {
+        height: 32px;
+        width: 32px;
+        border-radius: $border-r-mini;
+
+        svg {
+          transform: scale(0.8);
+        }
       }
     }
   }
-}
-@include brp(xm) {
-  .addItem {
-    &_container {
-      min-height: initial;
-      min-width: initial;
-      width: 100%;
-    }
-    &_file {
-      width: 100%;
+
+  @include brp(xm) {
+    .addItem {
+      &_container {
+        min-height: initial;
+        min-width: initial;
+        width: 100%;
+      }
+
+      &_file {
+        width: 100%;
+      }
     }
   }
-}
-@include brp(xs) {
-  .addItem {
-    &_file {
+
+  @include brp(xs) {
+    .addItem {
+      &_file {
+        margin-bottom: 16px;
+        height: 260px;
+      }
+    }
+
+    .input_wrap {
       margin-bottom: 16px;
-      height: 260px;
     }
   }
-  .input_wrap {
-    margin-bottom: 16px;
-  }
-}
 </style>

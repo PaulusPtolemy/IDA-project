@@ -42,36 +42,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ColorModePicker',
+
   components: {
     IconDark: () => import('~/assets/svg/dark.svg?inline'),
     IconLight: () => import('~/assets/svg/light.svg?inline')
   },
+
   computed: {
-    ...mapGetters({
-      Mode: 'getColorMode'
+    ...mapState({
+      Mode: state => state.modeColor
     }),
+
     currentIdIcon () {
       return this.Mode === 'light' ? 'dark-icon' : 'light-icon'
     }
   },
-  watch: {
-    Mode () {
-      if (this.isIE()) {
-        this.changeMode(this.Mode)
-        this.changeSVGColor(
-          'logo_circle-1',
-          'fill',
-          this.$options.$RGBcolors.$base0,
-          this.$options.$RGBcolors.$base500)
-      } else {
-        this.$colorMode.value = this.Mode
-      }
-    }
-  },
+
   mounted () {
     const pref = this.$colorMode.preference
     if (pref) {
@@ -84,13 +74,27 @@ export default {
       this.sendMode('light')
     }
   },
+
   methods: {
     changeMode (name) {
-      this.isIE() ? this.changeIEmode(name) : this.sendMode(name)
+      // this.isIE() ? this.changeIEmode(name) : this.sendMode(name)
+
+      if (this.isIE()) {
+        this.changeIEmode(name)
+        this.changeSVGColor(
+          'logo_circle-1',
+          'fill',
+          this.$options.$RGBcolors.$base0,
+          this.$options.$RGBcolors.$base500)
+      }
+      this.sendMode(name)
+      this.$colorMode.value = this.Mode
     },
+
     sendMode (data) {
       this.$store.dispatch('ACT_COLOR_MODE', data)
     },
+
     changeIEmode (val) {
       const html = document.getElementsByTagName('html')[0]
       html.removeAttribute('class')
@@ -102,46 +106,46 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
-.picker {
-  display: flex;
-  align-items: center;
-  width: 110px;
-  cursor: pointer;
+  .picker {
+    display: flex;
+    align-items: center;
+    width: 110px;
+    cursor: pointer;
 
-  &:hover {
     span {
       transition: color ease-in-out 300ms;
-      color: $main-400;
+      margin-left: auto;
     }
 
-    svg {
-      path {
-        fill: $main-400;
+    &:hover {
+      span {
+        transition: color ease-in-out 300ms;
+        color: $main-400;
+      }
+
+      svg {
+        path {
+          fill: $main-400;
+        }
+      }
+    }
+
+    @include brp(ml) {
+      width: auto;
+
+      span {
+        display: none;
+      }
+    }
+
+    @include brp(xs) {
+      svg {
+        width: 20px;
+        height: 20px;
       }
     }
   }
-
-  span {
-    transition: color ease-in-out 300ms;
-    margin-left: auto;
-  }
-
-  @include brp(ml) {
-    width: auto;
-
-    span {
-      display: none;
-    }
-  }
-
-  @include brp(xs) {
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-}
 </style>

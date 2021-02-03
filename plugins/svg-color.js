@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 // для корректной анимации в IE
 
 Vue.mixin({
   computed: {
-    ...mapGetters({
-      Mode: 'getColorMode'
+    ...mapState({
+      Mode: state => state.modeColor
     })
   },
   $RGBcolors: {

@@ -31,16 +31,18 @@ export default {
 <style lang="scss" module>
   @import "~/assets/scss/modules_import.scss";
   @import "~/assets/scss/mixins.scss";
+
   .list {
     display: flex;
     flex-direction: column;
   }
+
   .item {
     margin-bottom: 16px;
     padding-left: 20px;
     position: relative;
 
-    &:before {
+    &::before {
       content: '';
       display: block;
       height: 4px;

@@ -10,11 +10,11 @@
         :class="$style.item"
       >
         <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
-          <img
-            :src="require(`~/assets/${item.img}`)"
+          <ImageLazy
             :class="$style.item_img"
-            alt="item image"
-          >
+            :image="require(`~/assets/${item.img}`)"
+            class="ListItem"
+          />
         </div>
         <div>
           <div :class="[$style.color__title, $style.item_title]">
@@ -33,7 +33,13 @@
 </template>
 
 <script>
+import ImageLazy from '@/components/common/ImageLazy'
+
 export default {
+  components: {
+    ImageLazy
+  },
+
   team: {
     title: 'Qualified specialists',
     data: [
@@ -59,13 +65,14 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
-  @import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
   .list {
     display: flex;
     flex-wrap: wrap;
   }
+
   .item {
     display: flex;
     flex-direction: column;
@@ -83,6 +90,7 @@ export default {
       border-radius: $border-r-small;
 
       &_wrap {
+        position: relative;
         width: 162px;
         height: 96px;
         display: flex;
@@ -106,6 +114,7 @@ export default {
     line-height: $line-h-large;
     font-weight: $fontWeightMedium;
   }
+
   @include brp(xm) {
     .item {
       &_img {
@@ -116,10 +125,12 @@ export default {
       }
     }
   }
+
   @include brp(xs) {
     .list {
       flex-direction: column;
     }
+
     .item {
       flex-direction: row;
       width: 100%;

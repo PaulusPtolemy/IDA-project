@@ -90,15 +90,18 @@ export default {
       margin-bottom: 8px;
     }
   }
+
   @include brp(xs) {
     .item {
       align-items: initial;
+
       &_img {
         &_wrap {
           width: 64px;
           height: 80px;
           margin-right: 16px;
         }
+
         svg {
           transform: scale(0.8);
         }

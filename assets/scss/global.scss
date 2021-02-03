@@ -1,20 +1,19 @@
 @import "variables";
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
 }
-h1, p {
+
+h1,
+p {
   margin: 0;
 }
 
 body {
   font-family: 'Codec Pro';
-}
-
-a {
-  text-decoration: none;
 }
 
 input {
@@ -25,6 +24,7 @@ input {
   box-sizing: border-box;
   padding-left: 24px;
 }
+
 @supports not (-ms-high-contrast: none) {
   svg {
     cursor: pointer;
@@ -44,9 +44,12 @@ input {
 img:-moz-loading {
   visibility: hidden;
 }
+
 a {
+  text-decoration: none;
   outline: none;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -58,19 +61,21 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.page-enter-active, .page-leave-active {
-  transition: opacity 0.5s
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
 }
-.page-enter, .page-leave-active {
+
+.page-enter,
+.page-leave-active {
   opacity: 0
 }
 
 .nuxt-link-exact-active {
-  color: $main-400!important;
+  color: $main-400 !important;
 }
 
 .slideAppear {
-
   &-enter {
     transform: translateX(-50px);
     opacity: 0;
@@ -81,9 +86,8 @@ input[type=number] {
   }
 
   &-leave {
-
     &-active {
-      transition: all 0.2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
     }
 
     &-to {
@@ -94,12 +98,13 @@ input[type=number] {
 }
 
 .fade {
-
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
     transition: opacity 0.5s;
   }
 
-  &-enter, &-leave-to {
+  &-enter,
+  &-leave-to {
     opacity: 0;
   }
 }

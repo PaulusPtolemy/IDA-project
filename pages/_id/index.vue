@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.container">
     <div :class="[$style.image_wrap, $style.color__bg_secondary]">
-      <img
-        :src="lot.image"
+      <ImageLazy
         :class="$style.image"
-        alt="Lot image"
-      >
+        :image="lot.image"
+        class="ListItem"
+      />
     </div>
     <div :class="$style.content">
       <h1 :class="[$style.color__title, $style.title]">
@@ -47,13 +47,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import btn from '~/components/controls/TheButton.vue'
+import ImageLazy from '~/components/common/ImageLazy'
 
 export default {
   components: {
-    btn
+    btn,
+    ImageLazy
   },
+
   async fetch ({ store, route, error }) {
     try {
       const data = await store.dispatch('ACT_CURRENT_LOT', { route })
@@ -64,15 +67,18 @@ export default {
       error({ statusCode: 418, message: 'An error has occurred' })
     }
   },
+
   middleware ({ route, redirect }) {
     if (route.params.id && !route.params.slug) {
       return redirect(`/${route.params.id}/specifications`)
     }
   },
+
   computed: {
-    ...mapGetters({
-      lot: 'getCurrentLot'
+    ...mapState({
+      lot: state => state.currentLot
     }),
+
     getTabs () {
       const tabs = []
       for (const key in this.lot) {
@@ -92,15 +98,19 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
-  @import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
+
   .container {
     @include content-wrap;
+
     display: flex;
   }
+
   .content {
     width: 100%;
   }
+
   .image {
     height: 100%;
     width: 100%;
@@ -108,6 +118,7 @@ export default {
     border-radius: $border-r-medium;
 
     &_wrap {
+      position: relative;
       width: 712px;
       height: 700px;
       margin-right: 64px;
@@ -115,11 +126,13 @@ export default {
       flex-shrink: 0;
     }
   }
+
   .title {
     font-size: $fontSizeLarge;
     line-height: $line-h-mega;
     margin-bottom: 32px;
   }
+
   .tabs {
     display: flex;
     margin-bottom: 32px;
@@ -133,11 +146,13 @@ export default {
       }
     }
   }
+
   .rent {
     &_block {
       width: 100%;
       margin-top: 45px;
     }
+
     &_wrap {
       display: flex;
       align-items: center;
@@ -145,9 +160,11 @@ export default {
       height: 80px;
       border-radius: $border-r-small;
     }
+
     &_btn {
       margin-left: auto;
     }
+
     &_text {
       font-size: $fontSizeBigger;
       font-weight: $fontWeightBold;
@@ -160,6 +177,7 @@ export default {
       }
     }
   }
+
   @include brp(xl) {
     .container {
       padding: 0 16px;
@@ -173,50 +191,45 @@ export default {
       height: 600px;
     }
   }
+
   @include brp(ml) {
     .image_wrap {
       width: 500px;
       height: 500px;
     }
   }
+
   @include brp(md) {
     .container {
       flex-direction: column;
     }
+
     .image_wrap {
       margin-bottom: 32px;
-    }
-    .rent_block {
-      width: 600px;
-    }
-    .image_wrap {
-      width: 600px;
-      height: 600px;
-    }
-  }
-  @include brp(md) {
-    .rent_block {
-      width: 100%;
-    }
-    .image_wrap {
       width: 100%;
       height: 600px;
     }
+
+    .rent_block {
+      width: 100%;
+    }
   }
+
   @include brp(xm) {
     .image_wrap {
       height: 332px;
       margin-bottom: 22px;
     }
+
     .title {
       font-size: $fontSizeBigOne;
       margin-bottom: 16px;
     }
+
     .tabs {
       margin-bottom: 20px;
     }
-  }
-  @include brp(xm) {
+
     .rent {
       &_block {
         position: fixed;
@@ -224,6 +237,7 @@ export default {
         bottom: 32px;
         left: 16px;
       }
+
       &_shadow {
         display: block;
         position: absolute;
@@ -233,13 +247,16 @@ export default {
         width: calc(100% + 32px);
         z-index: $z-index-shadow;
       }
+
       &_wrap {
         position: relative;
         z-index: $z-index-content;
       }
+
       &_text {
         font-size: $fontSizeBase;
       }
+
       &_btn {
         padding: 16px 24px;
       }

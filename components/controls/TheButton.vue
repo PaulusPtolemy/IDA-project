@@ -32,21 +32,22 @@ export default {
 
 <style lang="scss" module>
 @import "~/assets/scss/modules_import.scss";
-  .btn {
-    padding: 17px 32px;
-    background-color: $main-400;
-    border-radius: $border-r-tiny;
-    outline: none;
-    cursor: pointer;
-    transition: all $anim-medium;
-    color: $base-0;
-    font-weight: $fontWeightBold;
-    flex-shrink: 0;
 
-    &:disabled {
-      transition: all $anim-medium;
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+.btn {
+  padding: 17px 32px;
+  background-color: $main-400;
+  border-radius: $border-r-tiny;
+  outline: none;
+  cursor: pointer;
+  transition: all $anim-medium;
+  color: $base-0;
+  font-weight: $fontWeightBold;
+  flex-shrink: 0;
+
+  &:disabled {
+    transition: all $anim-medium;
+    opacity: 0.3;
+    cursor: not-allowed;
   }
+}
 </style>

@@ -1,5 +1,5 @@
-const isDev = process.env.NODE_ENV === 'development';
-const getScopedName = require('./plugins/getScopedName.js');
+const isDev = process.env.NODE_ENV === 'development'
+const getScopedName = require('./plugins/getScopedName.js')
 
 export default {
   /*
@@ -25,10 +25,10 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
@@ -44,12 +44,13 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    {src: '~plugins/vue-infinite-scroll.js', ssr: false},
-    {src: '~plugins/vue-debounce.js', ssr: false},
-    {src: '~plugins/vue-select.js', ssr: false},
+    { src: '~plugins/vue-infinite-scroll.js', ssr: false },
+    { src: '~plugins/vue-debounce.js', ssr: false },
+    { src: '~plugins/vue-select.js', ssr: false },
     '~/plugins/filters.js',
     '~/plugins/methods.js',
-    '~/plugins/svg-color.js'
+    '~/plugins/svg-color.js',
+    '~/plugins/lazyload.js'
   ],
   /*
   ** Auto import components
@@ -70,7 +71,7 @@ export default {
   */
   modules: [
     '@nuxtjs/svg',
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   /*
   ** Build configuration
@@ -89,19 +90,18 @@ export default {
     loaders: {
       cssModules: {
         modules: {
-          ...( isDev ?
-              {
-                localIdentName: "[path][name]_[local]"
-              }
-              :
-              {
-                getLocalIdent: (context, localIdentName, localName) => (
-                  getScopedName(localName, context.resourcePath)
-                )
-              }
-          ),
+          ...(isDev
+            ? {
+              localIdentName: '[path][name]_[local]'
+            }
+            : {
+              getLocalIdent: (context, localIdentName, localName) => (
+                getScopedName(localName, context.resourcePath)
+              )
+            }
+          )
         }
-      },
+      }
 
     },
     ...(!isDev && {
@@ -133,7 +133,7 @@ export default {
           browsers: 'cover 99.5%',
           autoprefixer: true
         }
-      }),
+      })
     }
   }
 }

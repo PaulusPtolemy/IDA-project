@@ -81,6 +81,7 @@ export default {
 </script>
 <style lang="scss" module>
 @import "~/assets/scss/modules_import.scss";
+
 .label {
   display: block;
   width: 100%;
@@ -89,8 +90,9 @@ export default {
 
   input {
     &:focus {
-      box-shadow: 0px 0px 2px 1px rgba(73,89,255,0.5);
+      box-shadow: 0 0 2px 1px rgba(73, 89, 255, 0.5);
     }
+
     &::-ms-clear {
       display: none;
     }

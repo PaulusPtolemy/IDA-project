@@ -56,15 +56,18 @@ export default {
 }
 </script>
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
-  @import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
+
   .error {
     height: calc(100vh - 144px - 48px);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
     @include content-wrap;
+
     border-radius: $border-r-large;
 
     &_title {
@@ -77,6 +80,7 @@ export default {
       margin-bottom: 40px;
     }
   }
+
   @include brp(xm) {
     .error {
       border-radius: $border-r-medium;

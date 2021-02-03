@@ -28,11 +28,11 @@
       </div>
       <NotIcon v-else :class="$style.notification" />
       <div :class="[$style.user_name, $style.color__title]">
-        {{ getUser.name }}
+        {{ user.name }}
       </div>
       <img
         :class="$style.user_avatar"
-        :src="'data:image/jpeg;base64,' + getUser.avatar"
+        :src="'data:image/jpeg;base64,' + user.avatar"
         alt="user avatar"
       >
     </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 import ColorModePicker from '~/components/controls/ColorModePicker'
 
@@ -57,109 +57,127 @@ export default {
     ColorModePicker
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapState({
+      user: state => state.user
+    })
   }
 }
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
-.slogan {
-  font-size: $fontSizeBase;
-}
-.header {
-  @include content-wrap;
-  display: flex;
-  align-items: center;
-  padding: 48px 0 40px 0;
-  background-color: transparent;
-}
-.logo {
-  margin-right: 65px;
-  display: flex;
-  align-items: center;
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
-  &_title {
-    font-size: $fontSizeBig;
-    margin-left: 18px;
-    font-weight: $fontWeightBold;
-  }
-}
-.right_float {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-.message {
-  margin-left: 108px;
-  cursor: pointer;
-}
-.notification {
-  margin-left: 30px;
-  cursor: pointer;
-}
-.user {
-  &_name {
-    margin-left: 52px;
-    color: $base-500;
+  .slogan {
     font-size: $fontSizeBase;
-    font-weight: $fontWeightBold;
-    line-height: $line-h-grand;
   }
-  &_avatar {
-    height: 56px;
-    width: 56px;
-    margin-left: 20px;
-    border-radius: 50%;
-  }
-}
-@include brp(xl) {
+
   .header {
-    padding: 12px 16px;
-    margin-bottom: 8px;
+    @include content-wrap;
+
+    display: flex;
+    align-items: center;
+    padding: 48px 0 40px 0;
+    background-color: transparent;
   }
+
+  .logo {
+    margin-right: 65px;
+    display: flex;
+    align-items: center;
+
+    &_title {
+      font-size: $fontSizeBig;
+      margin-left: 18px;
+      font-weight: $fontWeightBold;
+    }
+  }
+
+  .right_float {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
   .message {
+    margin-left: 108px;
+    cursor: pointer;
+  }
+
+  .notification {
     margin-left: 30px;
+    cursor: pointer;
   }
-}
 
-@include brp(md) {
-  .descr {
-    display: none;
-  }
-}
-
-@include brp(sm) {
   .user {
     &_name {
+      margin-left: 52px;
+      color: $base-500;
+      font-size: $fontSizeBase;
+      font-weight: $fontWeightBold;
+      line-height: $line-h-grand;
+    }
+
+    &_avatar {
+      height: 56px;
+      width: 56px;
+      margin-left: 20px;
+      border-radius: 50%;
+    }
+  }
+
+  @include brp(xl) {
+    .header {
+      padding: 12px 16px;
+      margin-bottom: 8px;
+    }
+
+    .message {
+      margin-left: 30px;
+    }
+  }
+
+  @include brp(md) {
+    .descr {
       display: none;
     }
   }
-}
 
-@include brp(xs) {
-  .user {
-    &_avatar {
-      width: 32px;
-      height: 32px;
+  @include brp(sm) {
+    .user {
+      &_name {
+        display: none;
+      }
     }
   }
-  .message, .notification {
-    margin-left: 20px;
-    width: 20px;
-    height: 20px;
-  }
-  .logo {
-    margin-right: auto;
-    &_title {
-      margin-left: 2px;
-      font-size: $fontSizeMedium;
+
+  @include brp(xs) {
+    .user {
+      &_avatar {
+        width: 32px;
+        height: 32px;
+      }
     }
-    svg {
-      width: 32px;
-      height: 32px;
+
+    .message,
+    .notification {
+      margin-left: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .logo {
+      margin-right: auto;
+
+      &_title {
+        margin-left: 2px;
+        font-size: $fontSizeMedium;
+      }
+
+      svg {
+        width: 32px;
+        height: 32px;
+      }
     }
   }
-}
 </style>

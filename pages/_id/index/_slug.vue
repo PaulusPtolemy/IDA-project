@@ -12,13 +12,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
+
 export default {
   components: {
     specifications: () => import('~/components/hardcode/specifications'),
     team: () => import('~/components/hardcode/team'),
     termRent: () => import('~/components/hardcode/termRent.vue')
   },
+
   async fetch ({ store, route, error }) {
     try {
       const data = await store.dispatch('ACT_CURRENT_LOT_TAB', { route })
@@ -29,14 +31,17 @@ export default {
       error({ statusCode: 418, message: 'An error has occurred' })
     }
   },
+
   computed: {
-    ...mapGetters({
-      lotTab: 'getCurrentLotTab'
+    ...mapState({
+      lotTab: state => state.currentLotTab
     }),
+
     slugName () {
       return this.lotTab.label.replace('_text', '').toLowerCase()
     }
   },
+
   watch: {
     Mode () {
       if (this.isIE()) {
@@ -56,22 +61,23 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
-.tab {
-  &_descr {
-    font-size: $fontSizeSmaller;
-    line-height: $line-h-large;
-    font-weight: $fontWeightMedium;
-    margin-bottom: 32px;
-  }
-}
-@include brp(xm) {
   .tab {
     &_descr {
-      margin-bottom: 20px;
+      font-size: $fontSizeSmaller;
+      line-height: $line-h-large;
+      font-weight: $fontWeightMedium;
+      margin-bottom: 32px;
     }
   }
-}
+
+  @include brp(xm) {
+    .tab {
+      &_descr {
+        margin-bottom: 20px;
+      }
+    }
+  }
 </style>

@@ -67,13 +67,13 @@
       </div>
     </div>
     <client-only>
-      <add-item v-if="getPopup" :title="'Add new vehicle'" />
+      <add-item v-if="showPopup" :title="'Add new vehicle'" />
     </client-only>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { debounce } from 'vue-debounce'
 import listItem from '~/components/ListItem'
 import btn from '~/components/controls/TheButton.vue'
@@ -126,10 +126,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getdata', 'getPopup']),
+    ...mapState({
+      listData: state => state.data,
+      showPopup: state => state.showPopup
+    }),
+
     list () {
       return this.dataFilter(this.chosenType).filter((e, index) => index < this.count)
     },
+
     showInput () {
       return (this.findCurrentType.searchable && this.selectedVal !== 'whatever')
     },
@@ -151,36 +156,39 @@ export default {
       this.scroll.disabled = true
       this.count += 21
     },
+
     dataFilter (filterBy) {
       const val = filterBy.toLowerCase()
       if (this.selectedVal === 'whatever' || this.selectedVal === null) {
-        return this.getdata
+        return this.listData
       }
       if (!this.findCurrentType.searchable) {
-        return this.getdata.filter(e => e[val] === this.selectedVal)
+        return this.listData.filter(e => e[val] === this.selectedVal)
       }
       if (this.selectedVal === 'search' && this.inputVal) {
         return this.findCurrentType.typeData === 'string'
-          ? this.getdata
+          ? this.listData
             .filter(e => e[val].toLowerCase().includes(this.inputVal.toLowerCase()))
-          : this.getdata
+          : this.listData
             .filter(e => +e[val].toString().replace(/,/g, '') < this.inputVal)
       }
-      return this.getdata
+      return this.listData
     },
 
     selectOpt (defaultVal) {
       const result = [defaultVal]
       this.findCurrentType.searchable
         ? result.push('search')
-        : new Set(this.getdata
+        : new Set(this.listData
           .map(e => e[this.chosenType.toLowerCase()]))
           .forEach(e => result.push(e))
       return result
     },
+
     updFilter: debounce(function (e) {
       this.inputVal = e.target.value
     }, 1000),
+
     showAddItemPopUp () {
       this.$store.dispatch('ACT_SET_POPUP', true)
     }
@@ -190,161 +198,181 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
-.cont {
-  @include content-wrap;
-  border-radius: $border-r-large;
-  height: auto;
-  min-height: calc(100vh - 80px - 54px);
-}
+  .cont {
+    @include content-wrap;
 
-.list {
-  padding: 56px 64px 24px 64px;
-
-  &_trans {
-    display: flex;
-    flex-wrap: wrap;
+    border-radius: $border-r-large;
+    height: auto;
+    min-height: calc(100vh - 80px - 54px);
   }
 
-  &_item {
-    margin-bottom: 32px;
-    border-radius: $border-r-huge;
-    width: calc(100% / 3 - 32px*2 / 3);
-
-    &:not(:nth-child(3n)) {
-      margin-right: 32px;
-    }
-  }
-}
-.filter {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-.input_wrap {
-  width: 400px;
-  height: 56px;
-  margin-left: 40px;
-}
-.input {
-  padding-left: 24px;
-  border-radius: $border-r-tiny;
-}
-.btn_plus {
-  height: 48px;
-  width: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0!important;
-  flex-shrink: 0;
-
-  svg {
-    height: 14px;
-    width: 14px;
-    flex-shrink: 0;
-    &:hover {
-      path {
-        fill: $base-0;
-      }
-    }
-  }
-}
-.add {
-  &_title {
-    color: $main-400;
-    font-weight: $fontWeightBold;
-    font-size: $fontSizeBigger;
-    margin-right: 20px;
-  }
-  &_right {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: auto;
-  }
-}
-@include brp(xl) {
   .list {
-    padding: 26px 16px;
-  }
-}
-@include brp(ml) {
-  .input_wrap {
-    margin: 16px 0 0 0;
-    width: 50%;
-    order: 2;
-  }
-  .add {
-    &_right {
-      width: 50%;
+    padding: 56px 64px 24px 64px;
+
+    &_trans {
+      display: flex;
+      flex-wrap: wrap;
     }
-  }
-}
-@include brp(md) {
-  .list {
+
     &_item {
-      margin-bottom: 24px;
-      border-radius: $border-r-medium;
-      width: calc(100% / 2 - 24px/2);
+      margin-bottom: 32px;
+      border-radius: $border-r-huge;
+      width: calc(100% / 3 - 32px * 2 / 3);
 
       &:not(:nth-child(3n)) {
-        margin-right: 0;
+        margin-right: 32px;
       }
+    }
+  }
 
-      &:not(:nth-child(2n)) {
-        margin-right: 24px;
-      }
-    }
-  }
-}
-@include brp(sm) {
-  .cont {
-    border-radius: $border-r-medium;
-  }
   .filter {
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
   }
-  .add {
-    &_title {
-      font-size: $fontSizeBase;
-    }
+
+  .input_wrap {
+    width: 400px;
+    height: 56px;
+    margin-left: 40px;
   }
+
+  .input {
+    padding-left: 24px;
+    border-radius: $border-r-tiny;
+  }
+
   .btn_plus {
-    width: 32px;
-    height: 32px;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    flex-shrink: 0;
 
     svg {
-      height: 10px;
-      width: 10px;
-    }
-  }
-}
-@include brp(xm) {
-  .add {
-    &_title {
-      display: none;
-    }
-    &_right {
-      width: auto;
-    }
-  }
-  .input_wrap {
-    width: 100%;
-    height: 48px;
-  }
-  .list {
-    &_item {
-      margin-bottom: 12px;
-      width: 100%;
+      height: 14px;
+      width: 14px;
+      flex-shrink: 0;
 
-      &:not(:nth-child(2n)) {
-        margin-right: 0;
+      &:hover {
+        path {
+          fill: $base-0;
+        }
       }
     }
   }
-}
+
+  .add {
+    &_title {
+      color: $main-400;
+      font-weight: $fontWeightBold;
+      font-size: $fontSizeBigger;
+      margin-right: 20px;
+    }
+
+    &_right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-left: auto;
+    }
+  }
+
+  @include brp(xl) {
+    .list {
+      padding: 26px 16px;
+    }
+  }
+
+  @include brp(ml) {
+    .input_wrap {
+      margin: 16px 0 0 0;
+      width: 50%;
+      order: 2;
+    }
+
+    .add {
+      &_right {
+        width: 50%;
+      }
+    }
+  }
+
+  @include brp(md) {
+    .list {
+      &_item {
+        margin-bottom: 24px;
+        border-radius: $border-r-medium;
+        width: calc(100% / 2 - 24px / 2);
+
+        &:not(:nth-child(3n)) {
+          margin-right: 0;
+        }
+
+        &:not(:nth-child(2n)) {
+          margin-right: 24px;
+        }
+      }
+    }
+  }
+
+  @include brp(sm) {
+    .cont {
+      border-radius: $border-r-medium;
+    }
+
+    .filter {
+      margin-bottom: 20px;
+    }
+
+    .add {
+      &_title {
+        font-size: $fontSizeBase;
+      }
+    }
+
+    .btn_plus {
+      width: 32px;
+      height: 32px;
+
+      svg {
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+
+  @include brp(xm) {
+    .add {
+      &_title {
+        display: none;
+      }
+
+      &_right {
+        width: auto;
+      }
+    }
+
+    .input_wrap {
+      width: 100%;
+      height: 48px;
+    }
+
+    .list {
+      &_item {
+        margin-bottom: 12px;
+        width: 100%;
+
+        &:not(:nth-child(2n)) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 </style>
