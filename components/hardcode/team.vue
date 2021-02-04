@@ -1,5 +1,6 @@
 <template>
   <div>
+    <slot name="head" />
     <h2 :class="[$style.color__title, $style.tab_title]">
       {{ $options.team.title }}
     </h2>

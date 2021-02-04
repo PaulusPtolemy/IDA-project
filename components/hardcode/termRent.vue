@@ -1,5 +1,6 @@
 <template>
   <div>
+    <slot name="head" />
     <h2 :class="[$style.color__title, $style.tab_title]">
       {{ $options.term.title }}
     </h2>
@@ -29,8 +30,8 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
-  @import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
   .list {
     display: flex;

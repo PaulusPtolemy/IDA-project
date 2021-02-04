@@ -1,5 +1,6 @@
 <template>
   <div>
+    <slot name="head" />
     <h2 :class="[$style.color__title, $style.tab_title]">
       {{ $options.specifications.title }}
     </h2>
@@ -9,8 +10,11 @@
       :class="$style.item"
     >
       <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
-        <!--eslint-disable-next-line-->
-        <div :class="$style.item_img" alt="item image" v-html="item.svg"/>
+        <div
+          :class="$style.item_img"
+          alt="item image"
+          v-html="item.svg"
+        />
       </div>
       <div :class="$style.item_right">
         <div :class="[$style.color__title, $style.item_title]">
@@ -25,7 +29,9 @@
 </template>
 
 <script>
+
 export default {
+
   specifications: {
     title: 'Features:',
     data: [
@@ -49,8 +55,8 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "~/assets/scss/modules_import.scss";
-  @import "~/assets/scss/mixins.scss";
+  @import "assets/scss/modules_import.scss";
+  @import "assets/scss/mixins.scss";
 
   .item {
     display: flex;

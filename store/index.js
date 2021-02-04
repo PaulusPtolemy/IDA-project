@@ -12,10 +12,6 @@ export const state = () => ({
   modeColor: null
 })
 
-export const getters = {
-  //
-}
-
 export const mutations = {
   SET_DATA (state, payload) {
     state.data = payload

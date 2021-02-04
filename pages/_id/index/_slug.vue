@@ -1,13 +1,14 @@
 <template>
   <div :class="$style.tab">
-    <div
-      :class="[$style.color__descr, $style.tab_descr]"
-    >
-      {{ lotTab.data }}
-    </div>
-    <specifications v-if="slugName === 'specifications'" />
-    <team v-if="slugName === 'team'" />
-    <term-rent v-if="slugName === 'term'" />
+    <keep-alive>
+      <component :is="slugName" :lot-tab="lotTab">
+        <template v-slot:head>
+          <div :class="[$style.color__descr, $style.tab_descr]">
+            {{ lotTab.data }}
+          </div>
+        </template>
+      </component>
+    </keep-alive>
   </div>
 </template>
 
@@ -18,7 +19,7 @@ export default {
   components: {
     specifications: () => import('~/components/hardcode/specifications'),
     team: () => import('~/components/hardcode/team'),
-    termRent: () => import('~/components/hardcode/termRent.vue')
+    term: () => import('~/components/hardcode/termRent.vue')
   },
 
   async fetch ({ store, route, error }) {

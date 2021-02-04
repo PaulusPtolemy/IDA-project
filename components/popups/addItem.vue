@@ -1,20 +1,40 @@
 <template>
   <transition name="fade" appear>
-    <div :class="$style.addItem_mask" @click="modalCall(false)">
-      <div :class="[$style.addItem_container, $style.color__bg_primary]" @click.stop>
+    <div
+      :class="$style.addItem_mask"
+      @click="modalCall(false)"
+    >
+      <div
+        :class="[
+          $style.addItem_container,
+          $style.color__bg_primary
+        ]"
+        @click.stop
+      >
         <div :class="$style.addItem_header">
-          <div :class="[$style.color__title, $style.addItem_title]">
+          <div
+            :class="[
+              $style.color__title,
+              $style.addItem_title
+            ]"
+          >
             {{ title }}
           </div>
           <div
-            :class="[$style.color__bg_secondary, $style.addItem_cross]"
+            :class="[
+              $style.color__bg_secondary,
+              $style.addItem_cross
+            ]"
             @click="modalCall(false)"
           >
             <cross-icon :class="$style.color__iconSVG" />
           </div>
         </div>
         <div :class="$style.addItem_file">
-          <label for="fileUpload" :class="$style.color__bg_secondary" />
+          <label
+            for="fileUpload"
+            :class="$style.color__bg_secondary"
+          />
           <input
             id="fileUpload"
             placeholder="file"
@@ -27,7 +47,12 @@
             :src="form.fileSelected"
             alt="uploaded photo"
           >
-          <div :class="[$style.addItem_file_icon, $style.color__bg_primary]">
+          <div
+            :class="[
+              $style.addItem_file_icon,
+              $style.color__bg_primary
+            ]"
+          >
             <photoIcon />
           </div>
         </div>
@@ -69,7 +94,11 @@
               $style.color__input_placeholder,
             ]"
           >
-            <span :class="[$style.color__descr, $style.input_slot]">
+            <span
+              :class="[
+                $style.color__descr,
+                $style.input_slot]"
+            >
               $/h
             </span>
           </the-input>

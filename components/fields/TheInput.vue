@@ -80,7 +80,7 @@ export default {
 }
 </script>
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
+@import "assets/scss/modules_import.scss";
 
 .label {
   display: block;

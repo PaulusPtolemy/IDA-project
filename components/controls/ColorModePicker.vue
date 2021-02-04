@@ -10,7 +10,9 @@
       @click="changeMode('light')"
     >
       <IconLight id="light-icon" />
-      <span :class="$style.color__descr">Day mod</span>
+      <span :class="$style.color__descr">
+        Day mod
+      </span>
     </div>
     <div
       v-if="Mode === 'light'"
@@ -18,7 +20,9 @@
       @click="changeMode('dark')"
     >
       <IconDark id="dark-icon" />
-      <span :class="$style.color__descr">Night mod</span>
+      <span :class="$style.color__descr">
+        Night mod
+      </span>
     </div>
   </div>
   <div v-else>
@@ -28,7 +32,9 @@
       @click="changeMode('light')"
     >
       <IconLight />
-      <span :class="$style.color__descr">Day mod</span>
+      <span :class="$style.color__descr">
+        Day mod
+      </span>
     </div>
     <div
       v-if="Mode === 'light'"
@@ -36,7 +42,9 @@
       @click="changeMode('dark')"
     >
       <IconDark />
-      <span :class="$style.color__descr">Night mod</span>
+      <span :class="$style.color__descr">
+        Night mod
+      </span>
     </div>
   </div>
 </template>
