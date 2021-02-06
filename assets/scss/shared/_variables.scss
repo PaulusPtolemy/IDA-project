@@ -1,3 +1,13 @@
+$breakpoints: (
+  xs: 460px,
+  xm: 580px,
+  sm: 768px,
+  md: 960px,
+  ml: 1140px,
+  lg: 1280px,
+  xl: 1340px
+);
+
 //fonts
 $fontSizeSmall: 12px;
 $fontSizeSmaller: 14px;
@@ -15,36 +25,36 @@ $fontWeightSemiBold: 700;
 $fontWeightBold: 900;
 
 //colors
-$main-100: #D1D5FF;
-$main-200: #A4ACFF;
-$main-300: #7682FF;
-$main-400: #4959FF;
-$main-500: #1B2FFF;
-$main-600: #1626CC;
-$main-700: #101C99;
-$main-800: #0B1366;
+$main-100: #d1d5ff;
+$main-200: #a4acff;
+$main-300: #7682ff;
+$main-400: #4959ff;
+$main-500: #1b2fff;
+$main-600: #1626cc;
+$main-700: #101c99;
+$main-800: #0b1366;
 $main-900: #050933;
 
-$base-0: #FCFCFC;
-$base-50: #F3F4F7;
-$base-100: #CCD3DA;
-$base-200: #99A7B5;
-$base-300: #677B8F;
-$base-400: #344F6A;
+$base-0: #fcfcfc;
+$base-50: #f3f4f7;
+$base-100: #ccd3da;
+$base-200: #99a7b5;
+$base-300: #677b8f;
+$base-400: #344f6a;
 $base-500: #012345;
-$base-600: #011C37;
+$base-600: #011c37;
 $base-700: #011529;
-$base-800: #000E1C;
-$base-900: #00070E;
+$base-800: #000e1c;
+$base-900: #00070e;
 
-$secondary-100: #FDD2EC;
-$secondary-200: #FCA5D9;
-$secondary-300: #FA77C6;
-$secondary-400: #F84AB3;
-$secondary-500: #F71D9F;
-$secondary-600: #C51780;
+$secondary-100: #fdd2ec;
+$secondary-200: #fca5d9;
+$secondary-300: #fa77c6;
+$secondary-400: #f84ab3;
+$secondary-500: #f71d9f;
+$secondary-600: #c51780;
 $secondary-700: #941160;
-$secondary-800: #630C40;
+$secondary-800: #630c40;
 $secondary-900: #310620;
 
 $success: #4caf50;

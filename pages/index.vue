@@ -36,16 +36,17 @@
               <span :class="$style.add_title">
                 Add new
               </span>
-              <btn
+              <VButton
                 title="Add New"
                 :class="$style.btn_plus"
-                @click="showAddItemPopUp"
+                @click="$modal.open('AddItemPopup')"
               >
                 <plus-icon />
-              </btn>
+              </VButton>
             </div>
           </div>
         </client-only>
+
         <transition-group
           v-infinite-scroll="Scrolled"
           :infinite-scroll-disabled="scroll.disabled"
@@ -56,37 +57,37 @@
           appear
         >
           <nuxt-link
-            v-for="item in list"
+            v-for="item in listData"
             :key="item.id"
             :to="`/${item.id}`"
             :class="$style.list_item"
           >
-            <list-item :item-data="item" />
+            <the-list-item :item-data="item" />
           </nuxt-link>
         </transition-group>
       </div>
     </div>
-    <client-only>
-      <add-item v-if="showPopup" :title="'Add new vehicle'" />
-    </client-only>
+<!--    <client-only>-->
+<!--      <add-item v-if="showPopup" :title="'Add new vehicle'" />-->
+<!--    </client-only>-->
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { debounce } from 'vue-debounce'
-import listItem from '~/components/ListItem'
-import btn from '~/components/controls/TheButton.vue'
+import VButton from '@/components/common/ui/VButton.vue'
+import TheListItem from '@/components/unique/pages/home/TheListItem'
 import plusIcon from '~/assets/svg/add.svg?inline'
 import 'vue-select/dist/vue-select.css'
 
 export default {
   components: {
-    listItem,
-    btn,
+    TheListItem,
+    VButton,
     plusIcon,
-    TheInput: () => import('~/components/fields/TheInput'),
-    AddItem: () => import('~/components/popups/addItem.vue')
+    TheInput: () => import('@/components/common/ui/VInput')
+    // AddItem: () => import('~/components/popups/addItem.vue')
   },
   async fetch ({ store, error }) {
     try {
@@ -198,8 +199,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .cont {
     @include content-wrap;

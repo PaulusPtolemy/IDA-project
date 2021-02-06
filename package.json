@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.1",
+    "@nuxtjs/svg-sprite": "^0.5.2",
     "incstr": "^1.2.3",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.14.0",

@@ -34,7 +34,7 @@
 export default {
   name: 'NuxtError',
   components: {
-    btn: () => import('~/components/controls/TheButton.vue')
+    btn: () => import('@/components/common/ui/VButton.vue')
   },
   props: {
     error: {
@@ -56,8 +56,6 @@ export default {
 }
 </script>
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .error {
     height: calc(100vh - 144px - 48px);

@@ -53,11 +53,11 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'ColorModePicker',
+  name: 'TheColorModePicker',
 
   components: {
-    IconDark: () => import('~/assets/svg/dark.svg?inline'),
-    IconLight: () => import('~/assets/svg/light.svg?inline')
+    IconDark: () => import('assets/svg/dark.svg?inline'),
+    IconLight: () => import('assets/svg/light.svg?inline')
   },
 
   computed: {
@@ -114,8 +114,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .picker {
     display: flex;

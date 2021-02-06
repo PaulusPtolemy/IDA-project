@@ -1,13 +1,3 @@
-$breakpoints: (
-  xs: 460px,
-  xm: 580px,
-  sm: 768px,
-  md: 960px,
-  ml: 1140px,
-  lg: 1280px,
-  xl: 1340px
-);
-
 @mixin content-wrap {
   width: 1312px;
   margin: 0 auto;
@@ -25,10 +15,25 @@ $breakpoints: (
 @mixin brp($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
     $breakpoint-value: map-get($breakpoints, $breakpoint);
+
     @media (max-width: $breakpoint-value) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin font($alias, $name, $weight) {
+  @font-face {
+    font-family: $alias;
+    src:
+      url('~assets/fonts/' + $name + '.woff') format('woff'),
+      url('~assets/fonts/' + $name + '.woff2') format('woff2');
+    font-weight: $weight;
+    font-style: normal;
+    font-display: swap;
   }
 }

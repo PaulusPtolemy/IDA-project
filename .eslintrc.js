@@ -14,5 +14,34 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    'linebreak-style': [
+      'error',
+      'unix'
+    ],
+    quotes: [
+      'error',
+      'single'
+    ],
+    'no-console': 'off',
+    'no-unused-vars': 'off',
+    'vue/html-closing-bracket-newline': 'off',
+    'vue/html-indent': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/require-default-prop': 'off',
+    'vue/no-v-html': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/html-closing-bracket-spacing': 'off',
+    'vue/attribute-hyphenation': [
+      'error',
+      'always',
+      {
+        ignore: [
+          'viewBox'
+        ]
+      }
+    ]
+  }
 }

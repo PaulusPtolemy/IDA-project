@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'TheButton',
+  name: 'VButton',
   props: {
     type: {
       type: String,
@@ -31,7 +31,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
 
 .btn {
   padding: 17px 32px;

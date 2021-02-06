@@ -1,4 +1,4 @@
-const incstr = require('incstr')
+import incstr from 'incstr'
 
 const createUniqueIdGenerator = () => {
   const uniqIds = {}
@@ -19,7 +19,7 @@ const createUniqueIdGenerator = () => {
 const localNameIdGenerator = createUniqueIdGenerator()
 const componentNameIdGenerator = createUniqueIdGenerator()
 
-module.exports = (localName, resourcePath) => {
+export const obfuscation = (localName, resourcePath) => {
   const componentName = resourcePath
 
   const localId = localNameIdGenerator(localName)

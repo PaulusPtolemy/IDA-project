@@ -2,19 +2,19 @@
   <div :class="[$style.page, $style.color__bg_primary]">
     <TheHeader />
     <Nuxt />
+    <TheModal />
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    TheHeader: () => import('~/components/TheHeader')
+    TheHeader: () => import('@/components/unique/layout/TheHeader'),
+    TheModal: () => import('@/components/unique/layout/TheModal')
   }
 }
 </script>
 <style lang="scss" module>
-@import "~/assets/scss/modules_import.scss";
-@import "~/assets/scss/mixins.scss";
 
 .page {
   display: flex;

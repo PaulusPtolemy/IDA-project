@@ -1,0 +1,47 @@
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
+.nuxt-link-exact-active {
+  color: $main-400 !important;
+}
+
+.slideAppear {
+  &-enter {
+    transform: translateX(-50px);
+    opacity: 0;
+
+    &-active {
+      transition: all 1s ease;
+    }
+  }
+
+  &-leave {
+    &-active {
+      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+
+    &-to {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+  }
+}
+
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s;
+  }
+
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+}

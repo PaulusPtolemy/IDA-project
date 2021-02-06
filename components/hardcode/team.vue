@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import ImageLazy from '@/components/common/ImageLazy'
+import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
   components: {
@@ -66,8 +66,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .list {
     display: flex;

@@ -46,7 +46,7 @@ export default {
         svg: '<svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
           '<path id="man_icon" d="M14.9413 18.7518C18.4867 20.1625 21.096 23.4185 21.584 27.3332H0.416004C0.904004 23.4185 3.51334 20.1625 7.05867 18.7518L11 24.6665L14.9413 18.7518ZM19 0.666504V8.6665C19 13.0852 15.4187 16.6665 11 16.6665C6.58134 16.6665 3 13.0852 3 8.6665V0.666504H19ZM16.3333 8.6665H5.66667C5.66667 11.6132 8.05334 13.9998 11 13.9998C13.9467 13.9998 16.3333 11.6132 16.3333 8.6665Z" fill="#99A7B5"></path>\n' +
           '</svg>\n',
-        title: "Pilot's sweaty hands",
+        title: 'Pilot\'s sweaty hands',
         descr: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.'
       }
     ]
@@ -55,8 +55,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .item {
     display: flex;

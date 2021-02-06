@@ -1,5 +1,6 @@
+import { plugins } from './config/plugins'
+import { obfuscation } from './config/plugins/getScopedName'
 const isDev = process.env.NODE_ENV === 'development'
-const getScopedName = require('./plugins/getScopedName.js')
 
 export default {
   /*
@@ -36,21 +37,20 @@ export default {
   */
   css: [
     'normalize.css/normalize.css',
-    '@/assets/fonts/font.css',
-    '~/assets/scss/_main.scss'
+    '~/assets/scss/common.scss',
+    '~/assets/scss/vendors.scss',
+    '~/assets/scss/themes/_themes.scss'
   ],
+
+  styleResources: {
+    scss: '~/assets/scss/shared/*.scss'
+  },
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    { src: '~plugins/vue-infinite-scroll.js', ssr: false },
-    { src: '~plugins/vue-debounce.js', ssr: false },
-    { src: '~plugins/vue-select.js', ssr: false },
-    '~/plugins/filters.js',
-    '~/plugins/methods.js',
-    '~/plugins/svg-color.js',
-    '~/plugins/lazyload.js'
+    ...plugins
   ],
   /*
   ** Auto import components
@@ -62,17 +62,44 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
+    // '@nuxtjs/eslint-module',
     '@nuxtjs/color-mode',
-    '@nuxtjs/svg'
+    '@nuxtjs/svg',
+
+    [
+      '@nuxtjs/stylelint-module',
+      {
+        files: ['**/*.scss', '**/*.vue'],
+        failOnError: false,
+        quiet: false
+      }
+    ],
+    [
+      '@nuxtjs/eslint-module',
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: /(node_modules)/
+      }
+    ]
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     '@nuxtjs/svg',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/svg-sprite',
+    '@nuxtjs/style-resources',
   ],
+
+  // svg модуль для инлайн полного импорта
+  // svg-sprite для создания спрайта
+
+  svgSprite: {
+    input: '~/assets/svg/sprite/'
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
@@ -96,7 +123,7 @@ export default {
             }
             : {
               getLocalIdent: (context, localIdentName, localName) => (
-                getScopedName(localName, context.resourcePath)
+                obfuscation(localName, context.resourcePath)
               )
             }
           )

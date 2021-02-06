@@ -28,7 +28,7 @@
 <script>
 
 export default {
-  name: 'ImageLazy',
+  name: 'VImageLazy',
 
   props: {
     preview: {
@@ -77,8 +77,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "assets/scss/modules_import.scss";
-@import "assets/scss/mixins.scss";
 
 .image-lazy {
   height: 100%;

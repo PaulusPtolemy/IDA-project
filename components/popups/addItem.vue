@@ -1,150 +1,157 @@
 <template>
-  <transition name="fade" appear>
-    <div
-      :class="$style.addItem_mask"
-      @click="modalCall(false)"
+  <VBaseModal
+    :class="$style.VBaseModal"
+    :visible="visible"
+    @after-enter="$emit('after-enter')"
+    @after-leave="$emit('after-leave')"
     >
+    <transition name="fade" appear>
       <div
-        :class="[
-          $style.addItem_container,
-          $style.color__bg_primary
-        ]"
-        @click.stop
+        :class="$style.addItem_mask"
       >
-        <div :class="$style.addItem_header">
-          <div
-            :class="[
-              $style.color__title,
-              $style.addItem_title
-            ]"
-          >
-            {{ title }}
-          </div>
-          <div
-            :class="[
-              $style.color__bg_secondary,
-              $style.addItem_cross
-            ]"
-            @click="modalCall(false)"
-          >
-            <cross-icon :class="$style.color__iconSVG" />
-          </div>
-        </div>
-        <div :class="$style.addItem_file">
-          <label
-            for="fileUpload"
-            :class="$style.color__bg_secondary"
-          />
-          <input
-            id="fileUpload"
-            placeholder="file"
-            type="file"
-            accept="image/*"
-            @change="onFileSelected"
-          >
-          <img
-            v-if="form.fileSelected"
-            :src="form.fileSelected"
-            alt="uploaded photo"
-          >
-          <div
-            :class="[
-              $style.addItem_file_icon,
-              $style.color__bg_primary
-            ]"
-          >
-            <photoIcon />
-          </div>
-        </div>
-        <div :class="$style.input_wrap">
-          <the-input
-            :id="'name_input'"
-            v-model="form.name"
-            :type="'text'"
-            :placeholder="'Name'"
-            :css-modules="[
-              $style.color__bg_secondary,
-              $style.color__descr,
-              $style.color__input_placeholder,
-            ]"
-          />
-        </div>
-        <div :class="$style.input_wrap">
-          <the-input
-            :id="'description_input'"
-            v-model="form.description"
-            :type="'text'"
-            :placeholder="'Description'"
-            :css-modules="[
-              $style.color__bg_secondary,
-              $style.color__descr,
-              $style.color__input_placeholder,
-            ]"
-          />
-        </div>
-        <div :class="$style.input_wrap">
-          <the-input
-            :id="'rent_input'"
-            v-model="form.price"
-            :type="'number'"
-            :placeholder="'Rent price'"
-            :css-modules="[
-              $style.color__bg_secondary,
-              $style.color__descr,
-              $style.color__input_placeholder,
-            ]"
-          >
-            <span
+        <div
+          :class="[
+            $style.addItem_container,
+            $style.color__bg_primary
+          ]"
+        >
+          <div :class="$style.addItem_header">
+            <div
               :class="[
-                $style.color__descr,
-                $style.input_slot]"
+                $style.color__title,
+                $style.addItem_title
+              ]"
             >
-              $/h
-            </span>
-          </the-input>
+              {{ title }}
+            </div>
+            <div
+              :class="[
+                $style.color__bg_secondary,
+                $style.addItem_cross
+              ]"
+              @click="$modal.close()"
+            >
+              <cross-icon :class="$style.color__iconSVG" />
+            </div>
+          </div>
+          <div :class="$style.addItem_file">
+            <label
+              for="fileUpload"
+              :class="$style.color__bg_secondary"
+            />
+            <input
+              id="fileUpload"
+              placeholder="file"
+              type="file"
+              accept="image/*"
+              @change="onFileSelected"
+            >
+            <img
+              v-if="form.fileSelected"
+              :src="form.fileSelected"
+              alt="uploaded photo"
+            >
+            <div
+              :class="[
+                $style.addItem_file_icon,
+                $style.color__bg_primary
+              ]"
+            >
+              <photoIcon />
+            </div>
+          </div>
+          <div :class="$style.input_wrap">
+            <VInput
+              :id="'name_input'"
+              v-model="form.name"
+              :type="'text'"
+              :placeholder="'Name'"
+              :css-modules="[
+                $style.color__bg_secondary,
+                $style.color__descr,
+                $style.color__input_placeholder,
+              ]"
+            />
+          </div>
+          <div :class="$style.input_wrap">
+            <VInput
+              :id="'description_input'"
+              v-model="form.description"
+              :type="'text'"
+              :placeholder="'Description'"
+              :css-modules="[
+                $style.color__bg_secondary,
+                $style.color__descr,
+                $style.color__input_placeholder,
+              ]"
+            />
+          </div>
+          <div :class="$style.input_wrap">
+            <VInput
+              :id="'rent_input'"
+              v-model="form.price"
+              :type="'number'"
+              :placeholder="'Rent price'"
+              :css-modules="[
+                $style.color__bg_secondary,
+                $style.color__descr,
+                $style.color__input_placeholder,
+              ]"
+            >
+              <span
+                :class="[
+                  $style.color__descr,
+                  $style.input_slot]"
+              >
+                $/h
+              </span>
+            </VInput>
+          </div>
+          <VButton
+            v-if="!itemAdded"
+            :class="[$style.addItem_btn, {[$style.success] : itemAdded}]"
+            :disabled="!filledFields()"
+            @click="setItem"
+          >
+            Complete
+          </VButton>
+          <VButton
+            v-if="itemAdded"
+            :class="[$style.addItem_btn, {[$style.success]: itemAdded}]"
+            :disabled="!filledFields()"
+            @click="setItem"
+          >
+            Success
+          </VButton>
         </div>
-        <btn
-          v-if="!itemAdded"
-          :class="[$style.addItem_btn, {[$style.success] : itemAdded}]"
-          :disabled="!filledFields()"
-          @click="setItem"
-        >
-          Complete
-        </btn>
-        <btn
-          v-if="itemAdded"
-          :class="[$style.addItem_btn, {[$style.success]: itemAdded}]"
-          :disabled="!filledFields()"
-          @click="setItem"
-        >
-          Success
-        </btn>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </VBaseModal>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 
+import VBaseModal from '@/components/common/layout/modals/VBaseModal'
 import crossIcon from '~/assets/svg/cross.svg?inline'
-import btn from '~/components/controls/TheButton.vue'
-import TheInput from '~/components/fields/TheInput'
 import photoIcon from '~/assets/svg/photo.svg?inline'
 
 export default {
-  name: 'AddItem',
+  name: 'AddItemPopup',
   components: {
     photoIcon,
-    TheInput,
-    btn,
-    crossIcon
+    crossIcon,
+    VBaseModal
   },
 
   props: {
     title: {
       type: String,
       default: 'Modal title'
+    },
+    visible: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -252,21 +259,23 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
+
+  .VBaseModal {
+    position: relative;
+  }
 
   .addItem {
-    &_mask {
-      position: fixed;
-      z-index: $z-index-modal-mask;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      background: rgba(0, 7, 14, 0.9);
-    }
+    //&_mask {
+    //  position: fixed;
+    //  z-index: $z-index-modal-mask;
+    //  top: 0;
+    //  left: 0;
+    //  width: 100%;
+    //  height: 100%;
+    //  display: flex;
+    //  align-items: center;
+    //  background: rgba(0, 7, 14, 0.9);
+    //}
 
     @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
       &_mask {
@@ -276,11 +285,11 @@ export default {
     }
 
     &_container {
-      min-width: 460px;
-      min-height: 770px;
-      margin-left: auto;
-      padding: 64px 72px;
-      border-radius: $border-r-large 0 0 $border-r-large;
+      // min-width: 460px;
+      // min-height: 770px;
+      // margin-left: auto;
+      // padding: 64px 72px;
+      // border-radius: $border-r-large 0 0 $border-r-large;
     }
 
     &_title {

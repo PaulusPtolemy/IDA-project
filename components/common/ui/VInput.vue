@@ -42,6 +42,7 @@ const TYPES = [
 const includes = types => type => types.includes(type)
 
 export default {
+  name: 'VInput',
   inheritAttrs: false,
   model: {
     prop: 'value',
@@ -80,7 +81,6 @@ export default {
 }
 </script>
 <style lang="scss" module>
-@import "assets/scss/modules_import.scss";
 
 .label {
   display: block;

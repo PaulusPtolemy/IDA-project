@@ -1,4 +1,6 @@
-@import "variables";
+@import "./common/font";
+@import "./common/transitions";
+@import "./themes/themes";
 
 * {
   box-sizing: border-box;
@@ -12,8 +14,13 @@ p {
   margin: 0;
 }
 
-body {
-  font-family: 'Codec Pro';
+html {
+  font-family: 'Codec Pro', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
 }
 
 input {
@@ -28,6 +35,7 @@ input {
 @supports not (-ms-high-contrast: none) {
   svg {
     cursor: pointer;
+
     path {
       transition: fill ease-in-out 300ms;
     }
@@ -45,11 +53,6 @@ img:-moz-loading {
   visibility: hidden;
 }
 
-a {
-  text-decoration: none;
-  outline: none;
-}
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -61,50 +64,24 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.5s;
-}
+:global(#__nuxt) {
+  .tab_title {
+    font-size: $fontSizeBigOne;
+    font-weight: $fontWeightBold;
+    line-height: $line-h-large;
+    margin-bottom: 32px;
+  }
 
-.page-enter,
-.page-leave-active {
-  opacity: 0
-}
-
-.nuxt-link-exact-active {
-  color: $main-400 !important;
-}
-
-.slideAppear {
-  &-enter {
-    transform: translateX(-50px);
-    opacity: 0;
-
-    &-active {
-      transition: all 1s ease;
+  .color_logo {
+    rect {
+      fill: transparent;
     }
   }
 
-  &-leave {
-    &-active {
-      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  @include brp(xm) {
+    .tab_title {
+      font-size: $fontSizeBigger;
+      margin-bottom: 20px;
     }
-
-    &-to {
-      transform: translateX(100px);
-      opacity: 0;
-    }
-  }
-}
-
-.fade {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.5s;
-  }
-
-  &-enter,
-  &-leave-to {
-    opacity: 0;
   }
 }

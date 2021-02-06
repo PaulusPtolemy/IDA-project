@@ -1,8 +1,16 @@
 <template>
-  <header :class="$style.header">
-    <nuxt-link to="/" :class="$style.logo">
-      <LogoIcon id="logo_icon" :class="[$style.logo_icon, $style.color_logo]" />
-      <span :class="[$style.logo_title, $style.color__title]">Pepelane</span>
+  <header id="header" :class="$style.header">
+    <nuxt-link
+      to="/"
+      :class="$style.logo"
+    >
+      <IconLogo
+        id="logo_icon"
+        :class="[$style.logo_icon, $style.color_logo]"
+      />
+      <span :class="[$style.logo_title, $style.color__title]">
+        Pepelane
+      </span>
     </nuxt-link>
     <div :class="[$style.color__descr, $style.descr]">
       World's first affordable airsharing
@@ -15,18 +23,18 @@
         @mouseenter="hoverSVG('message-icon', 'enter')"
         @mouseleave="hoverSVG('message-icon', 'leave')"
       >
-        <MessageIcon id="message-icon" />
+        <IconMessage id="message-icon" />
       </div>
-      <MessageIcon v-else :class="$style.message" />
+      <IconMessage v-else :class="$style.message" />
       <div
         v-if="isIE()"
         :class="$style.notification"
         @mouseenter="hoverSVG('notification-icon', 'enter')"
         @mouseleave="hoverSVG('notification-icon', 'leave')"
       >
-        <NotIcon id="notification-icon" />
+        <IconNotification id="notification-icon" />
       </div>
-      <NotIcon v-else :class="$style.notification" />
+      <IconNotification v-else :class="$style.notification" />
       <div :class="[$style.user_name, $style.color__title]">
         {{ user.name }}
       </div>
@@ -42,18 +50,14 @@
 <script>
 import { mapState } from 'vuex'
 
-import ColorModePicker from '~/components/controls/ColorModePicker'
-
-import LogoIcon from '~/assets/svg/Logo.svg?inline'
-import MessageIcon from '~/assets/svg/message.svg?inline'
-import NotIcon from '~/assets/svg/notification.svg?inline'
+import ColorModePicker from '@/components/unique/ui/TheColorModePicker'
 
 export default {
   name: 'TheHeader',
   components: {
-    LogoIcon,
-    MessageIcon,
-    NotIcon,
+    IconLogo: () => import('assets/svg/Logo.svg?inline'),
+    IconMessage: () => import('assets/svg/message.svg?inline'),
+    IconNotification: () => import('assets/svg/notification.svg?inline'),
     ColorModePicker
   },
   computed: {
@@ -65,8 +69,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .slogan {
     font-size: $fontSizeBase;

@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import ImageLazy from '@/components/common/ImageLazy'
+import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-  name: 'ListItem',
+  name: 'TheListItem',
 
   components: {
     ImageLazy
@@ -50,8 +50,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/modules_import.scss";
-  @import "assets/scss/mixins.scss";
 
   .item {
     padding: 24px 32px 24px;
