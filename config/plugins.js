@@ -6,7 +6,6 @@ export const plugins = [
     { src: '~/config/plugins/vue-select.js', ssr: false },
     '~/config/plugins/filters.js',
     '~/config/plugins/methods.js',
-    '~/config/plugins/svg-color.js',
     '~/config/plugins/lazyload.js',
     '~/config/plugins/modal.js',
 ]

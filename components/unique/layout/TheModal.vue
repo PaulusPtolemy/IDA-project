@@ -1,19 +1,23 @@
 <template>
-  <transition name="overlay-appear"
-              @enter="isContentVisible = true"
-              @after-leave="afterOverlayClose">
-    <div v-if="isOverlayVisible"
-         :class="[$style.overlay, options && options.classList ? options.classList: '']"
-         @click.self="onClose">
+    <transition
+        name="overlay-appear"
+        @enter="isContentVisible = true"
+        @after-leave="afterOverlayClose"
+    >
+        <div
+            v-if="isOverlayVisible"
+            :class="[$style.overlay, options && options.classList ? options.classList: '']"
+            @click.self="onClose"
+        >
 
-      <component :is="component"
-                 :data="options"
-                 :visible="isContentVisible"
-                 @close="onClose"
-                 @after-leave="afterContentClose">
-      </component>
-    </div>
-  </transition>
+            <component
+                :is="component"
+                :data="options"
+                :visible="isContentVisible"
+                @close="onClose"
+                @after-leave="afterContentClose" />
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -96,38 +100,38 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/theme";
+    @import "assets/scss/theme";
 
-  .overlay {
-    position: fixed;
-    z-index: $z-index-modal-mask;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: rgba(0, 7, 14, 0.9);
+    .overlay {
+        position: fixed;
+        z-index: $z-index-modal-mask;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background: rgba(0, 7, 14, 0.9);
 
-    &:global(.overlay-appear-enter-active) {
-      transition: all 0.4s;
+        &:global(.overlay-appear-enter-active) {
+            transition: all 0.4s;
+        }
+
+        &:global(.overlay-appear-leave-active) {
+            transition: all 0.2s;
+            opacity: 0;
+        }
+
+        &:global(.overlay-appear-enter) {
+            opacity: 0;
+        }
+
+        &:global(.is-article) {
+            overflow-y: auto;
+        }
+
+        &:global(.is-light) {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
     }
-
-    &:global(.overlay-appear-leave-active) {
-      transition: all 0.2s;
-      opacity: 0;
-    }
-
-    &:global(.overlay-appear-enter) {
-      opacity: 0;
-    }
-
-    &:global(.is-article) {
-      overflow-y: auto;
-    }
-
-    &:global(.is-light) {
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-  }
 </style>

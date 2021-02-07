@@ -1,81 +1,45 @@
 <template>
     <div :class="[$style.color__bg_secondary, $style.cont]">
-        <div>
-            <div :class="[$style.list]">
-                <!--        <client-only>-->
-                <!--          <div :class="$style.filter">-->
-                <!--            <v-select-->
-                <!--              id="selectTypes"-->
-                <!--              v-model="chosenType"-->
-                <!--              :options="typeNames"-->
-                <!--              class="filter_types filter__selects"-->
-                <!--              :class="[$colorMode.preference]"-->
-                <!--            />-->
-                <!--            <v-select-->
-                <!--              id="selectValues"-->
-                <!--              v-model="selectedVal"-->
-                <!--              class="filter__selects"-->
-                <!--              :options="selectOpt('whatever')"-->
-                <!--            />-->
-                <!--            <div v-show="showInput" :class="$style.input_wrap">-->
-                <!--              <VInput-->
-                <!--                :id="'universal'"-->
-                <!--                :type="chosenType === 'Rent' ? 'number' : 'text'"-->
-                <!--                :value="inputVal"-->
-                <!--                :placeholder="'Print value'"-->
-                <!--                :css-modules="[-->
-                <!--                  $style.color__bg_primary,-->
-                <!--                  $style.color__descr,-->
-                <!--                  $style.color__input_placeholder,-->
-                <!--                  $style.input-->
-                <!--                ]"-->
-                <!--                @input="updFilter"-->
-                <!--              />-->
-                <!--            </div>-->
-                <!--            <div :class="$style.add_right">-->
-                <!--              <span :class="$style.add_title">-->
-                <!--                Add new-->
-                <!--              </span>-->
-                <!--              <VButton-->
-                <!--                title="Add New"-->
-                <!--                :class="$style.btn_plus"-->
-                <!--                @click="$modal.open('AddItemPopup')"-->
-                <!--              >-->
-                <!--                <plus-icon />-->
-                <!--              </VButton>-->
-                <!--            </div>-->
-                <!--          </div>-->
-                <!--        </client-only>-->
-                <TheListFilter
-                    :options="filterOptions"
-                    :values="values"
-                    :expand="currentChosenType"
-                    @change="onValueChange"
-                />
+        <div :class="[$style.list]">
+            <TheListFilter
+                :options="filterOptions"
+                :values="values"
+                :expand="currentChosenType"
+                @change="onValueChange"
+            />
 
-                <transition-group
-                    v-infinite-scroll="Scrolled"
-                    :infinite-scroll-disabled="scroll.disabled"
-                    :infinite-scroll-distance="scroll.limit"
-                    name="slideAppear"
-                    :class="$style.list_trans"
-                    mode="out-in"
-                    appear
+            <div :class="$style.add_right">
+                <span :class="$style.add_title">
+                    Add new
+                </span>
+                <VButton
+                    title="Add New"
+                    :class="$style.btn_plus"
+                    @click="$modal.open('AddItemPopup')"
                 >
-                    <nuxt-link
-                        v-for="item in listItems"
-                        :key="item.id"
-                        :to="`/${item.id}`"
-                        :class="$style.list_item"
-                    >
-                        <TheListItem :item-data="item" />
-                    </nuxt-link>
-                </transition-group>
+                    <IconPlus />
+                </VButton>
             </div>
+
+            <transition-group
+                v-infinite-scroll="Scrolled"
+                :infinite-scroll-disabled="scroll.disabled"
+                :infinite-scroll-distance="scroll.limit"
+                name="slideAppear"
+                :class="$style.list_trans"
+                mode="out-in"
+                appear
+            >
+                <nuxt-link
+                    v-for="item in listItems"
+                    :key="item.id"
+                    :to="`/${item.id}`"
+                    :class="$style.list_item"
+                >
+                    <TheListItem :item-data="item" />
+                </nuxt-link>
+            </transition-group>
         </div>
-        <!--    <client-only>-->
-        <!--      <add-item v-if="showPopup" :title="'Add new vehicle'" />-->
-        <!--    </client-only>-->
     </div>
 </template>
 
@@ -86,6 +50,8 @@ import { applyQuery } from 'assets/js/utils/queryUtils'
 
 import TheListItem from '@/components/unique/pages/home/TheListItem'
 import TheListFilter from '@/components/unique/filter/TheListFilter'
+
+import IconPlus from '~/assets/svg/add.svg?inline'
 
 const defaultValues = {
     type: 0,
@@ -98,6 +64,7 @@ export default {
     components: {
         TheListItem,
         TheListFilter,
+        IconPlus,
     },
 
     async asyncData ({ store, query, error }) {

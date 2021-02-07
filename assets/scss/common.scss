@@ -67,18 +67,18 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+#logo_icon {
+    rect {
+        fill: transparent;
+    }
+}
+
 :global(#__nuxt) {
   .tab_title {
     font-size: $fontSizeBigOne;
     font-weight: $fontWeightBold;
     line-height: $line-h-large;
     margin-bottom: 32px;
-  }
-
-  .color_logo {
-    rect {
-      fill: transparent;
-    }
   }
 
   @include brp(xm) {

@@ -1,132 +1,119 @@
 <template>
-  <VBaseModal
-    :class="$style.VBaseModal"
-    :visible="visible"
-    @after-enter="$emit('after-enter')"
-    @after-leave="$emit('after-leave')"
+    <VBaseModal
+        :class="$style.VBaseModal"
+        :visible="visible"
+        @after-enter="$emit('after-enter')"
+        @after-leave="$emit('after-leave')"
     >
-    <transition name="fade" appear>
-      <div
-        :class="$style.addItem_mask"
-      >
-        <div
-          :class="[
-            $style.addItem_container,
-            $style.color__bg_primary
-          ]"
-        >
-          <div :class="$style.addItem_header">
-            <div
-              :class="[
-                $style.color__title,
-                $style.addItem_title
-              ]"
-            >
-              {{ title }}
+        <transition name="fade" appear>
+            <div :class="$style.addItem_mask">
+                <div :class="[
+                    $style.addItem_container,
+                    $style.color__bg_primary]"
+                >
+                    <div :class="$style.addItem_header">
+                        <div :class="[
+                            $style.color__title,
+                            $style.addItem_title]"
+                        >
+                            {{ title }}
+                        </div>
+                        <div :class="[
+                            $style.color__bg_secondary,
+                            $style.addItem_cross]"
+                            @click="$modal.close()"
+                        >
+                            <cross-icon :class="$style.color__iconSVG" />
+                        </div>
+                    </div>
+                    <div :class="$style.addItem_file">
+                        <label
+                            for="fileUpload"
+                            :class="$style.color__bg_secondary"
+                        />
+                        <input
+                            id="fileUpload"
+                            placeholder="file"
+                            type="file"
+                            accept="image/*"
+                            @change="onFileSelected"
+                        >
+                        <img
+                            v-if="form.fileSelected"
+                            :src="form.fileSelected"
+                            alt="uploaded photo"
+                        >
+                        <div :class="[
+                            $style.addItem_file_icon,
+                            $style.color__bg_primary
+                            ]"
+                        >
+                            <photoIcon />
+                        </div>
+                    </div>
+                    <div :class="$style.input_wrap">
+                        <VInput
+                            :id="'name_input'"
+                            v-model="form.name"
+                            :type="'text'"
+                            :placeholder="'Name'"
+                            :css-modules="[
+                                $style.color__bg_secondary,
+                                $style.color__descr,
+                                $style.color__input_placeholder,]"
+                        />
+                    </div>
+                    <div :class="$style.input_wrap">
+                        <VInput
+                            :id="'description_input'"
+                            v-model="form.description"
+                            :type="'text'"
+                            :placeholder="'Description'"
+                            :css-modules="[
+                                $style.color__bg_secondary,
+                                $style.color__descr,
+                                $style.color__input_placeholder,]"
+                        />
+                    </div>
+                    <div :class="$style.input_wrap">
+                        <VInput
+                            :id="'rent_input'"
+                            v-model="form.price"
+                            :type="'number'"
+                            :placeholder="'Rent price'"
+                            :css-modules="[
+                                $style.color__bg_secondary,
+                                $style.color__descr,
+                                $style.color__input_placeholder,]"
+                        >
+                            <span :class="[
+                                $style.color__descr,
+                                $style.input_slot]"
+                            >
+                                $/h
+                            </span>
+                        </VInput>
+                    </div>
+                    <VButton
+                        v-if="!itemAdded"
+                        :class="[$style.addItem_btn, {[$style.success] : itemAdded}]"
+                        :disabled="!filledFields()"
+                        @click="setItem"
+                    >
+                        Complete
+                    </VButton>
+                    <VButton
+                        v-if="itemAdded"
+                        :class="[$style.addItem_btn, {[$style.success]: itemAdded}]"
+                        :disabled="!filledFields()"
+                        @click="setItem"
+                    >
+                        Success
+                    </VButton>
+                </div>
             </div>
-            <div
-              :class="[
-                $style.color__bg_secondary,
-                $style.addItem_cross
-              ]"
-              @click="$modal.close()"
-            >
-              <cross-icon :class="$style.color__iconSVG" />
-            </div>
-          </div>
-          <div :class="$style.addItem_file">
-            <label
-              for="fileUpload"
-              :class="$style.color__bg_secondary"
-            />
-            <input
-              id="fileUpload"
-              placeholder="file"
-              type="file"
-              accept="image/*"
-              @change="onFileSelected"
-            >
-            <img
-              v-if="form.fileSelected"
-              :src="form.fileSelected"
-              alt="uploaded photo"
-            >
-            <div
-              :class="[
-                $style.addItem_file_icon,
-                $style.color__bg_primary
-              ]"
-            >
-              <photoIcon />
-            </div>
-          </div>
-          <div :class="$style.input_wrap">
-            <VInput
-              :id="'name_input'"
-              v-model="form.name"
-              :type="'text'"
-              :placeholder="'Name'"
-              :css-modules="[
-                $style.color__bg_secondary,
-                $style.color__descr,
-                $style.color__input_placeholder,
-              ]"
-            />
-          </div>
-          <div :class="$style.input_wrap">
-            <VInput
-              :id="'description_input'"
-              v-model="form.description"
-              :type="'text'"
-              :placeholder="'Description'"
-              :css-modules="[
-                $style.color__bg_secondary,
-                $style.color__descr,
-                $style.color__input_placeholder,
-              ]"
-            />
-          </div>
-          <div :class="$style.input_wrap">
-            <VInput
-              :id="'rent_input'"
-              v-model="form.price"
-              :type="'number'"
-              :placeholder="'Rent price'"
-              :css-modules="[
-                $style.color__bg_secondary,
-                $style.color__descr,
-                $style.color__input_placeholder,
-              ]"
-            >
-              <span
-                :class="[
-                  $style.color__descr,
-                  $style.input_slot]"
-              >
-                $/h
-              </span>
-            </VInput>
-          </div>
-          <VButton
-            v-if="!itemAdded"
-            :class="[$style.addItem_btn, {[$style.success] : itemAdded}]"
-            :disabled="!filledFields()"
-            @click="setItem"
-          >
-            Complete
-          </VButton>
-          <VButton
-            v-if="itemAdded"
-            :class="[$style.addItem_btn, {[$style.success]: itemAdded}]"
-            :disabled="!filledFields()"
-            @click="setItem"
-          >
-            Success
-          </VButton>
-        </div>
-      </div>
-    </transition>
-  </VBaseModal>
+        </transition>
+    </VBaseModal>
 </template>
 
 <script>
@@ -190,17 +177,6 @@ export default {
                 setTimeout(() => { this.id = null }, 3000)
             }
         },
-    },
-
-    mounted () {
-        if (this.isIE()) {
-            this.changeSVGColor(
-                'modal__cross',
-                'fill',
-                this.$options.$RGBcolors.$base0,
-                this.$options.$RGBcolors.$base500,
-            )
-        }
     },
 
     methods: {

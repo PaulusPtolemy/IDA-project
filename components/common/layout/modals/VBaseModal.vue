@@ -1,26 +1,30 @@
 <template>
-  <div v-if="visible"
-       :class="$style.BaseModal">
-    <div :class="$style.container">
-      <div :class="$style.wrap">
-        <slot />
-      </div>
-    </div>
-    <button type="button"
+    <div
+        v-if="visible"
+        :class="$style.BaseModal"
+    >
+        <div :class="$style.container">
+            <div :class="$style.wrap">
+                <slot />
+            </div>
+        </div>
+        <button
+            type="button"
             class="btn-reset"
             :class="$style.close"
-            @click="onClose">
-      <cross-icon class="frame-icon" />
-    </button>
-  </div>
+            @click="onClose"
+        >
+            <IconCross class="frame-icon" />
+        </button>
+    </div>
 </template>
 
 <script>
-import crossIcon from '~/assets/svg/cross.svg?inline'
+import IconCross from '~/assets/svg/cross.svg?inline'
 
 export default {
     components: {
-        crossIcon,
+        IconCross,
     },
 
     props: {
@@ -55,31 +59,31 @@ export default {
 
 <style lang="scss" module>
 
-  .BaseModal {
-    //
-  }
-
-  .wrap {
-    min-width: 460px;
-    min-height: 770px;
-    margin-left: auto;
-    padding: 64px 72px;
-    border-radius: $border-r-large 0 0 $border-r-large;
-  }
-
-  .close {
-    position: absolute;
-    top: 92px;
-    right: calc(50% - 522px);
-    width: 2.4rem;
-    height: 2.4rem;
-    cursor: pointer;
-    pointer-events: all;
-    // color: rgba($gray, 0.6);
-    transition: opacity 0.3s ease-out;
-
-    &:hover {
-      opacity: 0.4;
+    .BaseModal {
+        //
     }
-  }
+
+    .wrap {
+        min-width: 460px;
+        min-height: 770px;
+        margin-left: auto;
+        padding: 64px 72px;
+        border-radius: $border-r-large 0 0 $border-r-large;
+    }
+
+    .close {
+        position: absolute;
+        top: 92px;
+        right: calc(50% - 522px);
+        width: 2.4rem;
+        height: 2.4rem;
+        cursor: pointer;
+        pointer-events: all;
+        // color: rgba($gray, 0.6);
+        transition: opacity 0.3s ease-out;
+
+        &:hover {
+            opacity: 0.4;
+        }
+    }
 </style>

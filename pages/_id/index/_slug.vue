@@ -42,42 +42,26 @@ export default {
             return this.lotTab.label.replace('_text', '').toLowerCase()
         },
     },
-
-    watch: {
-        Mode () {
-            if (this.isIE()) {
-                const svgs = ['cup_icon', 'man_icon']
-                for (let i = 0; i < svgs.length; i++) {
-                    this.changeSVGColor(
-                        svgs[i],
-                        'fill',
-                        this.$options.$RGBcolors.$base200,
-                        this.$options.$RGBcolors.$base300,
-                    )
-                }
-            }
-        },
-    },
 }
 </script>
 
 <style lang="scss" module>
-@import "assets/scss/theme";
+    @import "assets/scss/theme";
 
-.tab {
-    &_descr {
-        font-size: $fontSizeSmaller;
-        line-height: $line-h-large;
-        font-weight: $fontWeightMedium;
-        margin-bottom: 32px;
-    }
-}
-
-@include brp(xm) {
     .tab {
         &_descr {
-            margin-bottom: 20px;
+            font-size: $fontSizeSmaller;
+            line-height: $line-h-large;
+            font-weight: $fontWeightMedium;
+            margin-bottom: 32px;
         }
     }
-}
+
+    @include brp(xm) {
+        .tab {
+            &_descr {
+                margin-bottom: 20px;
+            }
+        }
+    }
 </style>

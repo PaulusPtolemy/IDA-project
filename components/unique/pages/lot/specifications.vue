@@ -55,62 +55,62 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/theme";
+    @import "assets/scss/theme";
 
-  .item {
-    display: flex;
-    align-items: center;
-
-    &:not(:last-child) {
-      margin-bottom: 16px;
-    }
-
-    &_img {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &_wrap {
-        width: 80px;
-        height: 96px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-        border-radius: $border-r-small;
-        margin-right: 24px;
-      }
-    }
-
-    &_right {
-      flex-direction: column;
-      flex: 100%;
-    }
-
-    &_title {
-      font-weight: $fontWeightBold;
-      line-height: $line-h-grand;
-      margin-bottom: 8px;
-    }
-  }
-
-  @include brp(xs) {
     .item {
-      align-items: initial;
+        display: flex;
+        align-items: center;
 
-      &_img {
-        &_wrap {
-          width: 64px;
-          height: 80px;
-          margin-right: 16px;
+        &:not(:last-child) {
+            margin-bottom: 16px;
         }
 
-        svg {
-          transform: scale(0.8);
+        &_img {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &_wrap {
+                width: 80px;
+                height: 96px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                border-radius: $border-r-small;
+                margin-right: 24px;
+            }
         }
-      }
+
+        &_right {
+            flex-direction: column;
+            flex: 100%;
+        }
+
+        &_title {
+            font-weight: $fontWeightBold;
+            line-height: $line-h-grand;
+            margin-bottom: 8px;
+        }
     }
-  }
+
+    @include brp(xs) {
+        .item {
+            align-items: initial;
+
+            &_img {
+                &_wrap {
+                    width: 64px;
+                    height: 80px;
+                    margin-right: 16px;
+                }
+
+                svg {
+                    transform: scale(0.8);
+                }
+            }
+        }
+    }
 </style>

@@ -1,36 +1,36 @@
 <template>
-  <div>
-    <slot name="head" />
-    <h2 :class="[$style.color__title, $style.tab_title]">
-      {{ $options.team.title }}
-    </h2>
-    <div :class="$style.list">
-      <div
-        v-for="item in $options.team.data"
-        :key="item.title"
-        :class="$style.item"
-      >
-        <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
-          <VImageLazy
-            :class="$style.item_img"
-            :image="require(`~/assets/${item.img}`)"
-            class="ListItem"
-          />
+    <div>
+        <slot name="head" />
+        <h2 :class="[$style.color__title, $style.tab_title]">
+            {{ $options.team.title }}
+        </h2>
+        <div :class="$style.list">
+            <div
+                v-for="item in $options.team.data"
+                :key="item.title"
+                :class="$style.item"
+            >
+                <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
+                    <VImageLazy
+                        :class="$style.item_img"
+                        :image="require(`~/assets/${item.img}`)"
+                        class="ListItem"
+                    />
+                </div>
+                <div>
+                    <div :class="[$style.color__title, $style.item_title]">
+                        {{ item.title }}
+                    </div>
+                    <div :class="[$style.color__descr, $style.item_descr]">
+                        {{ item.descr }}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <div :class="[$style.color__title, $style.item_title]">
-            {{ item.title }}
-          </div>
-          <div :class="[$style.color__descr, $style.item_descr]">
-            {{ item.descr }}
-          </div>
+        <div :class="[$style.color__descr, $style.descr]">
+            {{ $options.team.descr }}
         </div>
-      </div>
     </div>
-    <div :class="[$style.color__descr, $style.descr]">
-      {{ $options.team.descr }}
-    </div>
-  </div>
 </template>
 
 <script>
@@ -62,85 +62,85 @@ export default {
 </script>
 
 <style lang="scss" module>
-  @import "assets/scss/theme";
+    @import "assets/scss/theme";
 
-  .list {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column;
-    width: calc(100% / 3 - (25px * 2) / 3);
-    margin-bottom: 25px;
-
-    &:not(:nth-child(3n)) {
-      margin-right: 25px;
-    }
-
-    &_img {
-      display: block;
-      height: 100%;
-      width: 100%;
-      border-radius: $border-r-small;
-
-      &_wrap {
-        position: relative;
-        width: 162px;
-        height: 96px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-        border-radius: $border-r-small;
-        margin-bottom: 16px;
-      }
-    }
-
-    &_title {
-      font-weight: $fontWeightBold;
-      line-height: $line-h-grand;
-      margin-bottom: 8px;
-    }
-  }
-
-  .descr {
-    font-size: $fontSizeSmaller;
-    line-height: $line-h-large;
-    font-weight: $fontWeightMedium;
-  }
-
-  @include brp(xm) {
-    .item {
-      &_img {
-        &_wrap {
-          width: 132px;
-          height: 80px;
-        }
-      }
-    }
-  }
-
-  @include brp(xs) {
     .list {
-      flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .item {
-      flex-direction: row;
-      width: 100%;
-      margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        width: calc(100% / 3 - (25px * 2) / 3);
+        margin-bottom: 25px;
 
-      &_img {
-        &_wrap {
-          margin-right: 16px;
+        &:not(:nth-child(3n)) {
+            margin-right: 25px;
         }
-      }
 
-      &:not(:nth-child(3n)) {
-        margin-right: 0;
-      }
+        &_img {
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: $border-r-small;
+
+            &_wrap {
+                position: relative;
+                width: 162px;
+                height: 96px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                border-radius: $border-r-small;
+                margin-bottom: 16px;
+            }
+        }
+
+        &_title {
+            font-weight: $fontWeightBold;
+            line-height: $line-h-grand;
+            margin-bottom: 8px;
+        }
     }
-  }
+
+    .descr {
+        font-size: $fontSizeSmaller;
+        line-height: $line-h-large;
+        font-weight: $fontWeightMedium;
+    }
+
+    @include brp(xm) {
+        .item {
+            &_img {
+                &_wrap {
+                    width: 132px;
+                    height: 80px;
+                }
+            }
+        }
+    }
+
+    @include brp(xs) {
+        .list {
+            flex-direction: column;
+        }
+
+        .item {
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 12px;
+
+            &_img {
+                &_wrap {
+                    margin-right: 16px;
+                }
+            }
+
+            &:not(:nth-child(3n)) {
+                margin-right: 0;
+            }
+        }
+    }
 </style>
