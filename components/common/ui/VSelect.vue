@@ -1,17 +1,17 @@
 <template>
-  <div :class="$style.TheListFilter">
+  <div :class="$style.VSelect">
 
   </div>
 </template>
 
 <script>
 export default {
-    name: 'TheListFilter',
+    name: 'VSelect',
 }
 </script>
 
 <style lang="scss" module>
-  .TheListFilter {
+  .VSelect {
     //
   }
 </style>

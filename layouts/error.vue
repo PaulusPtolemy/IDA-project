@@ -32,30 +32,31 @@
 
 <script>
 export default {
-  name: 'NuxtError',
-  components: {
-    btn: () => import('@/components/common/ui/VButton.vue')
-  },
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  methods: {
-    reloadPage () {
-      if (this.isIE()) {
-        if (process.browser) {
-          window.location.reload(true)
-        }
-      } else {
-        this.$router.go(this.$router.currentRoute)
-      }
-    }
-  }
+    name: 'NuxtError',
+    components: {
+        btn: () => import('@/components/common/ui/VButton.vue'),
+    },
+    props: {
+        error: {
+            type: Object,
+            default: null,
+        },
+    },
+    methods: {
+        reloadPage () {
+            if (this.isIE()) {
+                if (process.browser) {
+                    window.location.reload(true)
+                }
+            } else {
+                this.$router.go(this.$router.currentRoute)
+            }
+        },
+    },
 }
 </script>
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .error {
     height: calc(100vh - 144px - 48px);

@@ -137,128 +137,129 @@ import crossIcon from '~/assets/svg/cross.svg?inline'
 import photoIcon from '~/assets/svg/photo.svg?inline'
 
 export default {
-  name: 'AddItemPopup',
-  components: {
-    photoIcon,
-    crossIcon,
-    VBaseModal
-  },
-
-  props: {
-    title: {
-      type: String,
-      default: 'Modal title'
-    },
-    visible: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  data () {
-    return {
-      id: null,
-      form: {
-        fileSelected: null,
-        name: null,
-        description: null,
-        price: null
-      }
-    }
-  },
-
-  computed: {
-    ...mapState({
-      listData: state => state.data
-    }),
-
-    dataIDS () {
-      return this.listData.map(e => e.id)
+    name: 'AddItemPopup',
+    components: {
+        photoIcon,
+        crossIcon,
+        VBaseModal,
     },
 
-    itemAdded () {
-      return this.listData.find(e => e.id === this.id)
-    }
-  },
+    props: {
+        title: {
+            type: String,
+            default: 'Modal title',
+        },
+        visible: {
+            type: Boolean,
+            default: false,
+        },
+    },
 
-  watch: {
-    itemAdded (newValue) {
-      if (newValue) {
-        for (const key in this.form) {
-          this.form[key] = null
+    data () {
+        return {
+            id: null,
+            form: {
+                fileSelected: null,
+                name: null,
+                description: null,
+                price: null,
+            },
         }
-        setTimeout(() => { this.id = null }, 3000)
-      }
-    }
-  },
-
-  mounted () {
-    if (this.isIE()) {
-      this.changeSVGColor(
-        'modal__cross',
-        'fill',
-        this.$options.$RGBcolors.$base0,
-        this.$options.$RGBcolors.$base500
-      )
-    }
-  },
-
-  methods: {
-    filledFields () {
-      let res = true
-      for (const key in this.form) {
-        if (!this.form[key]) {
-          res = false
-        }
-      }
-      return res
     },
 
-    setItem () {
-      this.randomID()
-      const itemObj =
+    computed: {
+        ...mapState({
+            listData: state => state.data,
+        }),
+
+        dataIDS () {
+            return this.listData.map(e => e.id)
+        },
+
+        itemAdded () {
+            return this.listData.find(e => e.id === this.id)
+        },
+    },
+
+    watch: {
+        itemAdded (newValue) {
+            if (newValue) {
+                for (const key in this.form) {
+                    this.form[key] = null
+                }
+                setTimeout(() => { this.id = null }, 3000)
+            }
+        },
+    },
+
+    mounted () {
+        if (this.isIE()) {
+            this.changeSVGColor(
+                'modal__cross',
+                'fill',
+                this.$options.$RGBcolors.$base0,
+                this.$options.$RGBcolors.$base500,
+            )
+        }
+    },
+
+    methods: {
+        filledFields () {
+            let res = true
+            for (const key in this.form) {
+                if (!this.form[key]) {
+                    res = false
+                }
+            }
+            return res
+        },
+
+        setItem () {
+            this.randomID()
+            const itemObj =
          {
-           id: this.id,
-           name: this.form.name,
-           type: 'custom',
-           description: this.form.description,
-           specifications_text: '',
-           team_text: '',
-           term_text: '',
-           rent: this.form.price,
-           preview: this.form.fileSelected,
-           image: this.form.fileSelected
+             id: this.id,
+             name: this.form.name,
+             type: 'custom',
+             description: this.form.description,
+             specifications_text: '',
+             team_text: '',
+             term_text: '',
+             rent: this.form.price,
+             preview: this.form.fileSelected,
+             image: this.form.fileSelected,
          }
-      this.$store.dispatch('ACT_SET_ITEM', itemObj)
-    },
+            this.$store.dispatch('ACT_SET_ITEM', itemObj)
+        },
 
-    randomID () {
-      const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-      this.dataIDS.includes(id) ? this.randomID() : this.id = id
-    },
+        randomID () {
+            const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+            this.dataIDS.includes(id) ? this.randomID() : this.id = id
+        },
 
-    onFileSelected (event) {
-      const data = event.target.files[0]
-      this.createBase64(data)
-    },
+        onFileSelected (event) {
+            const data = event.target.files[0]
+            this.createBase64(data)
+        },
 
-    createBase64 (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        this.form.fileSelected = e.target.result
-      }
-      reader.readAsDataURL(file)
-    },
+        createBase64 (file) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                this.form.fileSelected = e.target.result
+            }
+            reader.readAsDataURL(file)
+        },
 
-    modalCall (val) {
-      this.$store.dispatch('ACT_SET_POPUP', val)
-    }
-  }
+        modalCall (val) {
+            this.$store.dispatch('ACT_SET_POPUP', val)
+        },
+    },
 
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .VBaseModal {
     position: relative;

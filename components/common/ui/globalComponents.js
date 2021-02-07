@@ -7,15 +7,15 @@ import VInput from './VInput'
 import VIconSprite from './VIconSprite'
 
 const components = [
-  VButton,
-  VInput,
-  VIconSprite
+    VButton,
+    VInput,
+    VIconSprite,
 ]
 
 components.forEach((component) => {
-  if (component.name) {
-    Vue.component(component.name, component)
-  } else {
-    console.warn('[UI] Register / No component name: ', component)
-  }
+    if (component.name) {
+        Vue.component(component.name, component)
+    } else {
+        console.warn('[UI] Register / No component name: ', component)
+    }
 })

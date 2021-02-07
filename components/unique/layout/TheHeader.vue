@@ -53,22 +53,23 @@ import { mapState } from 'vuex'
 import ColorModePicker from '@/components/unique/ui/TheColorModePicker'
 
 export default {
-  name: 'TheHeader',
-  components: {
-    IconLogo: () => import('assets/svg/Logo.svg?inline'),
-    IconMessage: () => import('assets/svg/message.svg?inline'),
-    IconNotification: () => import('assets/svg/notification.svg?inline'),
-    ColorModePicker
-  },
-  computed: {
-    ...mapState({
-      user: state => state.user
-    })
-  }
+    name: 'TheHeader',
+    components: {
+        IconLogo: () => import('assets/svg/Logo.svg?inline'),
+        IconMessage: () => import('assets/svg/message.svg?inline'),
+        IconNotification: () => import('assets/svg/notification.svg?inline'),
+        ColorModePicker,
+    },
+    computed: {
+        ...mapState({
+            user: state => state.user,
+        }),
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .slogan {
     font-size: $fontSizeBase;

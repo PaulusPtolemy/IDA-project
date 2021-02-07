@@ -52,52 +52,53 @@ import btn from '@/components/common/ui/VButton.vue'
 import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-  components: {
-    btn,
-    ImageLazy
-  },
+    components: {
+        btn,
+        ImageLazy,
+    },
 
-  async fetch ({ store, route, error }) {
-    try {
-      const data = await store.dispatch('ACT_CURRENT_LOT', { route })
-      if (!data) {
-        error({ statusCode: 404, message: 'Page not found' })
-      }
-    } catch (err) {
-      error({ statusCode: 418, message: 'An error has occurred' })
-    }
-  },
-
-  middleware ({ route, redirect }) {
-    if (route.params.id && !route.params.slug) {
-      return redirect(`/${route.params.id}/specifications`)
-    }
-  },
-
-  computed: {
-    ...mapState({
-      lot: state => state.currentLot
-    }),
-
-    getTabs () {
-      const tabs = []
-      for (const key in this.lot) {
-        if (key.includes('_text')) {
-          const delText = key.replace('_text', '')
-          tabs.push({
-            label: delText,
-            slug: key,
-            descr: this.lot[key]
-          })
+    async fetch ({ store, route, error }) {
+        try {
+            const data = await store.dispatch('ACT_CURRENT_LOT', { route })
+            if (!data) {
+                error({ statusCode: 404, message: 'Page not found' })
+            }
+        } catch (err) {
+            error({ statusCode: 418, message: 'An error has occurred' })
         }
-      }
-      return tabs
-    }
-  }
+    },
+
+    middleware ({ route, redirect }) {
+        if (route.params.id && !route.params.slug) {
+            return redirect(`/${route.params.id}/specifications`)
+        }
+    },
+
+    computed: {
+        ...mapState({
+            lot: state => state.currentLot,
+        }),
+
+        getTabs () {
+            const tabs = []
+            for (const key in this.lot) {
+                if (key.includes('_text')) {
+                    const delText = key.replace('_text', '')
+                    tabs.push({
+                        label: delText,
+                        slug: key,
+                        descr: this.lot[key],
+                    })
+                }
+            }
+            return tabs
+        },
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .container {
     @include content-wrap;

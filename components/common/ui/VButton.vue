@@ -11,22 +11,22 @@
 
 <script>
 export default {
-  name: 'VButton',
-  props: {
-    type: {
-      type: String,
-      default: 'button'
+    name: 'VButton',
+    props: {
+        type: {
+            type: String,
+            default: 'button',
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    callback (e) {
-      this.$emit('click', e)
-    }
-  }
+    methods: {
+        callback (e) {
+            this.$emit('click', e)
+        },
+    },
 }
 </script>
 

@@ -18,18 +18,19 @@
 
 <script>
 export default {
-  term: {
-    title: 'Additional conditions:',
-    data: [
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.'
-    ]
-  }
+    term: {
+        title: 'Additional conditions:',
+        data: [
+            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
+            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
+        ],
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .list {
     display: flex;

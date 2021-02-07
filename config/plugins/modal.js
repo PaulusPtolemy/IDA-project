@@ -1,20 +1,20 @@
 import Vue from 'vue'
 
 const ModalPlugin = {
-  install (Vue, options = {}) {
-    Vue.prototype.$modal = {
-      event: new Vue(),
+    install (Vue, options = {}) {
+        Vue.prototype.$modal = {
+            event: new Vue(),
 
-      open (component, data) {
-        this.event.$emit('open', component, data)
-      },
+            open (component, data) {
+                this.event.$emit('open', component, data)
+            },
 
-      close () {
-        this.event.$emit('close')
-        console.log('modal closed')
-      }
-    }
-  }
+            close () {
+                this.event.$emit('close')
+                console.log('modal closed')
+            },
+        }
+    },
 }
 
 Vue.use(ModalPlugin)

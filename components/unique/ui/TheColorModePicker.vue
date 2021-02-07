@@ -53,67 +53,68 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'TheColorModePicker',
+    name: 'TheColorModePicker',
 
-  components: {
-    IconDark: () => import('assets/svg/dark.svg?inline'),
-    IconLight: () => import('assets/svg/light.svg?inline')
-  },
-
-  computed: {
-    ...mapState({
-      Mode: state => state.modeColor
-    }),
-
-    currentIdIcon () {
-      return this.Mode === 'light' ? 'dark-icon' : 'light-icon'
-    }
-  },
-
-  mounted () {
-    const pref = this.$colorMode.preference
-    if (pref) {
-      if (this.isIE() && pref === 'system') {
-        this.sendMode('light')
-      } else {
-        this.sendMode(this.$colorMode.value)
-      }
-    } else {
-      this.sendMode('light')
-    }
-  },
-
-  methods: {
-    changeMode (name) {
-      // this.isIE() ? this.changeIEmode(name) : this.sendMode(name)
-
-      if (this.isIE()) {
-        this.changeIEmode(name)
-        this.changeSVGColor(
-          'logo_circle-1',
-          'fill',
-          this.$options.$RGBcolors.$base0,
-          this.$options.$RGBcolors.$base500)
-      }
-      this.sendMode(name)
-      this.$colorMode.value = this.Mode
+    components: {
+        IconDark: () => import('assets/svg/dark.svg?inline'),
+        IconLight: () => import('assets/svg/light.svg?inline'),
     },
 
-    sendMode (data) {
-      this.$store.dispatch('ACT_COLOR_MODE', data)
+    computed: {
+        ...mapState({
+            Mode: state => state.modeColor,
+        }),
+
+        currentIdIcon () {
+            return this.Mode === 'light' ? 'dark-icon' : 'light-icon'
+        },
     },
 
-    changeIEmode (val) {
-      const html = document.getElementsByTagName('html')[0]
-      html.removeAttribute('class')
-      html.classList.add(`${val}-mode`)
-      this.sendMode(val)
-    }
-  }
+    mounted () {
+        const pref = this.$colorMode.preference
+        if (pref) {
+            if (this.isIE() && pref === 'system') {
+                this.sendMode('light')
+            } else {
+                this.sendMode(this.$colorMode.value)
+            }
+        } else {
+            this.sendMode('light')
+        }
+    },
+
+    methods: {
+        changeMode (name) {
+            // this.isIE() ? this.changeIEmode(name) : this.sendMode(name)
+
+            if (this.isIE()) {
+                this.changeIEmode(name)
+                this.changeSVGColor(
+                    'logo_circle-1',
+                    'fill',
+                    this.$options.$RGBcolors.$base0,
+                    this.$options.$RGBcolors.$base500)
+            }
+            this.sendMode(name)
+            this.$colorMode.value = this.Mode
+        },
+
+        sendMode (data) {
+            this.$store.dispatch('ACT_COLOR_MODE', data)
+        },
+
+        changeIEmode (val) {
+            const html = document.getElementsByTagName('html')[0]
+            html.removeAttribute('class')
+            html.classList.add(`${val}-mode`)
+            this.sendMode(val)
+        },
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .picker {
     display: flex;

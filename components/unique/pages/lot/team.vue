@@ -37,35 +37,36 @@
 import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-  components: {
-    ImageLazy
-  },
+    components: {
+        ImageLazy,
+    },
 
-  team: {
-    title: 'Qualified specialists',
-    data: [
-      {
-        img: 'img/lot/1.png',
-        title: 'Marvin McKinney',
-        descr: 'Pilot assistant'
-      },
-      {
-        img: 'img/lot/2.png',
-        title: 'Savannah Nguyen',
-        descr: 'Mechanic'
-      },
-      {
-        img: 'img/lot/3.png',
-        title: 'Courtney Henry',
-        descr: 'Stewardess'
-      }
-    ],
-    descr: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  }
+    team: {
+        title: 'Qualified specialists',
+        data: [
+            {
+                img: 'img/lot/1.png',
+                title: 'Marvin McKinney',
+                descr: 'Pilot assistant',
+            },
+            {
+                img: 'img/lot/2.png',
+                title: 'Savannah Nguyen',
+                descr: 'Mechanic',
+            },
+            {
+                img: 'img/lot/3.png',
+                title: 'Courtney Henry',
+                descr: 'Stewardess',
+            },
+        ],
+        descr: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .list {
     display: flex;

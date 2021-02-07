@@ -27,29 +27,30 @@
 import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-  name: 'TheListItem',
+    name: 'TheListItem',
 
-  components: {
-    ImageLazy
-  },
+    components: {
+        ImageLazy,
+    },
 
-  props: {
-    itemData: {
-      type: Object,
-      default () {
-        return {
-          preview: '~/assets/img/logo.png',
-          name: 'Test User',
-          description: 'Test description',
-          rent: '100'
-        }
-      }
-    }
-  }
+    props: {
+        itemData: {
+            type: Object,
+            default () {
+                return {
+                    preview: '~/assets/img/logo.png',
+                    name: 'Test User',
+                    description: 'Test description',
+                    rent: '100',
+                }
+            },
+        },
+    },
 }
 </script>
 
 <style lang="scss" module>
+  @import "assets/scss/theme";
 
   .item {
     padding: 24px 32px 24px;

@@ -14,41 +14,41 @@
 
 <script>
 export default {
-  name: 'VIconSprite',
+    name: 'VIconSprite',
 
-  props: {
-    viewBox: {
-      type: String,
-      default: '0 0 32 32'
+    props: {
+        viewBox: {
+            type: String,
+            default: '0 0 32 32',
+        },
+
+        name: {
+            type: String,
+            default: 'none',
+            required: true,
+        },
+
+        size: {
+            type: String,
+            default: 'medium',
+            validator: (v) => {
+                return [
+                    'small',
+                    'medium',
+                    'large',
+                    'custom',
+                ].includes(v)
+            },
+        },
     },
 
-    name: {
-      type: String,
-      default: 'none',
-      required: true
+    computed: {
+        classList () {
+            return {
+                [`_${this.size}`]: this.size,
+            }
+        },
     },
-
-    size: {
-      type: String,
-      default: 'medium',
-      validator: (v) => {
-        return [
-          'small',
-          'medium',
-          'large',
-          'custom'
-        ].includes(v)
-      }
-    }
-  },
-
-  computed: {
-    classList () {
-      return {
-        [`_${this.size}`]: this.size
-      }
-    }
-  }
 }
 </script>
 
