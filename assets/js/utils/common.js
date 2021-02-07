@@ -13,3 +13,13 @@ export function unlockBody () {
     document.body.style.paddingRight = ''
     header.style.paddingRight = ''
 }
+
+export function hasAll (arr1, arr2) {
+    const hash = arr1.reduce(function (acc, i) {
+        acc[i] = true
+        return acc
+    }, {})
+    return arr2.every(function (i) {
+        return i in hash
+    })
+}

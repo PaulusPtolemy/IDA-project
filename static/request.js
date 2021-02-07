@@ -8,16 +8,16 @@ const rejectByChance = () => {
 /** Emulate request */
 export const getVehicles = () =>
     new Promise((resolve, reject) => {
-        if (rejectByChance()) {
-            /* eslint-disable */
-        return reject({
-          error: {
-            statusCode: 418,
-            message: 'Server error'
-          },
-        })
-        /* eslint-enable */
-        }
+        // if (rejectByChance()) {
+        //     /* eslint-disable */
+        // return reject({
+        //   error: {
+        //     statusCode: 418,
+        //     message: 'Server error'
+        //   },
+        // })
+        // /* eslint-enable */
+        // }
         const delay = parseInt(Math.random() * 1000)
         setTimeout(() => {
             resolve(vehicles)

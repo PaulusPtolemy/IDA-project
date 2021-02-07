@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div :class="[$style.image_wrap, $style.color__bg_secondary]">
-      <ImageLazy
+      <VImageLazy
         :class="$style.image"
         :image="lot.image"
         class="ListItem"
@@ -37,9 +37,9 @@
               {{ lot.rent }} $/h
             </span>
           </div>
-          <btn :class="$style.rent_btn">
+          <VButton :class="$style.rent_btn">
             Rent now
-          </btn>
+          </VButton>
         </div>
       </div>
     </div>
@@ -48,14 +48,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import btn from '@/components/common/ui/VButton.vue'
-import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-    components: {
-        btn,
-        ImageLazy,
-    },
 
     async fetch ({ store, route, error }) {
         try {

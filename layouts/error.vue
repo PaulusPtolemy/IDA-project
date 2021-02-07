@@ -7,24 +7,24 @@
       <p :class="[$style.color__descr, $style.error_text]">
         Please refresh the page
       </p>
-      <btn
+      <VButton
         @click="reloadPage"
       >
         <span>
           Reload page
         </span>
-      </btn>
+      </VButton>
     </div>
     <div v-if="error.statusCode === 404" :class="[$style.color__bg_secondary ,$style.error]">
       <h1 :class="[$style.color__title, $style.error_title]">
         Page not found
       </h1>
       <nuxt-link to="/">
-        <btn>
+        <VButton>
           <span>
             Home page
           </span>
-        </btn>
+        </VButton>
       </nuxt-link>
     </div>
   </div>
@@ -33,9 +33,7 @@
 <script>
 export default {
     name: 'NuxtError',
-    components: {
-        btn: () => import('@/components/common/ui/VButton.vue'),
-    },
+
     props: {
         error: {
             type: Object,

@@ -11,7 +11,7 @@
         :class="$style.item"
       >
         <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
-          <ImageLazy
+          <VImageLazy
             :class="$style.item_img"
             :image="require(`~/assets/${item.img}`)"
             class="ListItem"
@@ -34,12 +34,8 @@
 </template>
 
 <script>
-import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
-    components: {
-        ImageLazy,
-    },
 
     team: {
         title: 'Qualified specialists',

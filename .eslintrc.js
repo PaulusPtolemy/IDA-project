@@ -23,7 +23,7 @@ module.exports = {
             'error',
             'single',
         ],
-        'indent': 'off',
+        indent: 'off',
         'comma-dangle': ['error', 'always-multiline'],
         'no-console': 'off',
         'no-unused-vars': 'off',

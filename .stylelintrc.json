@@ -1,17 +1,20 @@
 {
-  "extends": "stylelint-config-standard",
-  "plugins": [
-    "stylelint-scss"
-  ],
-  "rules": {
-    "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": null,
-    "indentation": null,
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["global"]
-      }
-    ]
-  }
+    "extends": "stylelint-config-standard",
+    "plugins": [
+        "stylelint-scss"
+    ],
+    "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": null,
+        "indentation": null,
+        "no-descending-specificity": null,
+        "selector-pseudo-class-no-unknown": [
+            true,
+            {
+                "ignorePseudoClasses": [
+                    "global"
+                ]
+            }
+        ]
+    }
 }

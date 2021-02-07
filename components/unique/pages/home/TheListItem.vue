@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in" appear>
     <div :class="[$style.color__bg_primary ,$style.item]">
       <div :class="[$style.img_wrap, $style.color__bg_secondary]">
-        <ImageLazy
+        <VImageLazy
           :class="$style.image"
           :image="itemData.preview"
           class="ListItem"
@@ -24,14 +24,9 @@
 </template>
 
 <script>
-import ImageLazy from '@/components/common/VImageLazy'
 
 export default {
     name: 'TheListItem',
-
-    components: {
-        ImageLazy,
-    },
 
     props: {
         itemData: {
