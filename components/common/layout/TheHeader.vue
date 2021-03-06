@@ -1,8 +1,5 @@
 <template>
-    <header
-        id="header"
-        :class="$style.header"
-    >
+    <header :class="$style.header">
         <nuxt-link
             to="/"
             :class="$style.logo"
@@ -21,7 +18,7 @@
         </div>
 
         <div :class="$style.right_float">
-            <color-mode-picker />
+            <ColorModePicker />
 
             <IconMessage :class="$style.message" />
 
@@ -41,24 +38,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+    import { mapState } from 'vuex'
 
-import ColorModePicker from '@/components/unique/ui/TheColorModePicker'
+    import ColorModePicker from '@/components/common/ui/TheColorModePicker'
 
-export default {
-    name: 'TheHeader',
-    components: {
-        IconLogo: () => import('assets/svg/Logo.svg?inline'),
-        IconMessage: () => import('assets/svg/message.svg?inline'),
-        IconNotification: () => import('assets/svg/notification.svg?inline'),
-        ColorModePicker,
-    },
-    computed: {
-        ...mapState({
-            user: state => state.user,
-        }),
-    },
-}
+    export default {
+        name: 'TheHeader',
+        components: {
+            IconLogo: () => import('assets/svg/Logo.svg?inline'),
+            IconMessage: () => import('assets/svg/message.svg?inline'),
+            IconNotification: () => import('assets/svg/notification.svg?inline'),
+            ColorModePicker,
+        },
+        computed: {
+            ...mapState({
+                user: state => state.user.profile,
+            }),
+        },
+    }
 </script>
 
 <style lang="scss" module>

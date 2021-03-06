@@ -27,10 +27,10 @@ import { lockBody, unlockBody } from 'assets/js/utils/common'
 export default {
     name: 'TheModal',
     components: {
-        AddItemPopup: () => import('@/components/unique/layout/modals/AddItemPopup'),
+        TheAddItemPopup: () => import('@/components/common/layout/modals/popups/TheAddItemPopup'),
     },
 
-    data () {
+    data() {
         return {
             component: null,
             options: null,
@@ -42,23 +42,23 @@ export default {
     },
 
     watch: {
-        $route () {
+        $route() {
             this.onClose()
         },
     },
 
-    beforeMount () {
+    beforeMount() {
         this.$modal.event.$on('open', this.onOpen)
         this.$modal.event.$on('close', this.onClose)
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
         this.$modal.event.$off('open', this.onOpen)
         this.$modal.event.$off('close', this.onClose)
     },
 
     methods: {
-        onOpen (component, options) {
+        onOpen(component, options) {
             if (this.isOverlayVisible) {
                 this.newComponent = component
                 this.newOptions = options || null
@@ -71,11 +71,11 @@ export default {
             }
         },
 
-        onClose () {
+        onClose() {
             this.isContentVisible = false
         },
 
-        afterContentClose () {
+        afterContentClose() {
             if (this.newComponent) {
                 this.component = this.newComponent
                 this.options = this.newOptions
@@ -92,7 +92,7 @@ export default {
             }
         },
 
-        afterOverlayClose () {
+        afterOverlayClose() {
             unlockBody()
         },
     },
@@ -112,6 +112,13 @@ export default {
         display: flex;
         align-items: center;
         background: rgba(0, 7, 14, 0.9);
+
+        @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+            &_mask {
+                background: rgba(0, 7, 14, 0.32);
+                backdrop-filter: blur(32px);
+            }
+        }
 
         &:global(.overlay-appear-enter-active) {
             transition: all 0.4s;

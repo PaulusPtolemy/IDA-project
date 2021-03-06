@@ -64,6 +64,12 @@ export default {
 <style lang="scss" module>
     @import "assets/scss/theme";
 
+    .tab {
+        &_title {
+            margin-bottom: 14px;
+        }
+    }
+
     .list {
         display: flex;
         flex-wrap: wrap;

@@ -1,239 +1,248 @@
 <template>
     <div :class="[$style.color__bg_secondary, $style.cont]">
-        <div :class="[$style.list]">
-            <TheListFilter
-                :options="filterOptions"
-                :values="values"
-                :expand="currentChosenType"
-                @change="onValueChange"
-            />
+        <div v-if="listData"
+             :class="[$style.list]"
+        >
 
-            <div :class="$style.add_right">
-                <span :class="$style.add_title">
-                    Add new
-                </span>
-                <VButton
-                    title="Add New"
-                    :class="$style.btn_plus"
-                    @click="$modal.open('AddItemPopup')"
-                >
-                    <IconPlus />
-                </VButton>
+            <div :class="$style.head">
+
+                <TheListFilter
+                    :options="filterOptions"
+                    :values="values"
+                    :expand="currentChosenType"
+                    @change="onValueChange"
+                />
+
+                <div :class="$style.add_right">
+                    <span :class="$style.add_title">
+                        Add new
+                    </span>
+                    <VButton
+                        title="Add New"
+                        :class="$style.btn_plus"
+                        @click="$modal.open('TheAddItemPopup')"
+                    >
+                        <IconPlus />
+                    </VButton>
+                </div>
+
             </div>
 
-            <transition-group
+            <div
                 v-infinite-scroll="Scrolled"
                 :infinite-scroll-disabled="scroll.disabled"
                 :infinite-scroll-distance="scroll.limit"
-                name="slideAppear"
-                :class="$style.list_trans"
-                mode="out-in"
-                appear
+                :class="[$style.list_trans, {[$style._reloading]: flags.isReloading}]"
             >
                 <nuxt-link
                     v-for="item in listItems"
                     :key="item.id"
-                    :to="`/${item.id}`"
+                    :to="`/${item.id}/specifications`"
                     :class="$style.list_item"
                 >
                     <TheListItem :item-data="item" />
                 </nuxt-link>
-            </transition-group>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+    import { mapState } from 'vuex'
 
-import { applyQuery } from 'assets/js/utils/queryUtils'
+    import { applyQuery } from 'assets/js/utils/queryUtils'
 
-import TheListItem from '@/components/unique/pages/home/TheListItem'
-import TheListFilter from '@/components/unique/filter/TheListFilter'
+    import TheListItem from '@/components/common/pages/home/TheListItem'
+    import TheListFilter from '@/components/common/filter/LotsList/TheListFilter'
 
-import IconPlus from '~/assets/svg/add.svg?inline'
+    import IconPlus from '~/assets/svg/add.svg?inline'
 
-const defaultValues = {
-    type: 0,
-    rent: '',
-    name: '',
-    machineType: '',
-}
+    const defaultValues = {
+        type: 0,
+        rent: '',
+        name: '',
+        machineType: '',
+    }
 
-export default {
-    components: {
-        TheListItem,
-        TheListFilter,
-        IconPlus,
-    },
-
-    async asyncData ({ store, query, error }) {
-        const initialValues = applyQuery(defaultValues, query)
-
-        try {
-            await store.dispatch('GET_DATA_ACT')
-        } catch (err) {
-            error({ statusCode: 418, message: 'An error has occurred' })
-        }
-
-        return {
-            values: initialValues,
-        }
-    },
-
-    filterOptions: [
-        {
-            value: 0,
-            label: 'Any',
-        },
-        {
-            value: 1,
-            label: 'Rent',
-        },
-        {
-            value: 2,
-            label: 'Type',
-        },
-        {
-            value: 3,
-            label: 'Name',
-        },
-    ],
-
-    data () {
-        return {
-            scroll: {
-                disabled: false,
-                limit: 10,
-            },
-            count: 21,
-
-            values: {},
-        }
-    },
-
-    computed: {
-        ...mapState({
-            listData: state => state.data,
-            showPopup: state => state.showPopup,
-        }),
-
-        currentChosenType () {
-            return this.$options.filterOptions
-                .find(e => e.value === this.values.type)
-                .label
-                .toLowerCase()
+    export default {
+        components: {
+            TheListItem,
+            TheListFilter,
+            IconPlus,
         },
 
-        machinesTypes () {
-            return new Set(this.listData.map(e => e.type))
-        },
-
-        filterBy () {
-            let result
-            const data = {
-                ...this.values,
-            }
-            delete data.type
-            Object.keys(data).forEach((e) => {
-                if (data[e] !== undefined && data[e] !== '') {
-                    result = { [e]: data[e] }
-                }
-            })
-
-            return result
-        },
-
-        listItems () {
-            const data = [...this.listData]
-            if (!this.filterBy) {
-                return data
-            }
-
-            return this.filtered(data, this.filterBy)
-        },
-
-        filterOptions () {
-            const data = [
-                {
-                    value: 0,
-                    label: 'all',
-                },
-            ]
-            const arr = [...this.machinesTypes]
-            arr.forEach((e, index) => data.push({
-                value: index + 1,
-                label: e,
-            }))
+        asyncData({ query }) {
+            const initialValues = applyQuery(defaultValues, query)
 
             return {
-                types: this.$options.filterOptions,
-                machineType: data,
+                values: initialValues,
             }
         },
-    },
 
-    methods: {
-        filtered (data, options) {
-            let result
+        filterOptions: [
+            {
+                value: 0,
+                label: 'Any',
+            },
+            {
+                value: 1,
+                label: 'Rent',
+            },
+            {
+                value: 2,
+                label: 'Type',
+            },
+            {
+                value: 3,
+                label: 'Name',
+            },
+        ],
 
-            const firstKey = Object.keys(options)[0]
-            const firstValue = Object.values(options)[0]
+        data() {
+            return {
+                scroll: {
+                    disabled: false,
+                    limit: 10,
+                },
+                count: 21,
 
-            const typeLabel = this.filterOptions?.machineType?.find(e => +e.value === +firstValue)
+                values: {},
 
-            switch (firstKey) {
-                case 'rent':
-                    result = data.filter(e => +e.rent.toString().replace(/,/g, '') < +firstValue)
-                    break
-
-                case 'machineType':
-                    if (+firstValue === 0) {
-                        result = data
-                    } else {
-                        result = data.filter(e => e.type.toLowerCase() === typeLabel.label.toLowerCase())
-                    }
-                    break
-
-                case 'name':
-                    result = data.filter(e => e.name.toLowerCase().includes(firstValue))
-                    break
+                flags: {
+                    isReloading: false,
+                },
             }
-
-            return result
         },
 
-        Scrolled () {
-            this.scroll.disabled = true
-            this.count += 21
-        },
+        computed: {
+            ...mapState({
+                listData: state => state.lots.lotsList,
+            }),
 
-        onValueChange (val) {
-            if (val.type !== undefined) {
-                this.values = { ...val }
-            } else {
-                this.values = { ...this.values, ...val }
-            }
+            currentChosenType() {
+                return this.$options.filterOptions
+                    .find(e => e.value === this.values.type)
+                    .label
+                    .toLowerCase()
+            },
 
-            this.updateQuery()
-        },
+            machinesTypes() {
+                return new Set(this.listData.map(e => e.type))
+            },
 
-        updateQuery () {
-            const query = {}
-
-            Object.keys(this.values).forEach((key) => {
-                if (this.values[key] !== '' || this.values[key].length) {
-                    query[key] = this.values[key]
+            filterBy() {
+                let result
+                const data = {
+                    ...this.values,
                 }
-            })
+                delete data.type
+                Object.keys(data).forEach(e => {
+                    if (data[e] !== undefined && data[e] !== '') {
+                        result = { [e]: data[e] }
+                    }
+                })
 
-            this.$router.replace({
-                query,
-            })
+                return result
+            },
+
+            listItems() {
+                const data = [...this.listData]
+                if (!this.filterBy) {
+                    return data
+                }
+
+                return this.filtered(data, this.filterBy)
+            },
+
+            filterOptions() {
+                const data = [
+                    {
+                        value: 0,
+                        label: 'all',
+                    },
+                ]
+                const arr = [...this.machinesTypes]
+                arr.forEach((e, index) => data.push({
+                    value: index + 1,
+                    label: e,
+                }))
+
+                return {
+                    types: this.$options.filterOptions,
+                    machineType: data,
+                }
+            },
         },
-    },
 
-}
+        methods: {
+            filtered(data, options) {
+                let result
+
+                const firstKey = Object.keys(options)[0]
+                const firstValue = Object.values(options)[0]
+
+                const typeLabel = this.filterOptions?.machineType?.find(e => +e.value === +firstValue)
+
+                switch (firstKey) {
+                    case 'rent':
+                        result = data.filter(e =>
+                            +e.rent
+                                .toString()
+                                .replace(/,/g, '') < +firstValue)
+                        break
+
+                    case 'machineType':
+                        if (+firstValue === 0) {
+                            result = data
+                        } else {
+                            result = data.filter(e =>
+                                e.type.toLowerCase() === typeLabel.label.toLowerCase())
+                        }
+                        break
+
+                    case 'name':
+                        result = data.filter(e => e.name.toLowerCase().includes(firstValue))
+                        break
+                }
+
+                return result
+            },
+
+            Scrolled() {
+                this.scroll.disabled = true
+                this.count += 21
+            },
+
+            onValueChange(val) {
+                this.flags.isReloading = true
+                // эмулируем задержку как при запросе
+                setTimeout(() => {
+                    if (val.type !== undefined) {
+                        this.values = { ...val }
+                    } else {
+                        this.values = { ...this.values, ...val }
+                    }
+                    this.flags.isReloading = false
+                    this.updateQuery()
+                }, 300)
+            },
+
+            updateQuery() {
+                const query = {}
+
+                Object.keys(this.values).forEach(key => {
+                    if (this.values[key] !== '' || this.values[key].length) {
+                        query[key] = this.values[key]
+                    }
+                })
+
+                this.$router.replace({
+                    query,
+                })
+            },
+        },
+
+    }
 </script>
 
 <style lang="scss" module>
@@ -253,6 +262,13 @@ export default {
         &_trans {
             display: flex;
             flex-wrap: wrap;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+            &._reloading {
+                opacity: 0;
+                transform: translate3d(16px, 0, 0);
+                transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
         }
 
         &_item {
@@ -273,10 +289,10 @@ export default {
         margin-bottom: 40px;
     }
 
-    .input_wrap {
-        width: 400px;
-        height: 56px;
-        margin-left: 40px;
+    .head {
+        position: relative;
+        display: flex;
+        margin-bottom: 24px;
     }
 
     .input {
@@ -315,6 +331,9 @@ export default {
         }
 
         &_right {
+            position: absolute;
+            right: 0;
+            top: 0;
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -325,20 +344,6 @@ export default {
     @include brp(xl) {
         .list {
             padding: 26px 16px;
-        }
-    }
-
-    @include brp(ml) {
-        .input_wrap {
-            margin: 16px 0 0 0;
-            width: 50%;
-            order: 2;
-        }
-
-        .add {
-            &_right {
-                width: 50%;
-            }
         }
     }
 
@@ -365,16 +370,6 @@ export default {
             border-radius: $border-r-medium;
         }
 
-        .filter {
-            margin-bottom: 20px;
-        }
-
-        .add {
-            &_title {
-                font-size: $fontSizeBase;
-            }
-        }
-
         .btn_plus {
             width: 32px;
             height: 32px;
@@ -387,21 +382,6 @@ export default {
     }
 
     @include brp(xm) {
-        .add {
-            &_title {
-                display: none;
-            }
-
-            &_right {
-                width: auto;
-            }
-        }
-
-        .input_wrap {
-            width: 100%;
-            height: 48px;
-        }
-
         .list {
             &_item {
                 margin-bottom: 12px;
@@ -413,4 +393,13 @@ export default {
             }
         }
     }
+
+    @include brp(xs) {
+        .add {
+            &_title {
+                display: none;
+            }
+        }
+    }
+
 </style>

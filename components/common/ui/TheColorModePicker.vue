@@ -36,27 +36,26 @@ export default {
 
     computed: {
         ...mapState({
-            Mode: state => state.modeColor,
+            Mode: state => state.colorMode.modeColor,
         }),
     },
 
-    mounted () {
-        const pref = this.$colorMode.preference
-        if (pref) {
-            this.sendMode(this.$colorMode.value)
-        } else {
-            this.sendMode('light')
+    mounted() {
+        const isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+        if (isLight) {
+            this.changeMode('light')
         }
+        this.$colorMode.value = this.Mode
     },
 
     methods: {
-        changeMode (name) {
+        changeMode(name) {
             this.sendMode(name)
             this.$colorMode.value = this.Mode
         },
 
-        sendMode (data) {
-            this.$store.dispatch('ACT_COLOR_MODE', data)
+        sendMode(data) {
+            this.$store.dispatch('colorMode/setColorMode', data)
         },
     },
 }
@@ -72,8 +71,14 @@ export default {
         cursor: pointer;
 
         span {
+            white-space: nowrap;
             transition: color ease-in-out 300ms;
             margin-left: auto;
+        }
+
+        svg {
+            flex-shrink: 0;
+            margin-right: 4px;
         }
 
         &:hover {

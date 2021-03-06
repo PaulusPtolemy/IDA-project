@@ -56,7 +56,7 @@ export default {
         tag: {
             type: String,
             default: 'div',
-            validator (val) {
+            validator(val) {
                 return ['div', 'img'].includes(val)
             },
         },
@@ -65,7 +65,7 @@ export default {
     },
 
     computed: {
-        classes () {
+        classes() {
             return {
                 'is-relative': this.relative,
                 'is-absolute': this.absolute,

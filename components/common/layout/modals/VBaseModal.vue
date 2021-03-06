@@ -4,86 +4,91 @@
         :class="$style.BaseModal"
     >
         <div :class="$style.container">
-            <div :class="$style.wrap">
-                <slot />
-            </div>
+            <slot />
         </div>
         <button
             type="button"
             class="btn-reset"
-            :class="$style.close"
+            :class="[$style.close, $style.color__bg_secondary]"
             @click="onClose"
         >
-            <IconCross class="frame-icon" />
+            <IconCross class="frame-icon" :class="$style.color__iconSVG"/>
         </button>
     </div>
 </template>
 
 <script>
-import IconCross from '~/assets/svg/cross.svg?inline'
+    import IconCross from '~/assets/svg/cross.svg?inline'
 
-export default {
-    components: {
-        IconCross,
-    },
-
-    props: {
-        submited: {
-            type: Boolean,
-            default: false,
+    export default {
+        components: {
+            IconCross,
         },
-        visible: Boolean,
-        redirectToHome: {
-            type: Boolean,
-            default: false,
-        },
-    },
 
-    watch: {
-        visible (val) {
-            val ? this.$emit('after-enter') : this.$emit('after-leave')
+        props: {
+            submited: {
+                type: Boolean,
+                default: false,
+            },
+            visible: Boolean,
+            redirectToHome: {
+                type: Boolean,
+                default: false,
+            },
         },
-    },
 
-    methods: {
-        onClose () {
-            this.$modal.close()
-
-            if (this.redirectToHome) {
-                this.$router.push('/')
-            }
+        watch: {
+            visible(val) {
+                val ? this.$emit('after-enter') : this.$emit('after-leave')
+            },
         },
-    },
-}
+
+        methods: {
+            onClose() {
+                this.$modal.close()
+
+                if (this.redirectToHome) {
+                    this.$router.push('/')
+                }
+            },
+        },
+    }
 </script>
 
 <style lang="scss" module>
+    @import "assets/scss/theme";
 
     .BaseModal {
-        //
-    }
-
-    .wrap {
-        min-width: 460px;
-        min-height: 770px;
+        position: relative;
         margin-left: auto;
-        padding: 64px 72px;
-        border-radius: $border-r-large 0 0 $border-r-large;
+
+        @include brp(sm) {
+            width: 100%;
+        }
     }
 
     .close {
         position: absolute;
-        top: 92px;
-        right: calc(50% - 522px);
-        width: 2.4rem;
-        height: 2.4rem;
+        top: 64px;
+        right: 72px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        border-radius: $border-r-small;
         cursor: pointer;
-        pointer-events: all;
-        // color: rgba($gray, 0.6);
-        transition: opacity 0.3s ease-out;
 
         &:hover {
             opacity: 0.4;
+        }
+
+        @include brp(sm) {
+            top: 22px;
+            right: 16px;
+            width: 38px;
+            height: 38px;
         }
     }
 </style>

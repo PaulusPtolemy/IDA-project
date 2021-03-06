@@ -1,73 +1,73 @@
 
 :global(.dark-mode) {
-  .color {
-    // text color
-    &__title {
-      transition: color ease-in-out 300ms;
-      color: $base-0;
-    }
-
-    &__descr {
-      transition: color ease-in-out 300ms;
-      color: $base-200;
-    }
-
-    &__important {
-      transition: color ease-in-out 300ms;
-      color: $main-400;
-    }
-
-    &__price {
-      transition: color ease-in-out 300ms;
-      color: $secondary-400;
-    }
-
-    //bg colors
-    &__bg_primary {
-      transition: background-color ease-in-out 300ms;
-      background-color: $base-500;
-    }
-
-    &__bg_secondary {
-      transition: background-color ease-in-out 300ms;
-      background-color: $base-600;
-    }
-
-    &__bg_trans {
-      background: rgba(1, 35, 69, 0.8);
-    }
-
-    @supports not (-ms-high-contrast: none) {
-      &_logo {
-        circle[cx="17"] {
-          transition: all ease-in-out 300ms;
-          fill: $base-0;
+    .color {
+        // text color
+        &__title {
+            transition: color ease-in-out 300ms;
+            color: $base-0;
         }
-      }
 
-      &__iconSVG {
-        path {
-          transition: fill ease-in-out 300ms;
-          fill: $base-0;
+        &__descr {
+            transition: color ease-in-out 300ms;
+            color: $base-200;
         }
-      }
-    }
 
-    &__input_placeholder {
-      &::placeholder {
-        transition: color ease-in-out 300ms;
-        color: $base-200;
-      }
-    }
+        &__important {
+            transition: color ease-in-out 300ms;
+            color: $main-400;
+        }
 
-    &__input_bg {
-      transition: background-color ease-in-out 300ms;
-      background-color: $base-500;
-    }
+        &__price {
+            transition: color ease-in-out 300ms;
+            color: $secondary-400;
+        }
 
-    &__shadow {
-      background: linear-gradient(180deg, rgba(1, 35, 69, 0) 0%, $base-500 100%);
-      transition: background ease-in-out 300ms;
+        //bg colors
+        &__bg_primary {
+            transition: background-color ease-in-out 300ms;
+            background-color: $base-500;
+        }
+
+        &__bg_secondary {
+            transition: background-color ease-in-out 300ms;
+            background-color: $base-600;
+        }
+
+        &__bg_trans {
+            background: rgba(1, 35, 69, 0.8);
+        }
+
+        @supports not (-ms-high-contrast: none) {
+            &_logo {
+                circle[cx="17"] {
+                    transition: all ease-in-out 300ms;
+                    fill: $base-0;
+                }
+            }
+
+            &__iconSVG {
+                path {
+                    transition: fill ease-in-out 300ms;
+                    fill: $base-0;
+                }
+            }
+        }
+
+        &__input_placeholder {
+            &::placeholder {
+                transition: color ease-in-out 300ms;
+                color: $base-200;
+            }
+        }
+
+        &__input_bg {
+            transition: background-color ease-in-out 300ms;
+            background-color: $base-500;
+        }
+
+        &__shadow {
+            background: linear-gradient(180deg, rgba(1, 35, 69, 0) 0%, $base-500 100%);
+            transition: background ease-in-out 300ms;
+        }
     }
-  }
 }

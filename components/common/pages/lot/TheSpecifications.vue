@@ -1,31 +1,31 @@
 <template>
-  <div>
-    <slot name="head" />
-    <h2 :class="[$style.color__title, $style.tab_title]">
-      {{ $options.specifications.title }}
-    </h2>
-    <div
-      v-for="(item, index) in $options.specifications.data"
-      :key="item.title + index"
-      :class="$style.item"
-    >
-      <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
+    <div>
+        <slot name="head" />
+        <h2 :class="[$style.color__title, $style.tab_title]">
+            {{ $options.specifications.title }}
+        </h2>
         <div
-          :class="$style.item_img"
-          alt="item image"
-          v-html="item.svg"
-        />
-      </div>
-      <div :class="$style.item_right">
-        <div :class="[$style.color__title, $style.item_title]">
-          {{ item.title }}
+            v-for="(item, index) in $options.specifications.data"
+            :key="item.title + index"
+            :class="$style.item"
+        >
+            <div :class="[$style.item_img_wrap ,$style.color__bg_secondary]">
+                <div
+                    :class="$style.item_img"
+                    alt="item image"
+                    v-html="item.svg"
+                />
+            </div>
+            <div :class="$style.item_right">
+                <div :class="[$style.color__title, $style.item_title]">
+                    {{ item.title }}
+                </div>
+                <div :class="[$style.color__descr, $style.item_descr]">
+                    {{ item.descr }}
+                </div>
+            </div>
         </div>
-        <div :class="[$style.color__descr, $style.item_descr]">
-          {{ item.descr }}
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -56,6 +56,12 @@ export default {
 
 <style lang="scss" module>
     @import "assets/scss/theme";
+
+    .tab {
+        &_title {
+            margin-bottom: 14px;
+        }
+    }
 
     .item {
         display: flex;

@@ -130,7 +130,7 @@ export default {
                     // },
                     ...(isDev
                         ? {
-                            localIdentName: '[path][name]_[local]',
+                            localIdentName: '[name]_[local]',
                         }
                         : {
                             getLocalIdent: (context, localIdentName, localName) => (

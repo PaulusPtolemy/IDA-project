@@ -7,7 +7,7 @@ const createUniqueIdGenerator = () => {
         alphabet: 'abcefghijklmnopqrstuvwxyzABCEFGHJKLMNOPQRSTUVWXYZ',
     })
 
-    return (name) => {
+    return name => {
         if (!uniqIds[name]) {
             uniqIds[name] = generateNextId()
         }

@@ -24,6 +24,8 @@ module.exports = {
             'single',
         ],
         indent: 'off',
+        'space-before-function-paren': ['error', 'never'],
+        'arrow-parens': ['error', 'as-needed'],
         'comma-dangle': ['error', 'always-multiline'],
         'no-console': 'off',
         'no-unused-vars': 'off',

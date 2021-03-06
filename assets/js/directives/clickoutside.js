@@ -8,12 +8,12 @@ let startClick
 let seed = 0
 
 !isServer && document.addEventListener('mousedown', e => (startClick = e), false)
-!isServer && document.addEventListener('mouseup', (e) => {
+!isServer && document.addEventListener('mouseup', e => {
     nodeList.forEach(node => node[ctx].documentHandler(e, startClick))
 }, false)
 
-function createDocumentHandler (el, binding, vnode) {
-    return function (mouseup = {}, mousedown = {}) {
+function createDocumentHandler(el, binding, vnode) {
+    return function(mouseup = {}, mousedown = {}) {
         if (!vnode ||
             !vnode.context ||
             !mouseup.target ||
@@ -36,7 +36,7 @@ function createDocumentHandler (el, binding, vnode) {
 }
 
 export default {
-    bind (el, binding, vnode) {
+    bind(el, binding, vnode) {
         nodeList.push(el)
         const id = seed++
         el[ctx] = {
@@ -53,7 +53,7 @@ export default {
     //     el[ctx].bindingFn = binding.value;
     // },
 
-    unbind (el) {
+    unbind(el) {
         for (let i = 0; i < nodeList.length; i++) {
             if (nodeList[i][ctx].id === el[ctx].id) {
                 nodeList.splice(i, 1)

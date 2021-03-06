@@ -31,7 +31,7 @@ export default {
         size: {
             type: String,
             default: 'medium',
-            validator: (v) => {
+            validator: v => {
                 return [
                     'small',
                     'medium',
@@ -43,7 +43,7 @@ export default {
     },
 
     computed: {
-        classList () {
+        classList() {
             return {
                 [`_${this.size}`]: this.size,
             }

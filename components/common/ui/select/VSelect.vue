@@ -166,7 +166,7 @@
             size: {
                 type: String,
                 default: 'medium',
-                validator (value) {
+                validator(value) {
                     return ['large', 'medium', 'small'].includes(value)
                 },
             },
@@ -244,7 +244,7 @@
             },
         },
 
-        data () {
+        data() {
             return {
                 lazyValue: '',
                 isFocused: false,
@@ -254,7 +254,7 @@
         },
 
         computed: {
-            classes () {
+            classes() {
                 return [
                     `v-select--${this.color}`,
                     `v-select--${this.size}`,
@@ -270,10 +270,10 @@
                 ]
             },
 
-            groupList () {
+            groupList() {
                 const options = []
 
-                this.options.forEach((group) => {
+                this.options.forEach(group => {
                     const gr = {
                         label: group[this.groupLabelKey],
                         options: [],
@@ -285,21 +285,21 @@
                 return options
             },
 
-            groupOptionList () {
+            groupOptionList() {
                 const options = []
 
-                this.options.forEach((group) => {
+                this.options.forEach(group => {
                     group[[this.groupKey]].forEach(opt => options.push(opt))
                 })
 
                 return options
             },
 
-            optionList () {
+            optionList() {
                 if (!this.hideSelected) {
                     return this.options
                 } else {
-                    return this.options.filter((opt) => {
+                    return this.options.filter(opt => {
                         if (Array.isArray(this.lazyValue)) {
                             return this.lazyValue.length
                                 ? !this.lazyValue.includes(opt[this.trackBy])
@@ -311,15 +311,15 @@
                 }
             },
 
-            nativeOptions () {
+            nativeOptions() {
                 return this.multiple
                     ? this.options.filter(opt => opt[this.trackBy] !== '')
                     : this.options
             },
 
-            selectedOptions () {
+            selectedOptions() {
                 if (this.groupView) {
-                    return this.groupOptionList.filter((opt) => {
+                    return this.groupOptionList.filter(opt => {
                         if (Array.isArray(this.lazyValue)) {
                             return this.lazyValue.length
                                 ? this.lazyValue.includes(opt[this.trackBy])
@@ -329,7 +329,7 @@
                         }
                     })
                 } else {
-                    return this.options.filter((opt) => {
+                    return this.options.filter(opt => {
                         if (Array.isArray(this.lazyValue)) {
                             return this.lazyValue.length
                                 ? this.lazyValue.includes(opt[this.trackBy])
@@ -341,7 +341,7 @@
                 }
             },
 
-            isActive () {
+            isActive() {
                 let flag = false
                 if (Array.isArray(this.lazyValue)) {
                     if (this.lazyValue.length) { flag = true }
@@ -350,7 +350,7 @@
                 return flag
             },
 
-            valueStr () {
+            valueStr() {
                 if (!this.selectedOptions.length) {
                     if (this.placeholder) {
                         return this.placeholder
@@ -369,13 +369,13 @@
                 }
             },
 
-            isDisabled () {
+            isDisabled() {
                 return this.disabled || this.options.length === 0
             },
         },
 
         watch: {
-            value (val) {
+            value(val) {
                 if (this.multiple) {
                     if (Array.isArray(val) && val !== this.lazyValue) {
                         this.lazyValue = val
@@ -387,19 +387,19 @@
                     }
             },
 
-            isOpened (val) {
+            isOpened(val) {
                 this.$emit('is-opened', val)
             },
         },
 
-        created () {
-            if (this.value) {
+        created() {
+            if (this.value || this.value === 0) {
                 this.lazyValue = this.value
             } else if (this.multiple) { this.lazyValue = [] }
         },
 
         methods: {
-            navigateOptions (direction) {
+            navigateOptions(direction) {
                 if (!this.isOpened) {
                     this.isOpened = true
                     return
@@ -425,13 +425,13 @@
                 // }
             },
 
-            toggleMenu () {
+            toggleMenu() {
                 if (this.isDisabled) { return }
                 this.isOpened = !this.isOpened
                 this.highlightIndex = -1
             },
 
-            onEnterPress () {
+            onEnterPress() {
                 if (!this.isOpened) {
                     this.toggleMenu()
                 } else {
@@ -442,7 +442,7 @@
                 }
             },
 
-            onGroupLabelClick (values) {
+            onGroupLabelClick(values) {
                 const newValue = this.lazyValue.slice()
                 if (hasAll(newValue, values)) {
                     this.$emit('input', difference(newValue, values))
@@ -451,7 +451,7 @@
                 }
             },
 
-            onOptionClick (value) {
+            onOptionClick(value) {
                 if (this.value !== undefined) {
                     if (Array.isArray(this.lazyValue)) {
                         if (value === '') {
@@ -493,7 +493,7 @@
             /**
              * Метод, который обрабатывает собите focus
              */
-            onFocus () {
+            onFocus() {
                 this.isFocused = true
                 this.$emit('focus')
             },
@@ -501,20 +501,20 @@
             /**
              * Метод, который обрабатывает собите blur
              */
-            onBlur () {
+            onBlur() {
                 if (this.isOpened) { this.isOpened = false }
                 this.isFocused = false
                 this.$emit('blur')
             },
 
-            onClickOutside () {
+            onClickOutside() {
                 if (!this.isFocused) { return }
                 this.isOpened = false
                 this.isFocused = false
                 this.$emit('blur')
             },
 
-            onNativeChange (e) {
+            onNativeChange(e) {
                 if (this.value !== undefined) {
                     this.$nextTick(() => {
                         const newValue = this.lazyValue
@@ -538,11 +538,21 @@
         /* Colors */
         &--default {
             .v-select__value {
-                color: $base-500;
+                color: $base-200;
             }
 
             .v-select__field-content {
-                color: $main-500;
+                color: $base-0;
+            }
+        }
+
+        &--pink {
+            .v-select__value {
+                color: $main-400;
+            }
+
+            .v-select__field-content {
+                color: $main-400;
             }
         }
 
@@ -563,7 +573,7 @@
             top: 1px;
 
             .v-select__value {
-                font-size: 3.6rem;
+                font-size: 36px;
                 font-weight: bold;
 
                 @include brp(xs) {
@@ -573,8 +583,8 @@
             }
 
             .v-select__arrow {
-                width: 1.2rem;
-                height: 0.8rem;
+                width: 12px;
+                height: 8px;
                 right: -2px;
                 top: 56%;
             }
@@ -604,12 +614,12 @@
 
         &--medium {
             .v-select__value {
-                font-size: 1.4rem;
+                font-size: 16px;
             }
 
             .v-select__arrow {
-                width: 1.2rem;
-                height: 0.8rem;
+                width: 12px;
+                height: 8px;
             }
         }
 
@@ -755,10 +765,6 @@
             transition: transform 0.2s ease;
             pointer-events: none;
             fill: currentColor;
-
-            @include brp(xs) {
-                right: -8px;
-            }
         }
 
         &__dropdown {

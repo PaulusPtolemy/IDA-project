@@ -41,11 +41,11 @@
         },
 
         computed: {
-            isVisibleLabel () {
+            isVisibleLabel() {
                 return this.hideDisabled ? this.group.options.findIndex(item => !item.disabled) !== -1 : true
             },
 
-            classes () {
+            classes() {
                 return {
                     'is-hidden': !this.isVisibleLabel,
                     'non-clickable': !this.isClickableLabel,
@@ -54,7 +54,7 @@
         },
 
         methods: {
-            handleGroupLabelClick () {
+            handleGroupLabelClick() {
                 if (!this.isClickableLabel) { return }
                 const options = this.group.options.filter(opt => !opt.disabled)
                 this.$emit('group-label-click', options.map(opt => opt[this.trackBy]))

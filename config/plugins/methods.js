@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 Vue.mixin({
     methods: {
-        isIE () {
+        isIE() {
             if (process.browser) {
                 const ua = window.navigator.userAgent
                 return ua.includes('MSIE ') || ua.includes('Trident/')
@@ -10,7 +10,7 @@ Vue.mixin({
                 return false
             }
         },
-        isFox () {
+        isFox() {
             if (process.browser) {
                 const ua = window.navigator.userAgent.toLowerCase()
                 return ua.includes('mozilla') || ua.includes('firefox')

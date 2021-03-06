@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'UiTabs',
+        name: 'VTabs',
 
         props: {
             color: {
@@ -31,7 +31,7 @@
         },
 
         computed: {
-            classes () {
+            classes() {
                 return [
                     [this.$style[`_${this.color}`]],
                     {
@@ -52,6 +52,13 @@
             &._bordered {
                 border: 0.1rem solid $base-0;
                 border-radius: 0.4rem;
+            }
+        }
+
+        &_pinky {
+            &._bordered {
+                border: 1px solid $main-400;
+                border-radius: $border-r-mini;
             }
         }
 

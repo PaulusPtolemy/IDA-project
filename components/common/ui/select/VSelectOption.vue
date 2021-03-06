@@ -46,7 +46,7 @@
         },
 
         computed: {
-            classes () {
+            classes() {
                 return [
                     {
                         'is-highlighted': this.isHighlighted,
@@ -57,11 +57,11 @@
                 ]
             },
 
-            label () {
+            label() {
                 return this.prefix && this.option[this.trackBy] !== '' ? `${this.prefix} ${this.option[this.labelKey]}` : this.option[this.labelKey]
             },
 
-            isSelected () {
+            isSelected() {
                 if (Array.isArray(this.value)) {
                     if (this.value.length) {
                         return this.value.includes(this.option[this.trackBy])
@@ -75,17 +75,17 @@
         },
 
         methods: {
-            onClick () {
+            onClick() {
                 if (this.option.disabled) { return }
                 this.$emit('click', this.option[this.trackBy])
             },
 
-            onMouseEnter () {
+            onMouseEnter() {
                 if (this.option.disabled) { return }
                 this.$emit('mouseenter')
             },
 
-            onMouseLeave () {
+            onMouseLeave() {
                 if (this.option.disabled) { return }
                 this.$emit('mouseleave')
             },
@@ -95,7 +95,7 @@
 
 <style lang="scss">
     .v-select-option {
-        padding: 1.56rem 2.4rem;
+        padding: 15px 24px;
         //margin: 0 -1.2rem;
         cursor: pointer;
         color: $base-900;
@@ -104,8 +104,8 @@
         transition: background-color $anim, color $anim;
 
         &.is-highlighted {
-            background-color: $main-800;
-            color: $main-500;
+            background-color: $base-200;
+            color: $base-500;
         }
 
         &.is-selected {

@@ -56,7 +56,7 @@
             isAbsolute: Boolean,
         },
 
-        data () {
+        data() {
             return {
                 axis: {
                     x: {
@@ -102,7 +102,7 @@
         },
 
         computed: {
-            yScrollPosition () {
+            yScrollPosition() {
                 if (!this.isYOverflowing) { return 0 }
 
                 const scrollPercentage =
@@ -116,7 +116,7 @@
                 return `translate3d(0, ${handleOffset}px, 0)`
             },
 
-            xScrollPosition () {
+            xScrollPosition() {
                 if (!this.isXOverflowing) { return 0 }
 
                 const scrollPercentage =
@@ -131,7 +131,7 @@
             },
         },
 
-        mounted () {
+        mounted() {
             if (this.resizable) {
                 addResizeListener(this.$refs.content, this.update)
             } else {
@@ -150,12 +150,12 @@
             // });
         },
 
-        beforeDestroy () {
+        beforeDestroy() {
             this.resizable && removeResizeListener(this.$refs.content, this.update)
         },
 
         methods: {
-            update () {
+            update() {
                 const contentHeight = this.$refs.content.scrollHeight
                 const contentWidth = this.$refs.content.scrollWidth
                 // Determine placeholder size
@@ -200,7 +200,7 @@
             //             : 0;
             // },
 
-            getScrollbarSize (axis = 'y') {
+            getScrollbarSize(axis = 'y') {
                 if ((axis === 'y' && this.isYOverflowing) || (axis === 'x' && this.isXOverflowing)) {
                     const contentSize = this.$refs.content[this.axis[axis].scrollSizeAttr]
                     const trackSize =
@@ -216,7 +216,7 @@
                 }
             },
 
-            onScroll () {
+            onScroll() {
                 if (!this.scrollXTicking && this.isXOverflowing) {
                     requestAnimationFrame(() => {
                         this.axis.x.scrollLeft = this.$refs.wrapper.scrollLeft
@@ -234,7 +234,7 @@
                 }
             },
 
-            onThumbClick (e, axis = 'y') {
+            onThumbClick(e, axis = 'y') {
                 if (e.ctrlKey || e.button === 2) { return }
                 e.stopImmediatePropagation()
 
@@ -248,7 +248,7 @@
                 document.onselectstart = () => false
             },
 
-            onMouseMove (e) {
+            onMouseMove(e) {
                 const prevPage = this.axis[this.draggingAxis].click
                 if (!prevPage) { return }
 
@@ -271,7 +271,7 @@
                     100
             },
 
-            onMouseUp (e) {
+            onMouseUp(e) {
                 this.axis[this.draggingAxis].click = 0
                 this.draggingAxis = null
                 document.removeEventListener('mousemove', this.onMouseMove)
@@ -279,7 +279,7 @@
                 document.onselectstart = null
             },
 
-            onRailClick (e, axis = 'y') {
+            onRailClick(e, axis = 'y') {
                 const offset = Math.abs(
                     e.target.getBoundingClientRect()[this.axis[axis].offsetAttr] -
                     e[this.axis[axis].clientAttr],

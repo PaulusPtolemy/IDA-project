@@ -20,7 +20,7 @@ const components = [
     VTab,
 ]
 
-components.forEach((component) => {
+components.forEach(component => {
     if (component.name) {
         Vue.component(component.name, component)
     } else {

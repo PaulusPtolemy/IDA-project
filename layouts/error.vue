@@ -51,7 +51,7 @@ export default {
         },
     },
     methods: {
-        reloadPage () {
+        reloadPage() {
             this.$router.go(this.$router.currentRoute)
         },
     },

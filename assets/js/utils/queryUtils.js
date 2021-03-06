@@ -1,4 +1,4 @@
-export function applyQuery (defaulValues, queryValues) {
+export function applyQuery(defaulValues, queryValues) {
     const values = { ...defaulValues }
 
     if (typeof defaulValues !== 'object') {
@@ -17,7 +17,7 @@ export function applyQuery (defaulValues, queryValues) {
         if (Object.prototype.hasOwnProperty.call(values, name)) {
             if (Array.isArray(values[name])) {
                 if (Array.isArray(queryValues[name])) {
-                    values[name] = queryValues[name].map((i) => {
+                    values[name] = queryValues[name].map(i => {
                         if (i === 'true') {
                             return true
                         } else if (i === 'false') {
@@ -61,14 +61,14 @@ export function applyQuery (defaulValues, queryValues) {
     return values
 }
 
-export function objectToQuery (obj) {
+export function objectToQuery(obj) {
     let qs = ''
     for (const name in obj) {
         if (obj[name]) {
             if (Array.isArray(obj[name])) {
                 if (obj[name].length) {
                     qs += `${name}=`
-                    obj[name].forEach((val) => {
+                    obj[name].forEach(val => {
                         qs += `${val},`
                     })
                     qs = qs.slice(0, -1) + '&'
@@ -81,13 +81,13 @@ export function objectToQuery (obj) {
     return qs.slice(0, -1)
 }
 
-export function queryToObject (qs) {
+export function queryToObject(qs) {
     const obj = {}
 
     if (qs) {
         const params = qs.split('&')
 
-        params.forEach((param) => {
+        params.forEach(param => {
             const name = param.split('=')[0]
             const value = param.split('=')[1]
             if (name && value) {

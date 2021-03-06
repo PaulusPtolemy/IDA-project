@@ -23,7 +23,7 @@ export default {
         },
     },
     methods: {
-        callback (e) {
+        callback(e) {
             this.$emit('click', e)
         },
     },

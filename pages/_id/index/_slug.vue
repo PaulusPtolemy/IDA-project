@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.tab">
         <keep-alive>
-            <component :is="slugName" :lot-tab="lotTab">
+            <component :is="$route.params.slug">
                 <template v-slot:head>
                     <div :class="[$style.color__descr, $style.tab_descr]">
                         {{ lotTab.data }}
@@ -13,36 +13,25 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+    import { mapGetters } from 'vuex'
 
-export default {
-    components: {
-        specifications: () => import('~/components/unique/pages/lot/specifications'),
-        team: () => import('~/components/unique/pages/lot/team'),
-        term: () => import('~/components/unique/pages/lot/termRent.vue'),
-    },
-
-    async fetch ({ store, route, error }) {
-        try {
-            const data = await store.dispatch('ACT_CURRENT_LOT_TAB', { route })
-            if (!data) {
-                error({ statusCode: 404, message: 'Page not found' })
-            }
-        } catch (err) {
-            error({ statusCode: 418, message: 'An error has occurred' })
-        }
-    },
-
-    computed: {
-        ...mapState({
-            lotTab: state => state.currentLotTab,
-        }),
-
-        slugName () {
-            return this.lotTab.label.replace('_text', '').toLowerCase()
+    export default {
+        components: {
+            specifications: () => import('~/components/common/pages/lot/TheSpecifications'),
+            team: () => import('~/components/common/pages/lot/TheTeam'),
+            term: () => import('~/components/common/pages/lot/TheTermRent.vue'),
         },
-    },
-}
+
+        computed: {
+            ...mapGetters({
+                getCurrentLotTab: 'lots/getCurrentLotTab',
+            }),
+
+            lotTab() {
+                return this.getCurrentLotTab(this.$route)
+            },
+        },
+    }
 </script>
 
 <style lang="scss" module>
