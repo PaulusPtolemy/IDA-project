@@ -12,26 +12,42 @@
     </div>
 </template>
 
-<script>
-    import { mapGetters } from 'vuex'
+<script lang="ts">
+import {
+    defineComponent,
+    computed,
+    useRoute,
+} from '@nuxtjs/composition-api'
 
-    export default {
+    import { getCurrentLotTab } from '@/composable/store/lots'
+    import { IRouteParams } from '~/types/lots'
+
+    export default defineComponent({
+        name: 'TheLotTab',
         components: {
-            specifications: () => import('~/components/common/pages/lot/TheSpecifications'),
-            team: () => import('~/components/common/pages/lot/TheTeam'),
-            term: () => import('~/components/common/pages/lot/TheTermRent.vue'),
+            specifications: () => import('/components/common/pages/lot/TheSpecifications.vue'),
+            team: () => import('/components/common/pages/lot/TheTeam.vue'),
+            term: () => import('/components/common/pages/lot/TheTermRent.vue'),
         },
 
-        computed: {
-            ...mapGetters({
-                getCurrentLotTab: 'lots/getCurrentLotTab',
-            }),
+        setup() {
+            const $route = useRoute()
 
-            lotTab() {
-                return this.getCurrentLotTab(this.$route)
-            },
+            const RouteParams: IRouteParams = computed(() => {
+                return {
+                    slug: $route.value.params.slug,
+                    id: $route.value.params.id,
+                }
+            })
+
+            const lotTab = computed(() => getCurrentLotTab(RouteParams.value))
+
+            return {
+                lotTab,
+                RouteParams,
+            }
         },
-    }
+    })
 </script>
 
 <style lang="scss" module>

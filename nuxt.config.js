@@ -59,11 +59,21 @@ export default {
     /*
   ** Nuxt.js dev-modules
   */
+
+    typescript: {
+        typeCheck: {
+            eslint: {
+                files: './**/*.{ts,js,vue}',
+            },
+        },
+    },
+
     buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     // '@nuxtjs/eslint-module',
-        '@nuxtjs/color-mode',
         '@nuxtjs/svg',
+        '@nuxtjs/composition-api',
+        '@nuxt/typescript-build',
 
         [
             '@nuxtjs/stylelint-module',
@@ -112,7 +122,6 @@ export default {
     // },
     },
     build: {
-        analyze: true,
         loaders: {
             cssModules: {
                 modules: {

@@ -7,7 +7,7 @@
             <div :class="$style.head">
 
                 <TheListFilter
-                    :options="filterOptions"
+                    :options="formattedOptions"
                     :values="values"
                     :expand="currentChosenType"
                     @change="onValueChange"
@@ -35,7 +35,7 @@
                 :class="[$style.list_trans, {[$style._reloading]: flags.isReloading}]"
             >
                 <nuxt-link
-                    v-for="item in listItems"
+                    v-for="item in partOfScrolled"
                     :key="item.id"
                     :to="`/${item.id}/specifications`"
                     :class="$style.list_item"
@@ -47,202 +47,235 @@
     </div>
 </template>
 
-<script>
-    import { mapState } from 'vuex'
+<script lang="ts">
+    import {
+        defineComponent,
+        reactive,
+        ref,
+        computed,
+        useContext,
+        useRouter,
+    } from '@nuxtjs/composition-api'
 
-    import { applyQuery } from 'assets/js/utils/queryUtils'
+    // store
+    import { getLotsList } from '@/composable/store/lots'
 
-    import TheListItem from '@/components/common/pages/home/TheListItem'
-    import TheListFilter from '@/components/common/filter/LotsList/TheListFilter'
+    // components
+    import TheListItem from '@/components/common/pages/home/TheListItem.vue'
+    import TheListFilter from '@/components/common/filter/LotsList/TheListFilter.vue'
 
+    // icons
     import IconPlus from '~/assets/svg/add.svg?inline'
 
-    const defaultValues = {
+    // utils
+    import { applyQuery } from '~/assets/js/utils/queryUtils'
+
+    // types
+    import { IOption, IValues, IScrollOptions, IFlags, IQuery } from '~/types/home'
+    import { ILot } from '~/types/lots'
+
+    // static data
+    const defaultValues: IValues = {
         type: 0,
         rent: '',
         name: '',
         machineType: '',
     }
 
-    export default {
+    const filterOptions: IOption[] = [
+        {
+            value: 0,
+            label: 'Any',
+        },
+        {
+            value: 1,
+            label: 'Rent',
+        },
+        {
+            value: 2,
+            label: 'Type',
+        },
+        {
+            value: 3,
+            label: 'Name',
+        },
+    ]
+
+    export default defineComponent({
+        name: 'Home',
         components: {
             TheListItem,
             TheListFilter,
             IconPlus,
         },
 
-        asyncData({ query }) {
-            const initialValues = applyQuery(defaultValues, query)
+        setup() {
+            const { query } = useContext()
+            const $router = useRouter()
 
-            return {
-                values: initialValues,
-            }
-        },
+            //* state / filter
+            const values = ref<IValues>({})
 
-        filterOptions: [
-            {
-                value: 0,
-                label: 'Any',
-            },
-            {
-                value: 1,
-                label: 'Rent',
-            },
-            {
-                value: 2,
-                label: 'Type',
-            },
-            {
-                value: 3,
-                label: 'Name',
-            },
-        ],
+            //* state / list
+            const listData = getLotsList // getting list of data from store
 
-        data() {
-            return {
-                scroll: {
-                    disabled: false,
-                    limit: 10,
-                },
-                count: 21,
+            //* state / flags for logic control & animation
+            const flags = reactive<IFlags>({
+                isReloading: false,
+            })
+            //* infinite scroll
+            const count = ref<number>(21) // count per view
+            const scroll = reactive<IScrollOptions>({ // options
+                disabled: false,
+                limit: 10,
+            })
 
-                values: {},
+            values.value = applyQuery(defaultValues, query.value)
 
-                flags: {
-                    isReloading: false,
-                },
-            }
-        },
+            const currentChosenType = computed(() => {
+                return filterOptions.find(e => e.value === values.value.type)?.label.toLowerCase()
+            })
 
-        computed: {
-            ...mapState({
-                listData: state => state.lots.lotsList,
-            }),
+            const machinesTypes = computed(() => new Set(listData?.value?.map(e => e.type)))
 
-            currentChosenType() {
-                return this.$options.filterOptions
-                    .find(e => e.value === this.values.type)
-                    .label
-                    .toLowerCase()
-            },
-
-            machinesTypes() {
-                return new Set(this.listData.map(e => e.type))
-            },
-
-            filterBy() {
-                let result
-                const data = {
-                    ...this.values,
-                }
+            const subFilter = computed(() => { // if type is chosen - subFilter data
+                const data = { ...values.value }
                 delete data.type
-                Object.keys(data).forEach(e => {
-                    if (data[e] !== undefined && data[e] !== '') {
-                        result = { [e]: data[e] }
+
+                const chosenSubFilter = Object.keys(data).find(e => data[e]) // cause of only one filter at time
+
+                if (chosenSubFilter) {
+                    return {
+                        name: chosenSubFilter,
+                        value: data[chosenSubFilter],
                     }
-                })
-
-                return result
-            },
-
-            listItems() {
-                const data = [...this.listData]
-                if (!this.filterBy) {
-                    return data
+                } else {
+                    return null
                 }
+            })
 
-                return this.filtered(data, this.filterBy)
-            },
+            const listItems = computed(() => { // return filtered data or full list
+                const data = listData.value ? [...listData.value] : []
+                if (subFilter.value) {
+                    return filtered(data)
+                }
+                return data
+            })
 
-            filterOptions() {
+            const partOfScrolled = computed(() => listItems?.value?.slice(0, count.value))
+
+            const formattedOptions = computed(() => { // formatted options for filter
                 const data = [
                     {
                         value: 0,
                         label: 'all',
                     },
                 ]
-                const arr = [...this.machinesTypes]
+                const arr = [...machinesTypes.value]
                 arr.forEach((e, index) => data.push({
                     value: index + 1,
                     label: e,
                 }))
 
                 return {
-                    types: this.$options.filterOptions,
+                    types: filterOptions,
                     machineType: data,
                 }
-            },
-        },
+            })
 
-        methods: {
-            filtered(data, options) {
+            const filtered = (data: ILot[]) => { // filtering a list
                 let result
 
-                const firstKey = Object.keys(options)[0]
-                const firstValue = Object.values(options)[0]
+                const filterKey = subFilter?.value?.name // only one subFilter can be active
+                const filterVal = subFilter?.value?.value
 
-                const typeLabel = this.filterOptions?.machineType?.find(e => +e.value === +firstValue)
+                if (!filterVal) {
+                    return
+                }
 
-                switch (firstKey) {
+                const typeLabel = formattedOptions?.value.machineType?.find(
+                    e => +e.value === +filterVal,
+                )
+
+                switch (filterKey) {
                     case 'rent':
-                        result = data.filter(e =>
+                        result = data.filter(e => // items with lower price than chosen
                             +e.rent
                                 .toString()
-                                .replace(/,/g, '') < +firstValue)
+                                .replace(/,/g, '') < +filterVal)
                         break
 
                     case 'machineType':
-                        if (+firstValue === 0) {
+                        if (+filterVal === 0) { // All machines
                             result = data
                         } else {
-                            result = data.filter(e =>
-                                e.type.toLowerCase() === typeLabel.label.toLowerCase())
+                            result = data.filter(e => // find a chosen type machines
+                                e.type.toLowerCase() === typeLabel?.label.toLowerCase())
                         }
                         break
 
-                    case 'name':
-                        result = data.filter(e => e.name.toLowerCase().includes(firstValue))
+                    case 'name': // find a substring in names
+                        result = data.filter(e => e.name.toLowerCase().includes(filterVal.toString()))
                         break
                 }
 
                 return result
-            },
+            }
 
-            Scrolled() {
-                this.scroll.disabled = true
-                this.count += 21
-            },
+            const onValueChange = (val: IValues) => { // on filter change
+                flags.isReloading = true
+                // delay emulating
 
-            onValueChange(val) {
-                this.flags.isReloading = true
-                // эмулируем задержку как при запросе
                 setTimeout(() => {
-                    if (val.type !== undefined) {
-                        this.values = { ...val }
-                    } else {
-                        this.values = { ...this.values, ...val }
+                    if (val.type || val.type === 0) { // primary filter
+                        values.value = { ...val }
+                    } else { // subFilter
+                        values.value = { ...values.value, ...val }
                     }
-                    this.flags.isReloading = false
-                    this.updateQuery()
+                    flags.isReloading = false
+                    updateQuery()
                 }, 300)
-            },
+            }
 
-            updateQuery() {
-                const query = {}
+            const updateQuery = () => {
+                const query: IQuery = {}
 
-                Object.keys(this.values).forEach(key => {
-                    if (this.values[key] !== '' || this.values[key].length) {
-                        query[key] = this.values[key]
+                Object.keys(values.value).forEach(key => {
+                    if (values.value[key] !== '') {
+                        query[key] = values.value[key].toString()
                     }
                 })
 
-                this.$router.replace({
+                $router.replace({
                     query,
                 })
-            },
-        },
+            }
 
-    }
+            const Scrolled = () => {
+                scroll.disabled = true
+                count.value += 21
+            }
+
+            return {
+                values,
+                flags,
+                listData,
+                currentChosenType,
+                machinesTypes,
+                subFilter,
+                listItems,
+                partOfScrolled,
+                formattedOptions,
+                filtered,
+                onValueChange,
+                updateQuery,
+                //* infinite scroll
+                count,
+                scroll,
+                Scrolled,
+            }
+        },
+    })
 </script>
 
 <style lang="scss" module>

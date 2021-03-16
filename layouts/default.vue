@@ -1,12 +1,15 @@
 <template>
-    <div :class="[$style.page, $style.color__bg_primary]">
-        <TheHeader />
-        <Nuxt />
-        <TheModal />
-    </div>
+    <TheColorMode>
+        <div :class="[$style.page, $style.color__bg_primary]">
+            <TheHeader />
+            <Nuxt />
+            <TheModal />
+        </div>
+    </TheColorMode>
 </template>
 
 <script>
+    import TheColorMode from '@/components/common/layout/TheColorMode'
     import TheHeader from '@/components/common/layout/TheHeader'
     import TheModal from '@/components/common/layout/TheModal'
 
@@ -14,6 +17,7 @@
         components: {
             TheHeader,
             TheModal,
+            TheColorMode,
         },
     }
 </script>

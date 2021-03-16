@@ -16,17 +16,20 @@
                     $style.color__input_placeholder
                 ]"
             :active="values.machineType === tab.value"
-            @click="$emit('change', { machineType: tab.value })"
+            @click="onTabClick(tab)"
         >
             {{ tab.label }}
         </VTab>
     </VTabs>
 </template>
 
-<script>
-    export default {
-        name: 'TheListFilterTabs',
+<script lang="ts">
+    import { defineComponent } from '@nuxtjs/composition-api'
 
+    import { IOption } from '~/types/home'
+
+    export default defineComponent({
+        name: 'TheListFilterTabs',
         props: {
             values: {
                 type: Object,
@@ -39,15 +42,23 @@
             },
         },
 
-        methods: {
-            checkPrevTab(tab, idx) {
-                const arr = this.options.machineType
-                const item = arr.find(e => e.value === this.values.machineType)
-                const i = arr.indexOf(item)
+        setup(props, { emit }) {
+            const onTabClick = (tab: IOption) => {
+                emit('change', { machineType: tab.value })
+            }
+
+            const checkPrevTab = (tab: IOption, idx: number): Boolean => {
+                const arr: IOption[] = props.options.machineType
+                const i = arr.findIndex(e => e.value === props.values.machineType)
                 return idx === i - 1
-            },
+            }
+
+            return {
+                onTabClick,
+                checkPrevTab,
+            }
         },
-    }
+    })
 </script>
 
 <style lang="scss" module>

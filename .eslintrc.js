@@ -5,13 +5,12 @@ module.exports = {
         node: true,
     },
     parserOptions: {
-        parser: 'babel-eslint',
+        parser: '@typescript-eslint/parser',
     },
+    plugins: ['@typescript-eslint'],
     extends: [
-        '@nuxtjs',
-        'plugin:nuxt/recommended',
-    ],
-    plugins: [
+        '@nuxtjs/eslint-config-typescript',
+        'plugin:vue/recommended',
     ],
     // add your custom rules here
     rules: {
@@ -28,7 +27,7 @@ module.exports = {
         'arrow-parens': ['error', 'as-needed'],
         'comma-dangle': ['error', 'always-multiline'],
         'no-console': 'off',
-        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
         'vue/html-closing-bracket-newline': 'off',
         'vue/html-indent': 'off',
         'vue/max-attributes-per-line': 'off',

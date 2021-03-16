@@ -37,12 +37,14 @@
     </header>
 </template>
 
-<script>
-    import { mapState } from 'vuex'
+<script lang="ts">
+    import { defineComponent } from '@nuxtjs/composition-api'
 
-    import ColorModePicker from '@/components/common/ui/TheColorModePicker'
+    import { getUser } from '~/composable/store/user.ts'
 
-    export default {
+    import ColorModePicker from '~/components/common/ui/TheColorModePicker.vue'
+
+    export default defineComponent({
         name: 'TheHeader',
         components: {
             IconLogo: () => import('assets/svg/Logo.svg?inline'),
@@ -50,12 +52,15 @@
             IconNotification: () => import('assets/svg/notification.svg?inline'),
             ColorModePicker,
         },
-        computed: {
-            ...mapState({
-                user: state => state.user.profile,
-            }),
+
+        setup() {
+            const user = getUser
+
+            return {
+                user,
+            }
         },
-    }
+    })
 </script>
 
 <style lang="scss" module>

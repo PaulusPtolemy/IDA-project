@@ -28,15 +28,15 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+    import { defineComponent, computed } from '@nuxtjs/composition-api'
     import { debounce } from 'assets/js/utils/common'
 
-    export default {
+    export default defineComponent({
         name: 'TheListFilter',
-
         components: {
-            TheListFilterInput: () => import('@/components/common/filter/LotsList/TheListFilterInput'),
-            TheListFilterTabs: () => import('@/components/common/filter/LotsList/TheListFilterTabs'),
+            TheListFilterInput: () => import('@/components/common/filter/LotsList/TheListFilterInput.vue'),
+            TheListFilterTabs: () => import('@/components/common/filter/LotsList/TheListFilterTabs.vue'),
         },
 
         props: {
@@ -56,35 +56,36 @@
             },
         },
 
-        computed: {
-            allowInput() {
-                return this.formatExpand === 'rent' || this.formatExpand === 'name'
-            },
+        setup(props, { emit }) {
+            const formatExpand = computed(() => props.expand.toLowerCase())
 
-            allowTabs() {
-                return this.formatExpand === 'type'
-            },
+            const allowInput = computed(() => {
+                return formatExpand.value === 'rent' || formatExpand.value === 'name'
+            })
 
-            formatExpand() {
-                return this.expand.toLowerCase()
-            },
+            const allowTabs = computed(() => formatExpand.value === 'type')
 
-            valueField() {
-                return this.values[this.formatExpand]
-            },
-        },
+            const valueField = computed(() => props.values[formatExpand.value])
 
-        methods: {
-
-            inputChange: debounce(function(e) {
-                const val = e.target.value === '0' ? '' : e.target.value
+            const inputChange = debounce((e: Event) => {
+                const target = e.target as HTMLInputElement
+                const val = target.value === '0' ? '' : target.value
                 const data = {
-                    [this.formatExpand]: val,
+                    [formatExpand.value]: val,
                 }
-                this.$emit('change', data)
-            }, 1000),
+                emit('change', data)
+            }, 1000)
+
+            return {
+                allowInput,
+                allowTabs,
+                formatExpand,
+                valueField,
+                inputChange,
+            }
         },
-    }
+    })
+
 </script>
 
 <style lang="scss" module>

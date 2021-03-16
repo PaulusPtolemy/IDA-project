@@ -7,12 +7,14 @@
         ]"
         :type="type"
         :value="value"
-        @input="$emit('input-change', $event)"
+        @input="onInput"
     />
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import { defineComponent } from '@nuxtjs/composition-api'
+
+    export default defineComponent({
         name: 'TheListFilterInput',
         props: {
             type: {
@@ -21,7 +23,17 @@
             },
             value: [String, Number],
         },
-    }
+
+        setup(props, { emit }) {
+            const onInput = (val: string) => {
+                emit('input-change', val)
+            }
+
+            return {
+                onInput,
+            }
+        },
+    })
 </script>
 
 <style lang="scss" module>

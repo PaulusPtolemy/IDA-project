@@ -6,4 +6,5 @@ export const plugins = [
     '~/config/plugins/methods.js',
     '~/config/plugins/lazyload.js',
     '~/config/plugins/modal.js',
+    '~/config/plugins/onGlobalSetup.js',
 ]

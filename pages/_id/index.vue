@@ -11,9 +11,11 @@
             <h1 :class="[$style.color__title, $style.title]">
                 {{ lot.name }}
             </h1>
-            <div :class="$style.tabs">
+            <div v-if="formattedTabs"
+                 :class="$style.tabs"
+            >
                 <nuxt-link
-                    v-for="(tab, idx) in getTabs"
+                    v-for="(tab, idx) in formattedTabs"
                     :key="tab.label + idx"
                     :to="`/${lot.id}/${tab.label}`"
                     :class="[
@@ -46,29 +48,32 @@
     </div>
 </template>
 
-<script>
-    import { mapGetters } from 'vuex'
+<script lang="ts">
+    import { defineComponent, computed, useRoute } from '@nuxtjs/composition-api'
+    import { getCurrentLot } from '@/composable/store/lots'
 
-    export default {
-        computed: {
-            ...mapGetters({
-                getCurrentLot: 'lots/getCurrentLot',
-            }),
+    export default defineComponent({
+        name: 'TheLotPage',
 
-            lot() {
-                return this.getCurrentLot(this.$route.params.id)
-            },
+        setup() {
+            const $route = useRoute().value
 
-            getTabs() {
-                return Object.keys(this.lot)
+            const lot = computed(() => getCurrentLot($route.params.id))
+
+            const formattedTabs = computed(() => {
+                return lot.value && Object.keys(lot.value)
                     .filter(e => e.includes('_text'))
                     .map(e => ({
                         label: e.replace('_text', ''),
-                        descr: this.lot[e],
                     }))
-            },
+            })
+
+            return {
+                lot,
+                formattedTabs,
+            }
         },
-    }
+    })
 </script>
 
 <style lang="scss" module>
