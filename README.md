@@ -1,6 +1,12 @@
-# IDA
+# Pepelane
 
 <b>Nuxt application for search/adding fly machines</b>
+
+Using: <br>
+<b> Nuxt </b> <br>
+<b> Express for simple API </b> <br>
+<b> Vue composition api with <a href="https://composition-api.nuxtjs.org/"> @nuxt-composition-api</a></b><br>
+<b> Typescript </b>
 
 <a href="https://ida-project.herokuapp.com/">
   Live demo
@@ -8,9 +14,9 @@
 <br>
 -searching by price/name/types<br>
 -possibility to adding a new machines (type 'custom')<br>
--light and dark mode with correct rendering (with IE11)<br>
+-light and dark mode<br>
 -css modules with classnames obfuscation in production<br>
--svg hover and color changes with correct transitions added for IE11<br>
+<br>
 
 ## Build Setup
 
