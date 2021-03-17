@@ -1,5 +1,5 @@
 import { computed, ssrRef } from '@nuxtjs/composition-api'
-import { getVehicles } from '~/static/request'
+import axios from 'axios'
 
 import { ILot, ILots, ILotTab, IRouteParams } from '~/types/lots'
 
@@ -25,13 +25,26 @@ const getCurrentLotTab = (RouteParams: IRouteParams) => {
     }
 }
 
-const setLot = (payload: ILot) => {
-    state.value.lotsList ? state.value.lotsList.push(payload) : state.value.lotsList = [payload]
+interface IResponse {
+    statusCode: number | undefined
+}
+
+const setLot = (payload: ILot): IResponse | void => {
+    try {
+        state.value.lotsList ? state.value.lotsList.push(payload) : state.value.lotsList = [payload]
+        return {
+            statusCode: 200,
+        }
+    } catch (e) {
+        console.log('store/lots setLot', e)
+    }
 }
 
 const setLots = async(): Promise<void> => {
     try {
-        state.value.lotsList = await getVehicles()
+        const res = await axios.get('/api/vehicles/')
+        console.log(res.status)
+        state.value.lotsList = res.data
     } catch (e) {
         console.log('store/lots setLots', e)
     }

@@ -40,7 +40,7 @@
 <script lang="ts">
     import { defineComponent } from '@nuxtjs/composition-api'
 
-    import { getUser } from '~/composable/store/user.ts'
+    import { getUser } from '~/composable/store/user'
 
     import ColorModePicker from '~/components/common/ui/TheColorModePicker.vue'
 

@@ -33,7 +33,7 @@ import {
         setup() {
             const $route = useRoute()
 
-            const RouteParams: IRouteParams = computed(() => {
+            const RouteParams = computed((): IRouteParams => {
                 return {
                     slug: $route.value.params.slug,
                     id: $route.value.params.id,

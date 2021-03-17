@@ -98,10 +98,17 @@ export default {
   */
     modules: [
         '@nuxtjs/svg',
-        '@nuxtjs/axios',
         '@nuxtjs/svg-sprite',
         '@nuxtjs/style-resources',
+        '@nuxt/http',
     ],
+    serverMiddleware: {
+        '/api': '~/api',
+    },
+
+    // env: {
+    //     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    // },
 
     // svg модуль для инлайн полного импорта
     // svg-sprite для создания спрайта

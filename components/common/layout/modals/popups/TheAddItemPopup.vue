@@ -111,12 +111,21 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import {
+        defineComponent,
+        ref,
+        reactive,
+        computed,
+        watch,
+    } from '@nuxtjs/composition-api'
 
     import VBaseModal from '@/components/common/layout/modals/VBaseModal'
+    import { getLotsList, setLot } from '@/composable/store/lots'
     import photoIcon from '~/assets/svg/photo.svg?inline'
 
-    export default {
+    // store
+
+    export default defineComponent({
         name: 'TheAddItemPopup',
         components: {
             photoIcon,
@@ -134,98 +143,108 @@
             },
         },
 
-        data() {
-            return {
-                id: null,
-                form: {
-                    fileSelected: null,
-                    name: null,
-                    description: null,
-                    price: null,
-                },
-            }
-        },
+        setup(props) {
+            const id = ref(null)
+            const form = reactive({
+                fileSelected: null,
+                name: null,
+                description: null,
+                price: null,
+            })
 
-        computed: {
-            ...mapState({
-                listData: state => state.lots.lotsList,
-            }),
+            const listData = getLotsList.value
 
-            dataIDS() {
-                return this.listData.map(e => e.id)
-            },
+            const dataIDS = computed(() => listData.map(e => e.id))
 
-            itemAdded() {
-                return this.listData.find(e => e.id === this.id)
-            },
-        },
+            const itemAdded = computed(() => listData.find(e => e.id === id.value))
 
-        watch: {
-            itemAdded(newValue) {
-                if (newValue) {
-                    for (const key in this.form) {
-                        this.form[key] = null
-                    }
-                    setTimeout(() => { this.id = null }, 3000)
-                }
-            },
-        },
+            // watch(itemAdded, (newValue, oldValue) => {
+            //     if (newValue) {
+            //         for (const key in form) {
+            //             form[key] = null
+            //         }
+            //         setTimeout(() => { id.value = null }, 3000)
+            //     }
+            // })
 
-        methods: {
-            filledFields() {
+            const filledFields = () => {
                 let res = true
-                for (const key in this.form) {
-                    if (!this.form[key]) {
+                for (const key in form) {
+                    if (!form[key]) {
                         res = false
                     }
                 }
                 return res
-            },
+            }
 
-            setItem() {
-                this.randomID()
+            const setItem = async() => {
+                randomID()
                 const itemObj =
                     {
-                        id: this.id,
-                        name: this.form.name,
+                        id: id.value,
+                        name: form.name,
                         type: 'custom',
-                        description: this.form.description,
+                        description: form.description,
                         specifications_text: '',
                         team_text: '',
                         term_text: '',
-                        rent: this.form.price,
-                        preview: this.form.fileSelected,
-                        image: this.form.fileSelected,
+                        rent: form.price,
+                        preview: form.fileSelected,
+                        image: form.fileSelected,
                     }
-                this.$store.dispatch('setNewItem', itemObj)
-            },
+                const res = await setLot(itemObj)
 
-            randomID() {
-                const id =
+                if (res.statusCode === 200) {
+                    clearForm()
+                }
+            }
+
+            const clearForm = () => {
+                Object.keys(form).forEach(e => {
+                    form[e] = null
+                })
+                setTimeout(() => { id.value = null }, 3000)
+            }
+
+            const randomID = () => {
+                const idx =
                     Math.random()
                         .toString(36)
                         .substring(2, 15) +
                     Math.random()
                         .toString(36)
                         .substring(2, 15)
-                this.dataIDS.includes(id) ? this.randomID() : this.id = id
-            },
+                dataIDS.value.includes(idx) ? randomID() : id.value = idx
+            }
 
-            onFileSelected(event) {
+            const onFileSelected = event => {
                 const data = event.target.files[0]
-                this.createBase64(data)
-            },
+                createBase64(data)
+            }
 
-            createBase64(file) {
+            const createBase64 = file => {
                 const reader = new FileReader()
                 reader.onload = e => {
-                    this.form.fileSelected = e.target.result
+                    form.fileSelected = e.target.result
                 }
                 reader.readAsDataURL(file)
-            },
-        },
+            }
 
-    }
+            return {
+                id,
+                form,
+                listData,
+                dataIDS,
+                itemAdded,
+                clearForm,
+                filledFields,
+                setItem,
+                randomID,
+                createBase64,
+                onFileSelected,
+            }
+        },
+    })
 </script>
 
 <style lang="scss" module>
