@@ -79,6 +79,7 @@
         margin-left: auto;
         border-radius: $border-r-small;
         cursor: pointer;
+        outline: none;
 
         &:hover {
             opacity: 0.4;

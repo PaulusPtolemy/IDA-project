@@ -17,7 +17,7 @@
                 <nuxt-link
                     v-for="(tab, idx) in formattedTabs"
                     :key="tab.label + idx"
-                    :to="`/${lot.id}/${tab.label}`"
+                    :to="`/${$route.params.id}/${tab.label}`"
                     :class="[
                         $style.color__descr,
                         $style.tabs_label,
@@ -27,7 +27,7 @@
                     {{ tab.label | capitalize }}
                 </nuxt-link>
             </div>
-            <NuxtChild />
+            <NuxtChild :lot="lot"/>
             <div :class="$style.rent_block">
                 <div :class="[$style.rent_shadow, $style.color__shadow]" />
                 <div :class="[$style.rent_wrap, $style.color__bg_secondary]">
@@ -49,8 +49,13 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, computed, useRoute } from '@nuxtjs/composition-api'
-    import { getCurrentLot } from '@/composable/store/lots'
+    import {
+        defineComponent,
+        computed,
+        useRoute,
+        useAsync,
+        useContext,
+    } from '@nuxtjs/composition-api'
 
     export default defineComponent({
         name: 'TheLotPage',
@@ -58,7 +63,15 @@
         setup() {
             const $route = useRoute().value
 
-            const lot = computed(() => getCurrentLot($route.params.id))
+            const { $axios } = useContext()
+
+            const lot = useAsync(() => {
+                try {
+                    return $axios.$get(`/api/vehicles/${$route.params.id}`)
+                } catch (e) {
+                    console.log('TheLotPage / useAsync', e)
+                }
+            })
 
             const formattedTabs = computed(() => {
                 return lot.value && Object.keys(lot.value)

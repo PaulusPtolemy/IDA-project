@@ -6,6 +6,10 @@ interface ILots {
     lotsList: ILot[] | null
 }
 
+interface IResponse {
+    statusCode: number | undefined
+}
+
 interface ILotTab {
     label: string,
     data: string,
@@ -21,4 +25,5 @@ export {
     ILots,
     ILotTab,
     IRouteParams,
+    IResponse,
 }

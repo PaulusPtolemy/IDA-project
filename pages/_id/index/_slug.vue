@@ -1,26 +1,27 @@
 <template>
     <div :class="$style.tab">
         <keep-alive>
-            <component :is="$route.params.slug">
-                <template v-slot:head>
-                    <div :class="[$style.color__descr, $style.tab_descr]">
-                        {{ lotTab.data }}
-                    </div>
-                </template>
-            </component>
+            <transition name="component-fade" mode="out-in">
+                <component :is="$route.params.slug">
+                    <template v-slot:head>
+                        <div :class="[$style.color__descr, $style.tab_descr]">
+                            {{ lotTab.data }}
+                        </div>
+                    </template>
+                </component>
+            </transition>
         </keep-alive>
     </div>
 </template>
 
 <script lang="ts">
-import {
-    defineComponent,
-    computed,
-    useRoute,
-} from '@nuxtjs/composition-api'
+    import {
+        defineComponent,
+        computed,
+        useRoute,
+    } from '@nuxtjs/composition-api'
 
-    import { getCurrentLotTab } from '@/composable/store/lots'
-    import { IRouteParams } from '~/types/lots'
+    import { ILot, ILotTab } from '~/types/lots'
 
     export default defineComponent({
         name: 'TheLotTab',
@@ -29,22 +30,29 @@ import {
             team: () => import('/components/common/pages/lot/TheTeam.vue'),
             term: () => import('/components/common/pages/lot/TheTermRent.vue'),
         },
+        props: {
+            lot: {
+                type: Object,
+                required: true,
+            },
+        },
 
-        setup() {
+        setup(props) {
             const $route = useRoute()
+            const lot: ILot = props.lot
 
-            const RouteParams = computed((): IRouteParams => {
+            const routeSlug = computed(() => $route.value.params.slug)
+
+            const lotTab = computed <ILotTab>(() => {
+                const tabName = `${routeSlug.value}_text`
                 return {
-                    slug: $route.value.params.slug,
-                    id: $route.value.params.id,
+                    label: tabName,
+                    data: lot ? lot[tabName] : '',
                 }
             })
 
-            const lotTab = computed(() => getCurrentLotTab(RouteParams.value))
-
             return {
                 lotTab,
-                RouteParams,
             }
         },
     })

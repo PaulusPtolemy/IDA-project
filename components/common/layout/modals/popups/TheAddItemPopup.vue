@@ -116,7 +116,6 @@
         ref,
         reactive,
         computed,
-        watch,
     } from '@nuxtjs/composition-api'
 
     import VBaseModal from '@/components/common/layout/modals/VBaseModal'
@@ -157,15 +156,6 @@
             const dataIDS = computed(() => listData.map(e => e.id))
 
             const itemAdded = computed(() => listData.find(e => e.id === id.value))
-
-            // watch(itemAdded, (newValue, oldValue) => {
-            //     if (newValue) {
-            //         for (const key in form) {
-            //             form[key] = null
-            //         }
-            //         setTimeout(() => { id.value = null }, 3000)
-            //     }
-            // })
 
             const filledFields = () => {
                 let res = true
