@@ -107,7 +107,7 @@ export default {
     },
 
     axios: {
-        baseUrl: '',
+        baseUrl: !isDev ? 'https://pepelane.herokuapp.com/' : '',
     },
 
     // svg модуль для инлайн полного импорта
