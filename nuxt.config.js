@@ -106,6 +106,10 @@ export default {
         '/api': '~/api',
     },
 
+    axios: {
+        baseUrl: '',
+    },
+
     // svg модуль для инлайн полного импорта
     // svg-sprite для создания спрайта
 

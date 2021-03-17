@@ -3,7 +3,6 @@ export const plugins = [
     '~components/common/ui/globalComponents.js',
     { src: '~/config/plugins/vue-infinite-scroll.js', ssr: false },
     '~/config/plugins/filters.js',
-    '~/config/plugins/methods.js',
     '~/config/plugins/lazyload.js',
     '~/config/plugins/modal.js',
     '~/config/plugins/onGlobalSetup.js',
