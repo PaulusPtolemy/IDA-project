@@ -8,7 +8,7 @@ Using: <br>
 <b> Vue composition api with <a href="https://composition-api.nuxtjs.org/"> @nuxt-composition-api</a></b><br>
 <b> Typescript </b>
 
-<a href="https://ida-project.herokuapp.com/">
+<a href="https://pepelane.herokuapp.com/">
   Live demo
 </a>
 <br>
