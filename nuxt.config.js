@@ -121,12 +121,9 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
     render: {
-    // включить при https
-    // http2: {
-    //   push: true,
-    //   pushAssets: (req, res, publicPath, preloadFiles) => preloadFiles
-    //   .map(f => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`)
-    // },
+        http2: {
+            push: true,
+        },
     },
     build: {
         loaders: {

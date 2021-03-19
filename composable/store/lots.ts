@@ -28,7 +28,6 @@ const setLot = (payload: ILot): IResponse | void => {
 }
 
 const setLots = async(): Promise<void> => {
-    console.log('$axios.defaults.baseURL', $axios.defaults.baseURL)
     try {
         state.value.lotsList = await $axios.$get('/api/vehicles/')
     } catch (e) {
