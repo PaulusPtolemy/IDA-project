@@ -21,7 +21,7 @@ export default {
         htmlAttrs: {
             lang: 'en',
         },
-        title: process.env.npm_package_name || '',
+        title: 'Pepelane',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -48,9 +48,7 @@ export default {
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
-    plugins: [
-        ...plugins,
-    ],
+    plugins,
     /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
@@ -155,29 +153,9 @@ export default {
             },
 
         },
-        ...(!isDev && {
-            html: {
-                minify: {
-                    collapseBooleanAttributes: true,
-                    decodeEntities: true,
-                    minifyCSS: true,
-                    minifyJS: true,
-                    processConditionalComments: true,
-                    removeEmptyAttributes: true,
-                    removeRedundantAttributes: true,
-                    trimCustomFragments: true,
-                    useShortDoctype: true,
-                },
-            },
-        }),
         optimization: {
             minimize: !isDev,
         },
-        ...(!isDev && {
-            extractCSS: {
-                ignoreOrder: true,
-            },
-        }),
         postcss: {
             ...(!isDev && {
                 preset: {
