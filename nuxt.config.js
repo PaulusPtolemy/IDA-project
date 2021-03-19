@@ -156,6 +156,11 @@ export default {
         optimization: {
             minimize: !isDev,
         },
+
+        extractCSS: {
+            ignoreOrder: true,
+        },
+
         postcss: {
             ...(!isDev && {
                 preset: {
