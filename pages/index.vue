@@ -1,5 +1,5 @@
 <template>
-    <div :class="[$style.color__bg_secondary, $style.cont]">
+    <div ref="page" :class="[$style.color__bg_secondary, $style.cont]">
         <div v-if="listData"
              :class="[$style.list]"
         >
@@ -28,12 +28,7 @@
 
             </div>
 
-            <div
-                v-infinite-scroll="Scrolled"
-                :infinite-scroll-disabled="scroll.disabled"
-                :infinite-scroll-distance="scroll.limit"
-                :class="[$style.list_trans, {[$style._reloading]: flags.isReloading}]"
-            >
+            <div :class="[$style.list_trans, {[$style._reloading]: flags.isReloading}]">
                 <nuxt-link
                     v-for="item in partOfScrolled"
                     :key="item.id"
@@ -53,6 +48,9 @@
         reactive,
         ref,
         computed,
+        watch,
+        onMounted,
+        onBeforeUnmount,
         useContext,
         useRouter,
     } from '@nuxtjs/composition-api'
@@ -64,11 +62,12 @@
     import TheListItem from '@/components/common/pages/home/TheListItem.vue'
     import TheListFilter from '@/components/common/filter/LotsList/TheListFilter.vue'
 
+    // utils
+    import { debounce } from 'assets/js/utils/common'
+    import { applyQuery } from '~/assets/js/utils/queryUtils'
+
     // icons
     import IconPlus from '~/assets/svg/add.svg?inline'
-
-    // utils
-    import { applyQuery } from '~/assets/js/utils/queryUtils'
 
     // types
     import { IOption, IValues, IScrollOptions, IFlags, IQuery } from '~/types/home'
@@ -122,21 +121,28 @@
             //* state / flags for logic control & animation
             const flags = reactive<IFlags>({
                 isReloading: false,
-            })
-            //* infinite scroll
-            const count = ref<number>(21) // count per view
-            const scroll = reactive<IScrollOptions>({ // options
-                disabled: false,
-                limit: 10,
+                isScrolling: false,
             })
 
+            //* infinite scroll
+            const count = ref<number>(21) // count per view
+            const page = ref<HTMLDivElement | null>(null) // html ref on page
+
             values.value = applyQuery(defaultValues, query.value)
+
+            const fullScrolled = computed(() => { // all items are loaded
+                if (listData.value && partOfScrolled.value) {
+                    return listData.value.length === partOfScrolled.value.length
+                }
+            })
 
             const currentChosenType = computed(() => {
                 return filterOptions.find(e => e.value === values.value.type)?.label.toLowerCase()
             })
 
-            const machinesTypes = computed(() => new Set(listData?.value?.map(e => e.type)))
+            const machinesTypes = computed(
+                () => new Set(listData?.value?.map(e => e.type)),
+            )
 
             const subFilter = computed(() => { // if type is chosen - subFilter data
                 const data = { ...values.value }
@@ -162,7 +168,9 @@
                 return data
             })
 
-            const partOfScrolled = computed(() => listItems?.value?.slice(0, count.value))
+            const partOfScrolled = computed(
+                () => listItems?.value?.slice(0, count.value),
+            )
 
             const formattedOptions = computed(() => { // formatted options for filter
                 const data = [
@@ -183,7 +191,7 @@
                 }
             })
 
-            const filtered = (data: ILot[]) => { // filtering a list
+            const filtered = (data: ILot[]): ILot[] | undefined => { // filtering a list
                 let result
 
                 const filterKey = subFilter?.value?.name // only one subFilter can be active
@@ -222,7 +230,7 @@
                 return result
             }
 
-            const onValueChange = (val: IValues) => { // on filter change
+            const onValueChange = (val: IValues): void => { // on filter change
                 flags.isReloading = true
                 // delay emulating
 
@@ -237,7 +245,7 @@
                 }, 300)
             }
 
-            const updateQuery = () => {
+            const updateQuery = (): void => {
                 const query: IQuery = {}
 
                 Object.keys(values.value).forEach(key => {
@@ -251,10 +259,41 @@
                 })
             }
 
-            const Scrolled = () => {
-                scroll.disabled = true
-                count.value += 21
+            onMounted(() => {
+                document.addEventListener('scroll', debouncedScroll)
+            })
+
+            watch(
+                query,
+                query => {
+                    if (!Object.keys(query).length) {
+                        values.value = defaultValues
+                    }
+                },
+            )
+
+            onBeforeUnmount(() => {
+                document.removeEventListener('scroll', debouncedScroll)
+            })
+
+            const onScroll = (): void => {
+                if (flags.isScrolling || fullScrolled.value) {
+                    return
+                }
+
+                flags.isScrolling = true
+
+                requestAnimationFrame((): void => {
+                    if (page.value &&
+                        window.pageYOffset > page.value.offsetHeight - window.innerHeight * 1.5) {
+                        count.value += 21
+                    }
+
+                    flags.isScrolling = false
+                })
             }
+
+            const debouncedScroll = debounce(onScroll, 100)
 
             return {
                 values,
@@ -271,8 +310,9 @@
                 updateQuery,
                 //* infinite scroll
                 count,
-                scroll,
-                Scrolled,
+                page,
+                fullScrolled,
+                debouncedScroll,
             }
         },
     })

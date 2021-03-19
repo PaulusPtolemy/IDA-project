@@ -26,7 +26,6 @@
         "cors": "^2.8.5",
         "express": "latest",
         "nuxt": "^2.14.0",
-        "vue-infinite-scroll": "^2.0.2",
         "vue-lazyload": "^1.3.3"
     },
     "devDependencies": {
