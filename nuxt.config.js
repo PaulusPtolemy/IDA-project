@@ -25,11 +25,13 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+            { hid: 'description', name: 'description', content: 'nuxt composition api for machines on typescript' },
             { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/CodecPro/CodecPro-News.woff2', crossorigin: true },
+            { rel: 'preconnect', href: 'https://loremflickr.com' },
         ],
     },
     /*
