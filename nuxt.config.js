@@ -124,23 +124,17 @@ export default {
         http2: {
             push: true,
         },
+        bundleRenderer: {
+            shouldPreload: (file, type) => {
+                return ['font'].includes(type)
+            },
+        },
     },
+
     build: {
         loaders: {
             cssModules: {
                 modules: {
-                    // exportGlobals: true
-                    // mode: (resourcePath) => {
-                    //   if (/pure.scss$/i.test(resourcePath)) {
-                    //     return 'pure'
-                    //   }
-                    //
-                    //   if (/global.scss$/i.test(resourcePath)) {
-                    //     return 'global'
-                    //   }
-                    //
-                    //   return 'local'
-                    // },
                     ...(isDev
                         ? {
                             localIdentName: '[name]_[local]',
@@ -155,8 +149,19 @@ export default {
             },
 
         },
+
         optimization: {
             minimize: !isDev,
+            splitChunks: {
+                cacheGroups: {
+                    styles: {
+                        name: 'styles',
+                        test: /\.(css|vue)$/,
+                        chunks: 'all',
+                        enforce: true,
+                    },
+                },
+            },
         },
 
         extractCSS: {

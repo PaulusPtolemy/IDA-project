@@ -546,16 +546,6 @@
             }
         }
 
-        &--pink {
-            .v-select__value {
-                color: $main-400;
-            }
-
-            .v-select__field-content {
-                color: $main-400;
-            }
-        }
-
         &--blue {
             .v-select__value {
                 color: $main-500;

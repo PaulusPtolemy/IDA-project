@@ -11,7 +11,6 @@ const ModalPlugin = {
 
             close() {
                 this.event.$emit('close')
-                console.log('modal closed')
             },
         }
     },

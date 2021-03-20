@@ -30,12 +30,15 @@
 
             <div :class="[$style.list_trans, {[$style._reloading]: flags.isReloading}]">
                 <nuxt-link
-                    v-for="item in partOfScrolled"
+                    v-for="(item, idx) in partOfScrolled"
                     :key="item.id"
                     :to="`/${item.id}/specifications`"
                     :class="$style.list_item"
                 >
-                    <TheListItem :item-data="item" />
+                    <TheListItem
+                        :item-data="item"
+                        :preloaded="idx + 1 <= 21"
+                    />
                 </nuxt-link>
             </div>
         </div>
@@ -286,7 +289,7 @@
                 requestAnimationFrame((): void => {
                     if (page.value &&
                         window.pageYOffset > page.value.offsetHeight - window.innerHeight * 1.5) {
-                        count.value += 21
+                        count.value += 9
                     }
 
                     flags.isScrolling = false
@@ -348,9 +351,23 @@
             margin-bottom: 32px;
             border-radius: $border-r-huge;
             width: calc(100% / 3 - 32px * 2 / 3);
+            transition: transform $anim;
+            -webkit-backface-visibility: hidden;
 
             &:not(:nth-child(3n)) {
                 margin-right: 32px;
+            }
+
+            :global(.image-lazy__image) {
+                transition: transform $anim;
+            }
+
+            &:hover {
+                transform: translate3d(0, -0.3rem, 0);
+
+                :global(.image-lazy__image) {
+                    transform: scale(1.05);
+                }
             }
         }
     }

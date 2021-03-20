@@ -2,8 +2,10 @@
     <div :class="[$style.color__bg_primary ,$style.item]">
         <div :class="[$style.img_wrap, $style.color__bg_secondary]">
             <VImageLazy
+                :tag="preloaded ? 'img' : 'div'"
                 :class="$style.img"
                 :image="itemData.preview"
+                :preloaded="preloaded"
             />
         </div>
         <div :class="$style.right">
@@ -26,6 +28,11 @@
         name: 'TheListItem',
 
         props: {
+            preloaded: {
+                type: Boolean,
+                default: false,
+            },
+
             itemData: {
                 type: Object,
                 default() {
@@ -62,12 +69,14 @@
             height: 88px;
             margin-right: 24px;
             flex-shrink: 0;
+            overflow: hidden;
             border-radius: $border-r-medium;
             z-index: $z-index-img-wrap;
         }
 
         .image-lazy__image {
             border-radius: 24px;
+            transition: transform $anim;
         }
     }
 
@@ -88,6 +97,7 @@
     }
 
     .price {
+        margin-top: auto;
         font-weight: $fontWeightBold;
         font-size: $fontSizeSmaller;
     }

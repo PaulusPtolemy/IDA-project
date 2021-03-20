@@ -2,3 +2,19 @@
     border-radius: $border-r-mini;
     border: 1px solid $main-400;
 }
+
+.dark-mode {
+    .v-select {
+        &--pink {
+            color: $base-0;
+        }
+    }
+}
+
+.light-mode {
+    .v-select {
+        &--pink {
+            color: $main-400;
+        }
+    }
+}
