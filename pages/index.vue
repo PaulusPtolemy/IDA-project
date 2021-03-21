@@ -1,6 +1,7 @@
 <template>
     <div ref="page" :class="[$style.color__bg_secondary, $style.cont]">
         <div v-if="listData"
+             id="start_of_content"
              :class="[$style.list]"
         >
 
@@ -234,9 +235,19 @@
             }
 
             const onValueChange = (val: IValues): void => { // on filter change
-                flags.isReloading = true
-                // delay emulating
+                const isUnchangedVal = Object.keys(val).every(e => { // check for changing values
+                    return val[e] === values.value[e]
+                })
 
+                const isOnlyType = Object.keys(val).length === 1 && val.type // val is only type (dont need a reload ani)
+
+                if (isUnchangedVal && !isOnlyType) { return } // out of func cause dont need a change
+
+                if (!isOnlyType) {
+                    flags.isReloading = true
+                }
+
+                // delay emulating
                 setTimeout(() => {
                     if (val.type || val.type === 0) { // primary filter
                         values.value = { ...val }
@@ -358,14 +369,16 @@
                 margin-right: 32px;
             }
 
-            :global(.image-lazy__image) {
+            :global(.image-lazy__image),
+            :global(.image-preloaded__image) {
                 transition: transform $anim;
             }
 
             &:hover {
                 transform: translate3d(0, -0.3rem, 0);
 
-                :global(.image-lazy__image) {
+                :global(.image-lazy__image),
+                :global(.image-preloaded__image) {
                     transform: scale(1.05);
                 }
             }

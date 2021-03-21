@@ -1,5 +1,8 @@
 <template>
     <TheColorMode>
+        <a :class="$style.skip" href="#start_of_content">
+            Skip to content
+        </a>
         <div :class="[$style.page, $style.color__bg_primary]">
             <TheHeader />
             <Nuxt />
@@ -34,6 +37,20 @@
     @include brp(xm) {
         .page {
             padding-bottom: calc(48px + 80px);
+        }
+    }
+
+    .skip {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: white;
+        padding: 8px;
+        z-index: 100;
+
+        &:focus {
+            top: 0;
         }
     }
 </style>

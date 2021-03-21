@@ -5,7 +5,13 @@
     >
         <template v-if="tag === 'img'">
             <img
-                v-if="image"
+                v-if="preloaded"
+                class="image-preloaded__image"
+                :src="image"
+                alt="image"
+            >
+            <img
+                v-else
                 v-lazy="image"
                 class="image-lazy__image"
                 alt="image"
@@ -156,5 +162,10 @@ export default {
             background-size: contain;
         }
     }
+}
+
+.image-preloaded__image {
+    width: 100%;
+    height: 100%;
 }
 </style>
