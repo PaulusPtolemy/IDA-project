@@ -30,7 +30,7 @@
 
             <img
                 :class="$style.user_avatar"
-                :src="'data:image/jpeg;base64,' + user.avatar"
+                :src="user.avatar"
                 alt="user avatar"
             >
         </div>

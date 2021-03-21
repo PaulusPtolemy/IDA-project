@@ -30,7 +30,6 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/CodecPro/CodecPro-News.woff2', crossorigin: true },
             { rel: 'preconnect', href: 'https://loremflickr.com' },
         ],
     },
